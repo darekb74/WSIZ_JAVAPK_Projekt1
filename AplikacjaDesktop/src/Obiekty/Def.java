@@ -11,6 +11,8 @@ package Obiekty;
  */
 public class Def {
 
+    public final static boolean DEBUG = true;
+
     public final static byte LVL0 = (byte) 0x0;    // 00000000 - podstawowe menu
     public final static byte LVL1 = (byte) 0x1;    // 00000001 - menu pracownika magazynu
     public final static byte LVL2 = (byte) 0x2;    // 00000010 - menu serwisanta 
@@ -21,4 +23,8 @@ public class Def {
     public final static byte LVL7 = (byte) 0x40;   // 01000000 - 
     public final static byte LVL9 = (byte) 0x80;   // 10000000 -                                              
     public final static byte ADM = (byte) 0xFF;    // 11111111 - wszystkie (administrator)
+
+    public final static String O_ZAKONCZ = "Zakończ";
+    public final static String O_SPRAWDZ_STANY = "Sprawdź stany magazynowe";
+    public final static String O_SZUKAJ_CZESCI = "Szukaj części";
 }

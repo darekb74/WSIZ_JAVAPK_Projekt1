@@ -19,13 +19,11 @@ import javax.swing.JTable;
  */
 public class TabelaDanych extends JTable {
 
-    private final boolean DEBUG = true;
-
     public TabelaDanych(Object[][] dane, String[] nazwyKolumn, Container rodzic) {
         super(dane, nazwyKolumn);
         setPreferredScrollableViewportSize(new Dimension(500, 70));
         setFillsViewportHeight(true);
-        if (DEBUG) {
+        if (Def.DEBUG) {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) { // mouseReleased zapewnia prawidłowe działanie, mouseClicked czasami nie odpala :/
