@@ -17,5 +17,5 @@ public interface Fasada_EE_ejbRemote {
 
     public UserDTO znajdzUzytkownika(String username);
 
-    //public Boolean uzytkownikIstnieje(String username);
+    public Boolean uzytkownikIstnieje(String username);
 }

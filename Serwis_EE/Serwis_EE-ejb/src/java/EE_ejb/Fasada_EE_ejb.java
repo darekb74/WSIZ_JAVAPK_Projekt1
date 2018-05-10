@@ -19,14 +19,15 @@ public class Fasada_EE_ejb implements Fasada_EE_ejbRemote {
 
     @EJB
     private UserFacadeLocal bazaUzytkownikow;
-    
-    //private MgrUzytkownikow mgrU = new MgrUzytkownikow();
-    
+
     @Override
     public UserDTO znajdzUzytkownika(String userName) {
+        System.out.println("Szukam :userName");
         return bazaUzytkownikow.find(userName).getUserDTO();
     }
-    /*public Boolean uzytkownikIstnieje(String username) {
-        return false;
-    }*/
+
+    @Override
+    public Boolean uzytkownikIstnieje(String userName) {
+        return (bazaUzytkownikow.find(userName).getUserDTO().getId() > 0 );
+    }
 }

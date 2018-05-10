@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.ws.rs.client.Client;
 
 /**
  *
@@ -32,7 +31,7 @@ public class UserFacade extends AbstractFacade<UserD> implements UserFacadeLocal
     }
     
     public UserD find(String userName) {
-        Query query = em.createQuery("select u FROM User WHERE u.userName = :userName",
+        Query query = em.createQuery("SELECT u FROM UserD u WHERE u.userName = :userName",
                 UserD.class);
         
         return (UserD)query

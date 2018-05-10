@@ -18,10 +18,10 @@ public class UserDTO implements Serializable {
     private String username;
     private String password_hash;
     private String eMail;
-    private Date last_login;
+    private String last_login;
     private Boolean isOnline;
 
-    public UserDTO(Long id_, String username_, String password_hash_, String eMail_, Date last_login_, Boolean isOnline_) {
+    public UserDTO(Long id_, String username_, String password_hash_, String eMail_, String last_login_, Boolean isOnline_) {
         id = id_;
         username = username_;
         password_hash = password_hash_;
@@ -62,11 +62,11 @@ public class UserDTO implements Serializable {
         this.eMail = eMail;
     }
 
-    public Date getLast_login() {
+    public String getLast_login() {
         return last_login;
     }
 
-    public void setLast_login(Date last_login) {
+    public void setLast_login(String last_login) {
         this.last_login = last_login;
     }
 
