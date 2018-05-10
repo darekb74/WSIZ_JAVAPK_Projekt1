@@ -5,9 +5,8 @@
  */
 package Menadzery;
 
-import Menadzery.Def;
-import Tabele.User;
-import java.util.ArrayList;
+import DTO.UserDTO;
+import Tabele.UserD;
 
 /**
  *
@@ -15,25 +14,14 @@ import java.util.ArrayList;
  */
 public class MgrUzytkownikow {
 
-    private ArrayList<User> uLista = new ArrayList<>();
-
-    public MgrUzytkownikow() {
-
-    }
-
-    public void dodajUzytkownika(User u) {
-        if (!uLista.contains(u)) {
-            uLista.add(u);
-        } else if (Def.DEBUG) {
-            System.out.println("Użytkownik '" + u.getUsername() + "' już istnieje.");
-        }
-    }
-
-    public void usunUzytkownika(User u) {
-        if (uLista.contains(u)) {
-            uLista.remove(u);
-        } else if (Def.DEBUG) {
-            System.out.println("Użytkownik '" + u.getUsername() + "' nie znaleziony.");
-        }
+    public UserD map(UserDTO dtoU) {
+        UserD u = new UserD();
+        u.setId(dtoU.getId());
+        u.setUsername(dtoU.getUsername());
+        u.setPassword_hash(dtoU.getPassword_hash());
+        u.seteMail(dtoU.geteMail());
+        u.setIsOnline(dtoU.isOnline());
+        u.setLast_login(dtoU.getLast_login());
+        return u;
     }
 }
