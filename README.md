@@ -3,6 +3,7 @@ Projekt semestralny - magazyn serwisu komputerowego
 
 NALEŻY STWORZYĆ BAZĘ DANYCH:
 
+
 nazwa: SerwisKomputerowy
 user: serwis
 pass: serwis
