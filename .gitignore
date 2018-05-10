@@ -2,7 +2,6 @@
 AplikacjaDesktop/nbproject/private/private.xml
 AplikacjaDesktop/nbproject/private/private.properties
 AplikacjaDesktop/nbproject/genfiles.properties
-AplikacjaDesktop/nbproject/build-impl.xml
 AplikacjaDesktop/build/built-jar.properties
 AplikacjaDesktop/build/classes/.netbeans_automatic_build
 AplikacjaDesktop/build/classes/.netbeans_update_resources
@@ -19,7 +18,6 @@ AplikacjaDesktop/manifest.mf
 /SerwisCore/dist/
 /SerwisCore/build/
 AplikacjaDesktop/dist/lib/SerwisCore.jar
-SerwisCore/nbproject/build-impl.xml
 SerwisCore/nbproject/genfiles.properties
 /Serwis_EE/nbproject/private/
 /Serwis_EE/Serwis_EE-ejb/nbproject/private/
@@ -35,14 +33,10 @@ SerwisCore/nbproject/genfiles.properties
 /Serwis_EE/build/
 /Serwis_EE/dist/
 Serwis_interfejs/nbproject/genfiles.properties
-Serwis_interfejs/nbproject/build-impl.xml
 Serwis_EE/nbproject/ant-deploy.xml
 Serwis_EE/nbproject/genfiles.properties
 Serwis_EE/Serwis_EE-ejb/nbproject/ant-deploy.xml
 Serwis_EE/Serwis_EE-ejb/nbproject/genfiles.properties
-Serwis_EE/Serwis_EE-ejb/nbproject/build-impl.xml
-Serwis_EE/nbproject/build-impl.xml
 AplikacjaDesktop_EE/nbproject/genfiles.properties
 AplikacjaDesktop_EE/nbproject/ant-deploy.xml
-AplikacjaDesktop_EE/nbproject/build-impl.xml
 AplikacjaDesktop/build/built-clean.properties
