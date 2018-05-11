@@ -30,8 +30,8 @@ public class UserFacade extends AbstractFacade<UserD> implements UserFacadeLocal
         super(UserD.class);
     }
     
-    public UserD find(String userName) {
-        Query query = em.createQuery("SELECT u FROM UserD u WHERE u.userName = :userName",
+    public UserD findByName(String userName) {
+        Query query = em.createQuery("SELECT c FROM UserD as c WHERE c.username = :userName",
                 UserD.class);
         
         return (UserD)query

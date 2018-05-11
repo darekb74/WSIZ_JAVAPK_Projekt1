@@ -6,17 +6,26 @@
 package Tabele;
 
 import DTO.UserDTO;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Darek Xperia
  */
 @Entity
-public class UserD extends Tabela {
+public class UserD implements Serializable {
 
     // struktura tabeli user
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
     @Column(unique = true, length = 32)
     private String username;
 
@@ -39,6 +48,14 @@ public class UserD extends Tabela {
         return "[User] id=" + this.getId() + ", username=" + username;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public String getUsername() {
         return username;
     }

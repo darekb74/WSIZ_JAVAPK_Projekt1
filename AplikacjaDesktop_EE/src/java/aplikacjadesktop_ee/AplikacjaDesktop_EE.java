@@ -110,6 +110,7 @@ public class AplikacjaDesktop_EE extends JFrame {
             panel.removeAll();
             JLabel l3 = new JLabel("Zalogowany jako " + luser.getUsername() +".");
             panel.add(l3);
+            panel.repaint();
         } else {
             panel.removeAll();
             JLabel l1 = new JLabel("Nazwa uzytkownika:");
@@ -120,6 +121,7 @@ public class AplikacjaDesktop_EE extends JFrame {
             panel.add(ha);
             panel.add(bu);
             panel.add(wynik);
+            panel.repaint();
         }
     }
 
