@@ -6,6 +6,7 @@
 package EE_ejb;
 
 import DTO.UserDTO;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -16,6 +17,8 @@ import javax.ejb.Remote;
 public interface Fasada_EE_ejbRemote {
 
     public UserDTO znajdzUzytkownika(String username);
+    
+    public List<UserDTO> listaUzytkownikow();
 
     public Boolean uzytkownikIstnieje(String username);
 }

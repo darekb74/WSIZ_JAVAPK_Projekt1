@@ -86,5 +86,14 @@ public class UserDTO implements Serializable {
     public void setRmask(Byte rmask) {
         this.rmask = rmask;
     }
-
+    
+    public String[] toArray () {
+        return new String[] {getId().toString(), 
+                        username,
+                        password_hash,
+                        eMail,
+                        last_login,
+                        isOnline.toString(),
+                        rmask.toString()};
+    }
 }

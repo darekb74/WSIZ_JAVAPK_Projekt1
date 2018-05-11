@@ -7,6 +7,7 @@ package Tabele;
 
 import DTO.UserDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,19 +26,19 @@ public class UserD implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Column(unique = true, length = 32)
     private String username;
 
     @Column(length = 32) // md5
     private String password_hash;
-    
+
     @Column(length = 64)
     private String eMail;
 
     //@Temporal(javax.persistence.TemporalType.TIMESTAMP)
     // 1970-01-01 00:00:00
-    @Column(length = 19) 
+    @Column(length = 19)
     private String last_login;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -45,7 +46,7 @@ public class UserD implements Serializable {
 
     @Column(columnDefinition = "SMALLINT DEFAULT 0")
     private Byte rmask;
-    
+
     @Override
     public String toString() {
         return "[User] id=" + this.getId() + ", username=" + username;
@@ -58,7 +59,7 @@ public class UserD implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -116,5 +117,13 @@ public class UserD implements Serializable {
                 this.last_login,
                 this.isOnline,
                 this.rmask);
+    }
+
+    public static ArrayList<UserDTO> getUserListDTO(ArrayList<UserD> lista) {
+        ArrayList<UserDTO> tmp = new ArrayList<>();
+        for (UserD u : lista) {
+            tmp.add(u.getUserDTO());
+        }
+        return tmp;
     }
 }

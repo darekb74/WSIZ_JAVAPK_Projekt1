@@ -12,9 +12,9 @@ import Obiekty.TabelaDanych;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import javax.ejb.EJB;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -49,28 +50,18 @@ public class AplikacjaDesktop_EE extends JFrame {
         this.add(menuBar, BorderLayout.NORTH);
 
         // testowe dane
-        String[] nazwyKolumn = {"Imię",
-            "Nazwisko",
-            "Stanowisko",
-            "Poziom dostępu",
-            "Pracownik"};
+        String[] nazwyKolumn = {"Id",
+            "Nazwa użytkownika",
+            "Hasło",
+            "e-Mail",
+            "Ostatni login",
+            "Online",
+            "Poziom dostępu"};
 
-        Object[][] dane = {
-            {"Katarzyna", "Iksińska",
-                "Księgowa", new Byte(Obiekty.Def.LVL6), new Boolean(true)},
-            {"Jerzy", "Jabłoński",
-                "Magazynier", new Byte(Obiekty.Def.LVL1), new Boolean(true)},
-            {"Wacław", "Cyniński",
-                "Serwisant", new Byte(Obiekty.Def.LVL2), new Boolean(true)},
-            {"Andrzej", "Menadżerski",
-                "Kierownik serwisu", new Byte((byte) (Obiekty.Def.LVL2 | Obiekty.Def.LVL5)), new Boolean(true)},
-            {"Rafał", "Bogowski",
-                "Administrator", new Byte(Obiekty.Def.ADM), new Boolean(true)},
-            {"Darek", "Problemski",
-                "klient", new Byte(Obiekty.Def.LVL0), new Boolean(false)}
-        };
-
-        tabela = new TabelaDanych(dane, nazwyKolumn, this);
+        DefaultTableModel model = new DefaultTableModel(nazwyKolumn, 0);
+        List<UserDTO> tmp = fasada_EE_ejb.listaUzytkownikow();
+        formatujDane(tmp, model);
+        tabela = new TabelaDanych(model, this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
         // login form
         this.add(panel, BorderLayout.SOUTH);
@@ -91,11 +82,11 @@ public class AplikacjaDesktop_EE extends JFrame {
                             luser = tmp;
                             wypelnijPanel();
                         } else {
-                            wynik.setText("Nieprtawidłowe login lub hasło!");
+                            wynik.setText("Nieprawidłowy login lub hasło!");
                             wynik.setForeground(Color.red);
                         }
                     } else {
-                        wynik.setText("Nieprtawidłowe login lub hasło!");
+                        wynik.setText("Nieprawidłowy login lub hasło!");
                         wynik.setForeground(Color.red);
                     }
                 } else {
@@ -107,6 +98,12 @@ public class AplikacjaDesktop_EE extends JFrame {
         bu.addActionListener(acL);
     }
 
+    private void formatujDane(List<UserDTO> in, DefaultTableModel model) {
+       // najpierw List<UserDTO> to List<String>
+       for(UserDTO e : in) {
+           model.addRow(e.toArray());
+       }
+    }
     private void wypelnijPanel() {
         if (zalogowany) {
             panel.removeAll();

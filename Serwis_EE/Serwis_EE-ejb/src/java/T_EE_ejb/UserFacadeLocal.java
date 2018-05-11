@@ -6,6 +6,7 @@
 package T_EE_ejb;
 
 import Tabele.UserD;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +26,8 @@ public interface UserFacadeLocal {
     UserD find(Object id);
     
     UserD findByName(String username);
+    
+    List<UserD> generateUserList();
 
     List<UserD> findAll();
 

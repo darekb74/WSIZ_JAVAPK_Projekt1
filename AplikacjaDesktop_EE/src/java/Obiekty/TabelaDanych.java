@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,8 +20,8 @@ import javax.swing.JTable;
  */
 public class TabelaDanych extends JTable {
 
-    public TabelaDanych(Object[][] dane, String[] nazwyKolumn, Container rodzic) {
-        super(dane, nazwyKolumn);
+    public TabelaDanych(DefaultTableModel model, Container rodzic) {
+        super(model);
         setPreferredScrollableViewportSize(new Dimension(500, 70));
         setFillsViewportHeight(true);
         if (Def.DEBUG) {
