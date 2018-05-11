@@ -14,11 +14,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import javax.ejb.EJB;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -33,7 +35,7 @@ public class AplikacjaDesktop_EE extends JFrame {
     private TabelaDanych tabela;
     private MenuBar menuBar;
     private JTextField nu = new JTextField();
-    private JTextField ha = new JTextField();
+    private JPasswordField  ha = new JPasswordField();
     private JButton bu = new JButton("Zaloguj");
     private JPanel panel = new JPanel();
     private JLabel wynik = new JLabel("Wprowadź dane i wciśnij Zaloguj");
@@ -79,11 +81,11 @@ public class AplikacjaDesktop_EE extends JFrame {
         ActionListener acL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!nu.getText().isEmpty() && !ha.getText().isEmpty()) {
+                if(!nu.getText().isEmpty() && ha.getPassword().length>0) {
                     
                     UserDTO tmp = fasada_EE_ejb.znajdzUzytkownika(nu.getText());
                     if(tmp.getId()>0) { // jest uzytkownik o takim username
-                        if (tmp.getPassword_hash().equals(Utils.Utils.md5(ha.getText()))) {
+                        if (tmp.getPassword_hash().equals(Utils.Utils.md5(String.valueOf(ha.getPassword())))) {
                             // hasło ok
                             zalogowany = true;
                             luser = tmp;
@@ -110,7 +112,9 @@ public class AplikacjaDesktop_EE extends JFrame {
             panel.removeAll();
             JLabel l3 = new JLabel("Zalogowany jako " + luser.getUsername() +".");
             panel.add(l3);
-            panel.repaint();
+            menuBar.removeAll();
+            menuBar.setRights(luser.getRmask());
+            this.validate();
         } else {
             panel.removeAll();
             JLabel l1 = new JLabel("Nazwa uzytkownika:");
@@ -121,7 +125,7 @@ public class AplikacjaDesktop_EE extends JFrame {
             panel.add(ha);
             panel.add(bu);
             panel.add(wynik);
-            panel.repaint();
+            this.validate();
         }
     }
 

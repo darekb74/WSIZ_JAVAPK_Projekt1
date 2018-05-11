@@ -18,8 +18,13 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar implements ActionListener {
 
-    public MenuBar(int poziomDostepu) {
+    public MenuBar(Byte poziomDostepu) {
         super();
+
+        setRights(poziomDostepu);
+    }
+    
+    public void setRights(Byte rmask) {
 
         JMenu menu, subMenu;
         JMenuItem menuItem;
@@ -37,17 +42,16 @@ public class MenuBar extends JMenuBar implements ActionListener {
         add(menu);
         menuItem = new JMenuItem(Def.O_SPRAWDZ_STANY, KeyEvent.VK_S);
         menuItem.addActionListener(this);
-        if ((poziomDostepu & (Def.LVL1 | Def.LVL5)) == 0) {
+        if ((rmask & (Def.LVL1 | Def.LVL5)) == 0) {
             menuItem.setEnabled(false); // brak uprawnień
         }
         menu.add(menuItem);
         menuItem = new JMenuItem(Def.O_SZUKAJ_CZESCI, KeyEvent.VK_C);
         menuItem.addActionListener(this);
-        if ((poziomDostepu & Def.LVL1) == 0) {
+        if ((rmask & Def.LVL1) == 0) {
             menuItem.setEnabled(false); // brak uprawnień
         }
         menu.add(menuItem);
-
     }
 
     @Override

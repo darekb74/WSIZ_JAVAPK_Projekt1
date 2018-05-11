@@ -6,7 +6,6 @@
 package DTO;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -20,14 +19,16 @@ public class UserDTO implements Serializable {
     private String eMail;
     private String last_login;
     private Boolean isOnline;
+    private Byte rmask;
 
-    public UserDTO(Long id_, String username_, String password_hash_, String eMail_, String last_login_, Boolean isOnline_) {
+    public UserDTO(Long id_, String username_, String password_hash_, String eMail_, String last_login_, Boolean isOnline_, Byte rmask_) {
         id = id_;
         username = username_;
         password_hash = password_hash_;
         eMail = eMail_;
         last_login = last_login_;
         isOnline = isOnline_;
+        rmask = rmask_;
     }
 
     public Long getId() {
@@ -76,6 +77,14 @@ public class UserDTO implements Serializable {
 
     public void setIsOnline(Boolean isOnline) {
         this.isOnline = isOnline;
+    }
+
+    public Byte getRmask() {
+        return rmask;
+    }
+
+    public void setRmask(Byte rmask) {
+        this.rmask = rmask;
     }
 
 }

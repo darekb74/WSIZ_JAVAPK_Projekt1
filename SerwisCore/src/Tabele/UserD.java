@@ -43,6 +43,9 @@ public class UserD implements Serializable {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isOnline;
 
+    @Column(columnDefinition = "SMALLINT DEFAULT 0")
+    private Byte rmask;
+    
     @Override
     public String toString() {
         return "[User] id=" + this.getId() + ", username=" + username;
@@ -96,6 +99,14 @@ public class UserD implements Serializable {
         this.isOnline = isOnline;
     }
 
+    public Byte getRmask() {
+        return rmask;
+    }
+
+    public void setRmask(Byte rmask) {
+        this.rmask = rmask;
+    }
+
     public UserDTO getUserDTO() {
         return new UserDTO(
                 this.getId(),
@@ -103,6 +114,7 @@ public class UserD implements Serializable {
                 this.password_hash,
                 this.eMail,
                 this.last_login,
-                this.isOnline);
+                this.isOnline,
+                this.rmask);
     }
 }
