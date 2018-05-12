@@ -59,9 +59,10 @@ public class AplikacjaDesktop_EE extends JFrame {
             "Poziom dostępu"};
 
         DefaultTableModel model = new DefaultTableModel(nazwyKolumn, 0);
+        DefaultTableModel modelb = new DefaultTableModel(nazwyKolumn, 0);
         List<UserDTO> tmp = fasada_EE_ejb.listaUzytkownikow();
-        formatujDane(tmp, model);
-        tabela = new TabelaDanych(model, this);
+        formatujDane(tmp, model, modelb);
+        tabela = new TabelaDanych(model, modelb, this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
         // login form
         this.add(panel, BorderLayout.SOUTH);
@@ -98,10 +99,11 @@ public class AplikacjaDesktop_EE extends JFrame {
         bu.addActionListener(acL);
     }
 
-    private void formatujDane(List<UserDTO> in, DefaultTableModel model) {
+    private void formatujDane(List<UserDTO> in, DefaultTableModel model, DefaultTableModel modelb) {
        // najpierw List<UserDTO> to List<String>
        for(UserDTO e : in) {
            model.addRow(e.toArray());
+           modelb.addRow(e.toArray());
        }
     }
     private void wypelnijPanel() {
