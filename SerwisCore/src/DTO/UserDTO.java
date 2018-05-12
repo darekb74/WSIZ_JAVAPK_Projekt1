@@ -87,13 +87,13 @@ public class UserDTO implements Serializable {
         this.rmask = rmask;
     }
     
-    public String[] toArray () {
-        return new String[] {getId().toString(), 
+    public Object[] toArray () {
+        return new Object[] {getId(), 
                         username,
                         password_hash,
                         eMail,
                         last_login,
-                        isOnline.toString(),
-                        rmask.toString()};
+                        isOnline,
+                        rmask};
     }
 }

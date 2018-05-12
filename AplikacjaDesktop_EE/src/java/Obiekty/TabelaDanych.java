@@ -63,16 +63,22 @@ public class TabelaDanych extends JTable {
             return;
         }
         System.out.println("Zaznaczona komórka zawiera wartość: '"
-                + getValueAt(getSelectedRow(), getSelectedColumn()) + "'.");
+                + getValueAt(getSelectedRow(), getSelectedColumn()) + "' type:"
+                + getColumnClass(getSelectedColumn()).toString()
+                + ".");
         if (!getValueAt(getSelectedRow(), getSelectedColumn()).equals(getValueAt(getSelectedRow(), getSelectedColumn()))) {
 
         }
         for (int i = 0; i < this.getColumnCount(); i++) {
             System.out.println("[" + i + "]" + this.getColumnName(i) + ": '"
-                    + getValueAt(getSelectedRow(), i)
-                    + "'('" + model.getValueAt(getSelectedRow(), i)
+                    + this.getValueAt(getSelectedRow(), i).toString()
+                    + "'('" + model.getValueAt(getSelectedRow(), i).toString()
                     + "').");
         }
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return this.getValueAt(0, columnIndex).getClass();
+    }
 }
