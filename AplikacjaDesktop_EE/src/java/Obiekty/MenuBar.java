@@ -5,9 +5,13 @@
  */
 package Obiekty;
 
+import DTO.UserDTO;
+import aplikacjadesktop_ee.AplikacjaDesktop_EE;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import javax.swing.Box;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -18,14 +22,17 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar implements ActionListener {
 
-    public MenuBar(Byte poziomDostepu) {
+    private Container rodzic;
+
+    public MenuBar(UserDTO user, Container rodzic) {
         super();
-
-        setRights(poziomDostepu);
+        this.rodzic = rodzic;
+        setRights(user);
     }
-    
-    public void setRights(Byte rmask) {
 
+    public void setRights(UserDTO user) {
+
+        Byte rmask = (user != null ? user.getRmask() : Obiekty.Def.LVL0);
         JMenu menu, subMenu;
         JMenuItem menuItem;
 
@@ -52,6 +59,16 @@ public class MenuBar extends JMenuBar implements ActionListener {
             menuItem.setEnabled(false); // brak uprawnień
         }
         menu.add(menuItem);
+        // menu użytkownika
+        if (user != null) {
+            menu = new JMenu("[" + user.getUsername() + "]");
+            add(Box.createHorizontalGlue());
+            menu.setMnemonic(KeyEvent.VK_U);
+            add(menu);
+            menuItem = new JMenuItem(Def.O_WYLOGUJ, KeyEvent.VK_W);
+            menuItem.addActionListener(this);
+            menu.add(menuItem);
+        }
     }
 
     @Override
@@ -62,10 +79,13 @@ public class MenuBar extends JMenuBar implements ActionListener {
                 System.exit(0);
                 break;
             case Def.O_SPRAWDZ_STANY:
-                
+
                 break;
             case Def.O_SZUKAJ_CZESCI:
-                
+
+                break;
+            case Def.O_WYLOGUJ:
+                ((AplikacjaDesktop_EE) rodzic).wyloguj();
                 break;
             default:
                 break;

@@ -27,4 +27,5 @@ public class Def {
     public final static String O_ZAKONCZ = "Zakończ";
     public final static String O_SPRAWDZ_STANY = "Sprawdź stany magazynowe";
     public final static String O_SZUKAJ_CZESCI = "Szukaj części";
+    public final static String O_WYLOGUJ = "Wyloguj";
 }

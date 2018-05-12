@@ -36,7 +36,7 @@ public class AplikacjaDesktop_EE extends JFrame {
     private TabelaDanych tabela;
     private MenuBar menuBar;
     private JTextField nu = new JTextField();
-    private JPasswordField  ha = new JPasswordField();
+    private JPasswordField ha = new JPasswordField();
     private JButton bu = new JButton("Zaloguj");
     private JPanel panel = new JPanel();
     private JLabel wynik = new JLabel("Wprowadź dane i wciśnij Zaloguj");
@@ -46,7 +46,7 @@ public class AplikacjaDesktop_EE extends JFrame {
     AplikacjaDesktop_EE() {
         super("Serwis komuterowy - aplikacja desktop");
         this.setLayout(new BorderLayout());
-        menuBar = new MenuBar(Obiekty.Def.LVL0);
+        menuBar = new MenuBar(luser, this);
         this.add(menuBar, BorderLayout.NORTH);
 
         // testowe dane
@@ -62,21 +62,21 @@ public class AplikacjaDesktop_EE extends JFrame {
         DefaultTableModel modelb = new DefaultTableModel(nazwyKolumn, 0);
         List<UserDTO> tmp = fasada_EE_ejb.listaUzytkownikow();
         formatujDane(tmp, model, modelb);
-        tabela = new TabelaDanych(model, modelb, (byte) 0b00010101,this);
+        tabela = new TabelaDanych(model, modelb, (byte) 0b00010101, this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
         // login form
         this.add(panel, BorderLayout.SOUTH);
         nu.setPreferredSize(new Dimension(100, 25));
         ha.setPreferredSize(new Dimension(100, 25));
-        
+
         wypelnijPanel();
         ActionListener acL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!nu.getText().isEmpty() && ha.getPassword().length>0) {
-                    
+                if (!nu.getText().isEmpty() && ha.getPassword().length > 0) {
+
                     UserDTO tmp = fasada_EE_ejb.znajdzUzytkownika(nu.getText());
-                    if(tmp.getId()>0) { // jest uzytkownik o takim username
+                    if (tmp.getId() > 0) { // jest uzytkownik o takim username
                         if (tmp.getPassword_hash().equals(Utils.Utils.md5(String.valueOf(ha.getPassword())))) {
                             // hasło ok
                             zalogowany = true;
@@ -100,19 +100,29 @@ public class AplikacjaDesktop_EE extends JFrame {
     }
 
     private void formatujDane(List<UserDTO> in, DefaultTableModel model, DefaultTableModel modelb) {
-       // najpierw List<UserDTO> to List<String>
-       for(UserDTO e : in) {
-           model.addRow(e.toArray());
-           modelb.addRow(e.toArray());
-       }
+        // najpierw List<UserDTO> to List<String>
+        for (UserDTO e : in) {
+            model.addRow(e.toArray());
+            modelb.addRow(e.toArray());
+        }
     }
+
+    public void wyloguj() {
+        if (zalogowany) {
+            zalogowany = false;
+            luser = null;
+            wypelnijPanel();
+
+        }
+    }
+
     private void wypelnijPanel() {
         if (zalogowany) {
             panel.removeAll();
-            JLabel l3 = new JLabel("Zalogowany jako " + luser.getUsername() +".");
+            JLabel l3 = new JLabel("Zalogowany jako " + luser.getUsername() + ".");
             panel.add(l3);
             menuBar.removeAll();
-            menuBar.setRights(luser.getRmask());
+            menuBar.setRights(luser);
             this.validate();
         } else {
             panel.removeAll();
@@ -124,6 +134,9 @@ public class AplikacjaDesktop_EE extends JFrame {
             panel.add(ha);
             panel.add(bu);
             panel.add(wynik);
+            ha.setText("");
+            menuBar.removeAll();
+            menuBar.setRights(luser);
             this.validate();
         }
     }
