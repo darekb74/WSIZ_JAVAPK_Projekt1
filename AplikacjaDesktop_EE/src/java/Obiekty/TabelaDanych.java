@@ -12,6 +12,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import static java.lang.Math.pow;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -24,10 +25,12 @@ import javax.swing.table.TableCellRenderer;
 public class TabelaDanych extends JTable {
 
     private DefaultTableModel model;
+    private Byte maskaEdycji;
 
-    public TabelaDanych(DefaultTableModel model, DefaultTableModel modelb, Container rodzic) {
+    public TabelaDanych(DefaultTableModel model, DefaultTableModel modelb, Byte maskaEdycji, Container rodzic) {
         super(model);
         this.model = modelb;
+        this.maskaEdycji = maskaEdycji;
         setPreferredScrollableViewportSize(new Dimension(500, 70));
         setFillsViewportHeight(true);
         if (Def.DEBUG) {
@@ -49,6 +52,8 @@ public class TabelaDanych extends JTable {
         Object value = getModel().getValueAt(row, col);
         if (!value.equals(model.getValueAt(row, col))) {
             comp.setBackground(Color.YELLOW);
+        } else if (!isCellEditable(row,col)) {
+            comp.setBackground(new Color(235,235,235));
             //} else if (sprawdzPoprawnosc(value)) {
             //  comp.setBackground(Color.red);
         } else {
@@ -66,8 +71,8 @@ public class TabelaDanych extends JTable {
                 + getValueAt(getSelectedRow(), getSelectedColumn()) + "' type:"
                 + getColumnClass(getSelectedColumn()).toString()
                 + ".");
-        if (!getValueAt(getSelectedRow(), getSelectedColumn()).equals(getValueAt(getSelectedRow(), getSelectedColumn()))) {
-
+        if (!isCellEditable(getSelectedRow(), getSelectedColumn())) {
+            System.out.println("Edycja tej komórki jest niemożliwa.");
         }
         for (int i = 0; i < this.getColumnCount(); i++) {
             System.out.println("[" + i + "]" + this.getColumnName(i) + ": '"
@@ -80,5 +85,12 @@ public class TabelaDanych extends JTable {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return this.getValueAt(0, columnIndex).getClass();
+    }
+    
+    @Override 
+    public boolean isCellEditable(int row, int column)
+    {
+        Double d = pow(2,column);
+        return (d.intValue() & maskaEdycji) == 0;
     }
 }

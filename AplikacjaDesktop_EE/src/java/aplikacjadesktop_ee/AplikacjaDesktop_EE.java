@@ -62,7 +62,7 @@ public class AplikacjaDesktop_EE extends JFrame {
         DefaultTableModel modelb = new DefaultTableModel(nazwyKolumn, 0);
         List<UserDTO> tmp = fasada_EE_ejb.listaUzytkownikow();
         formatujDane(tmp, model, modelb);
-        tabela = new TabelaDanych(model, modelb, this);
+        tabela = new TabelaDanych(model, modelb, (byte) 0b00010101,this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
         // login form
         this.add(panel, BorderLayout.SOUTH);
