@@ -6,11 +6,13 @@
 package EE_ejb;
 
 import DTO.UserDTO;
+import Menadzery.MgrUzytkownikow;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import T_EE_ejb.UserDFacadeLocal;
+import Tabele.UserD;
 import javax.inject.Named;
 
 /**
@@ -23,6 +25,8 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
 
     @EJB
     private UserDFacadeLocal bazaUzytkownikow;
+    
+    private MgrUzytkownikow mgr = new MgrUzytkownikow();
 
     @Override
     public UserDTO znajdzUzytkownika(String userName) {
@@ -46,5 +50,17 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
     @Override
     public Boolean uzytkownikIstnieje(String userName) {
         return (bazaUzytkownikow.find(userName).getUserDTO().getId() > 0 );
+    }
+    
+    @Override
+    public void aktualizujDane(UserDTO userDTO) {
+        UserD u = mgr.map(userDTO);
+        bazaUzytkownikow.edit(u);
+    }
+    
+    @Override
+    public void usunUzytkownika(UserDTO userDTO) {
+        UserD u = mgr.map(userDTO);
+        bazaUzytkownikow.remove(u);
     }
 }

@@ -13,6 +13,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -56,14 +57,18 @@ public class Login extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!nu.getText().isEmpty() && ha.getPassword().length > 0) {
-
-                    UserDTO tmp = lookupFasadaUserD_ejbRemote().znajdzUzytkownika(nu.getText());
+                    FasadaUserD_ejbRemote fasada = lookupFasadaUserD_ejbRemote();
+                    UserDTO tmp = fasada.znajdzUzytkownika(nu.getText());
                     if (tmp.getId() > 0) { // jest uzytkownik o takim username
                         if (tmp.getPassword_hash().equals(Utils.Utils.md5(String.valueOf(ha.getPassword())))) {
                             // hasło ok
                             zalogowany = true;
                             luser = tmp;
                             wypelnijPanel();
+                            //pustaw datę i stan online
+                            luser.setIsOnline(true);
+                            luser.setLast_login(Utils.Utils.foramtujDate(new Date()));
+                            fasada.aktualizujDane(luser);
                         } else {
                             wynik.setText("Nieprawidłowy login lub hasło!");
                             wynik.setForeground(Color.red);
@@ -110,6 +115,8 @@ public class Login extends JPanel {
 
     public void logout() {
         if (zalogowany) {
+            luser.setIsOnline(false);
+            lookupFasadaUserD_ejbRemote().aktualizujDane(luser);
             zalogowany = false;
             luser = null;
             wypelnijPanel();

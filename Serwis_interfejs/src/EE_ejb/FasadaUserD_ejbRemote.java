@@ -21,4 +21,8 @@ public interface FasadaUserD_ejbRemote {
     public List<UserDTO> listaUzytkownikow();
 
     public Boolean uzytkownikIstnieje(String username);
+    
+    public void aktualizujDane(UserDTO user);
+    
+    public void usunUzytkownika(UserDTO user);
 }

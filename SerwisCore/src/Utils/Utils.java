@@ -7,6 +7,8 @@ package Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -28,5 +30,10 @@ public class Utils {
         } catch (NoSuchAlgorithmException e) {
             return null; // błąd
         }
+    }
+
+    public static String foramtujDate(Date data) {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdfDate.format(data);
     }
 }
