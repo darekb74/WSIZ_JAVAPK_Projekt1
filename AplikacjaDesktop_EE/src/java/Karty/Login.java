@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  *
  * @author Darek Xperia
  */
-public class Login extends JPanel implements Karta {
+public class Login extends JPanel {
     
     private JTextField nu = new JTextField();
     private JPasswordField ha = new JPasswordField();
@@ -41,15 +41,14 @@ public class Login extends JPanel implements Karta {
     public boolean zalogowany;
     public UserDTO luser;
 
-    @Override
-    public void init(Object[] args) {
-        if (args[0] == null || args[1] == null ) {
+    public Login(Container rodzic, MenuBar menuBar) {
+        if (rodzic == null || menuBar == null ) {
             // nieprawidowa inicjacjia
             System.out.println("[BŁĄD] Nieprawidłowa inicjacja panelu logowania!");
             return;
         }
-        rodzic = (Container) args[0];
-        menuBar = (MenuBar) args[1];
+        this.rodzic = rodzic;
+        this.menuBar = menuBar;
         nu.setPreferredSize(new Dimension(100, 25));
         ha.setPreferredSize(new Dimension(100, 25));
         
@@ -109,18 +108,12 @@ public class Login extends JPanel implements Karta {
         }
     }
 
-    @Override
     public void logout() {
         if (zalogowany) {
             zalogowany = false;
             luser = null;
             wypelnijPanel();
         }
-    }
-
-    @Override
-    public void takeAction(int type) {
-
     }
 
     private Fasada_EE_ejbRemote lookupFasada_EE_ejbRemote() {

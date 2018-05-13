@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 public class UserDTable extends JPanel implements Karta{
     
     private TabelaDanych tabela;
+    private ButtonsPanel przyciski;
     
     @Override
     public void init(Object[] args) {
@@ -51,6 +52,8 @@ public class UserDTable extends JPanel implements Karta{
         tabela.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tabela);
         this.add(scrollPane, BorderLayout.CENTER);
+        przyciski = new ButtonsPanel(true, true);
+        this.add(przyciski, BorderLayout.SOUTH);
     }
     
     private void formatujDane(List<UserDTO> in, DefaultTableModel model, DefaultTableModel modelb) {

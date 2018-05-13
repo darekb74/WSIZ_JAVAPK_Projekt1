@@ -18,14 +18,13 @@ import javax.swing.JFrame;
  */
 public class AplikacjaDesktop_EE extends JFrame {
     
-    private MenuBar menuBar;
-    private Login panel = new Login();
+    private MenuBar menuBar = new MenuBar(null, this);
+    private Login panel = new Login(this, menuBar);
     private UserDTable tabela = new UserDTable();
 
     AplikacjaDesktop_EE() {
         super("Serwis komuterowy - aplikacja desktop");
         this.setLayout(new BorderLayout());
-        menuBar = new MenuBar(null, this);
         this.add(menuBar, BorderLayout.NORTH);
 
         // tabela użytkowników
@@ -34,7 +33,6 @@ public class AplikacjaDesktop_EE extends JFrame {
         
         // login form
         Object[] init = {this, menuBar};
-        panel.init(init);
         this.add(panel, BorderLayout.SOUTH);
         
     }
