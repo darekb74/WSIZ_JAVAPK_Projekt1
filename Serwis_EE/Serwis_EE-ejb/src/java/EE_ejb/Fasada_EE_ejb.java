@@ -6,11 +6,11 @@
 package EE_ejb;
 
 import DTO.UserDTO;
-import T_EE_ejb.UserFacadeLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import T_EE_ejb.UserDFacadeLocal;
 
 /**
  *
@@ -20,7 +20,7 @@ import javax.ejb.Stateless;
 public class Fasada_EE_ejb implements Fasada_EE_ejbRemote {
 
     @EJB
-    private UserFacadeLocal bazaUzytkownikow;
+    private UserDFacadeLocal bazaUzytkownikow;
 
     @Override
     public UserDTO znajdzUzytkownika(String userName) {

@@ -6,7 +6,6 @@
 package T_EE_ejb;
 
 import Tabele.UserD;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,7 +14,7 @@ import javax.ejb.Local;
  * @author Darek Xperia
  */
 @Local
-public interface UserFacadeLocal {
+public interface UserDFacadeLocal {
 
     void create(UserD user);
 

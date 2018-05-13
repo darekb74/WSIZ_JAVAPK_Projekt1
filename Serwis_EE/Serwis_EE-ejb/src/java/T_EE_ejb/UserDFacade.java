@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * @author Darek Xperia
  */
 @Stateless
-public class UserFacade extends AbstractFacade<UserD> implements UserFacadeLocal {
+public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLocal {
 
     @PersistenceContext(unitName = "Serwis_EE-ejbPU")
     private EntityManager em;
@@ -27,7 +27,7 @@ public class UserFacade extends AbstractFacade<UserD> implements UserFacadeLocal
         return em;
     }
 
-    public UserFacade() {
+    public UserDFacade() {
         super(UserD.class);
     }
     
