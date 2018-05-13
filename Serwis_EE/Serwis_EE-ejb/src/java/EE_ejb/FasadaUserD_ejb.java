@@ -11,13 +11,15 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import T_EE_ejb.UserDFacadeLocal;
+import javax.inject.Named;
 
 /**
  *
  * @author Darek Xperia
  */
-@Stateless
-public class Fasada_EE_ejb implements Fasada_EE_ejbRemote {
+@Stateless(mappedName="ejb/FasadaUserD_ejb")
+@Named
+public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
 
     @EJB
     private UserDFacadeLocal bazaUzytkownikow;

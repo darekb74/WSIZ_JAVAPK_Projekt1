@@ -5,7 +5,7 @@
  */
 package Karty;
 
-import DTO.UserDTO;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -17,21 +17,25 @@ import javax.swing.JPanel;
  */
 public class ButtonsPanel extends JPanel {
 
+    private JButton refresh = new JButton("Odśwież");
     private JButton update = new JButton("Aktualizuj");
     private JButton delete = new JButton("Usuń");
+    
+    private Container rodzic;
 
-    public ButtonsPanel(boolean a, boolean u) {
-        if (a) {
-            this.add(update);
-        }
-        if (u) {
-            this.add(delete);
-        }
-
+    public ButtonsPanel(boolean r, boolean u, boolean d, Container rodzic) {
+        this.rodzic = rodzic;
+        this.add(refresh);
+        this.add(update);
+        this.add(delete);
+        refresh.setEnabled(r);
+        update.setEnabled(u);
+        delete.setEnabled(d);
+        
         ActionListener ucL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ((Karta)rodzic).takeAction(1);
             }
         };
         update.addActionListener(ucL);
@@ -39,9 +43,17 @@ public class ButtonsPanel extends JPanel {
         ActionListener dcL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ((Karta)rodzic).takeAction(2);
             }
         };
         delete.addActionListener(dcL);
+        
+        ActionListener rcL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ((Karta)rodzic).takeAction(3);
+            }
+        };
+        refresh.addActionListener(rcL);
     }
 }

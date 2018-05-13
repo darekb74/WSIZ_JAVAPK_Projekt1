@@ -6,7 +6,7 @@
 package Karty;
 
 import DTO.UserDTO;
-import EE_ejb.Fasada_EE_ejbRemote;
+import EE_ejb.FasadaUserD_ejbRemote;
 import Obiekty.TabelaDanych;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -29,11 +29,19 @@ import javax.swing.table.DefaultTableModel;
 public class UserDTable extends JPanel implements Karta{
     
     private TabelaDanych tabela;
+    private JScrollPane scrollPane;
     private ButtonsPanel przyciski;
     
     @Override
     public void init(Object[] args) {
         this.setLayout(new BorderLayout());
+        wypelnij();
+        
+        
+    }
+    
+    private void wypelnij() {
+        this.removeAll();
         String[] nazwyKolumn = {"Id",
             "Nazwa użytkownika",
             "Hasło",
@@ -41,18 +49,17 @@ public class UserDTable extends JPanel implements Karta{
             "Ostatni login",
             "Online",
             "Poziom dostępu"};
-
         DefaultTableModel model = new DefaultTableModel(nazwyKolumn, 0);
         DefaultTableModel modelb = new DefaultTableModel(nazwyKolumn, 0);
-        List<UserDTO> tmp = lookupFasada_EE_ejbRemote().listaUzytkownikow();
+        List<UserDTO> tmp = lookupFasadaUserD_ejbRemote().listaUzytkownikow();
         formatujDane(tmp, model, modelb);
         tabela = new TabelaDanych(model, modelb, (byte) 0b00110101, this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
         tabela.setPreferredScrollableViewportSize(new Dimension(500, 70));
         tabela.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(tabela);
+        scrollPane = new JScrollPane(tabela);
         this.add(scrollPane, BorderLayout.CENTER);
-        przyciski = new ButtonsPanel(true, true);
+        przyciski = new ButtonsPanel(true, true, false, this);
         this.add(przyciski, BorderLayout.SOUTH);
     }
     
@@ -71,16 +78,25 @@ public class UserDTable extends JPanel implements Karta{
     
     @Override
     public void takeAction(int type) {
-        
+        switch (type) {
+            default:
+                break;
+            case 3: // refresh;
+                wypelnij();
+                validate();
+                break;
+        }
     }
 
-    private Fasada_EE_ejbRemote lookupFasada_EE_ejbRemote() {
+    private FasadaUserD_ejbRemote lookupFasadaUserD_ejbRemote() {
         try {
             Context c = new InitialContext();
-            return (Fasada_EE_ejbRemote) c.lookup("java:comp/env/Fasada_EE_ejb");
+            return (FasadaUserD_ejbRemote) c.lookup("ejb/FasadaUserD_ejb");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }
+
+
 }

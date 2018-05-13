@@ -14,7 +14,7 @@ import javax.ejb.Remote;
  * @author Darek Xperia
  */
 @Remote
-public interface Fasada_EE_ejbRemote {
+public interface FasadaUserD_ejbRemote {
 
     public UserDTO znajdzUzytkownika(String username);
     

@@ -6,7 +6,7 @@
 package Karty;
 
 import DTO.UserDTO;
-import EE_ejb.Fasada_EE_ejbRemote;
+import EE_ejb.FasadaUserD_ejbRemote;
 import Obiekty.MenuBar;
 import java.awt.Color;
 import java.awt.Container;
@@ -57,7 +57,7 @@ public class Login extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!nu.getText().isEmpty() && ha.getPassword().length > 0) {
 
-                    UserDTO tmp = lookupFasada_EE_ejbRemote().znajdzUzytkownika(nu.getText());
+                    UserDTO tmp = lookupFasadaUserD_ejbRemote().znajdzUzytkownika(nu.getText());
                     if (tmp.getId() > 0) { // jest uzytkownik o takim username
                         if (tmp.getPassword_hash().equals(Utils.Utils.md5(String.valueOf(ha.getPassword())))) {
                             // hasło ok
@@ -116,10 +116,10 @@ public class Login extends JPanel {
         }
     }
 
-    private Fasada_EE_ejbRemote lookupFasada_EE_ejbRemote() {
+    private FasadaUserD_ejbRemote lookupFasadaUserD_ejbRemote() {
         try {
             Context c = new InitialContext();
-            return (Fasada_EE_ejbRemote) c.lookup("java:comp/env/Fasada_EE_ejb");
+            return (FasadaUserD_ejbRemote) c.lookup("ejb/FasadaUserD_ejb");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
