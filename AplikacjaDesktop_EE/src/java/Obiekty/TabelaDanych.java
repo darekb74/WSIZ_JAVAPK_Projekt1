@@ -5,15 +5,12 @@
  */
 package Obiekty;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import static java.lang.Math.pow;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -31,8 +28,6 @@ public class TabelaDanych extends JTable {
         super(model);
         this.model = modelb;
         this.maskaEdycji = maskaEdycji;
-        setPreferredScrollableViewportSize(new Dimension(500, 70));
-        setFillsViewportHeight(true);
         if (Def.DEBUG) {
             addMouseListener(new MouseAdapter() {
                 @Override
@@ -41,9 +36,6 @@ public class TabelaDanych extends JTable {
                 }
             });
         }
-        JScrollPane scrollPane = new JScrollPane(this);
-        rodzic.add(scrollPane, BorderLayout.CENTER);
-
     }
 
     @Override
