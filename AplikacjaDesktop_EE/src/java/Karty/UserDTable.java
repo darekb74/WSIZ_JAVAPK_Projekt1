@@ -149,6 +149,7 @@ public class UserDTable extends JPanel implements Karta {
                         if (Def.DEBUG) {
                             System.out.println("[BLĄD] Pole wyszukiwania puste!");
                         }
+                        break;
                     }
 
                     List<UserDTO> wynik = lookupFasadaUserD_ejbRemote()

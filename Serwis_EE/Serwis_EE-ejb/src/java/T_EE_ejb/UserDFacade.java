@@ -45,19 +45,19 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
         }
     }
 
-    private Query setParameter(Query q, String column, String keyword) {
+    private Query setParameter(Query q, String column, String param, String keyword) {
         switch (column) {
             case "id":
-                q.setParameter("keyword", Long.parseLong(keyword));
+                q.setParameter(param, Long.parseLong(keyword));
                 break;
             case "rmask":
-                q.setParameter("keyword", Byte.parseByte(keyword));
+                q.setParameter(param, Byte.parseByte(keyword));
                 break;
             case "isOnline":
-                q.setParameter("keyword", Boolean.parseBoolean(keyword));
+                q.setParameter(param, Boolean.parseBoolean(keyword));
                 break;
             default:
-                q.setParameter("keyword", keyword);
+                q.setParameter(param, keyword);
                 break;
         }
         return q;
@@ -74,7 +74,7 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
                     query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,
                             UserD.class);
 
-                    query = setParameter(query,column,keyword);
+                    query = setParameter(query, column, "keyword", keyword);
                     break;
                 case "LIKE":
                 case "NOT LIKE":
@@ -82,6 +82,15 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
                     query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,
                             UserD.class);
                     query.setParameter("keyword", "%" + keyword + "%");
+                    break;
+                case "BETWEEN":
+                case "NOT BETWEEN":
+                    String[] k = keyword.split(",");
+                    q1 = "c." + column + " " + operator + " :min AND :max";
+                    query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,
+                            UserD.class);
+                    query = setParameter(query, column, "min", k[0]);
+                    query = setParameter(query, column, "max", k[1]);
                     break;
                 case "IS NULL":
                 case "IS NOT NULL":
