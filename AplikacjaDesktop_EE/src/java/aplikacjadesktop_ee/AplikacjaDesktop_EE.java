@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  * @author Darek Xperia
  */
 public class AplikacjaDesktop_EE extends JFrame {
-    
+
     private MenuBar menuBar = new MenuBar(null, this);
     private Login panel = new Login(this, menuBar);
     private UserDTable tabela = new UserDTable();
@@ -30,11 +30,10 @@ public class AplikacjaDesktop_EE extends JFrame {
         // tabela użytkowników
         tabela.init(null);
         this.add(tabela);
-        
+
         // login form
-        Object[] init = {this, menuBar};
         this.add(panel, BorderLayout.SOUTH);
-        
+
     }
 
     public void wyloguj() {

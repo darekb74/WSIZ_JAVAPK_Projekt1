@@ -40,13 +40,4 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
                 .setParameter("userName", userName)
                 .getSingleResult();
     }
-    
-    @Override
-    public List<UserD> generateUserList() {
-        Query query = em.createQuery("SELECT e FROM UserD e", UserD.class);
-        
-        return (List<UserD>)query
-                .getResultList();
-    }
-    
 }

@@ -29,6 +29,12 @@ public abstract class AbstractFacade<T> {
     public void edit(T entity) {
         getEntityManager().merge(entity);
     }
+    
+    public void editList(List<T> entityList) {
+        entityList.forEach((entity) -> {
+            getEntityManager().merge(entity);
+        });
+    }
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));

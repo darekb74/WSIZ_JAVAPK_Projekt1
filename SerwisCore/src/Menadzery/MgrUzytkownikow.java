@@ -8,6 +8,7 @@ package Menadzery;
 import DTO.UserDTO;
 import Tabele.UserD;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,19 +28,11 @@ public class MgrUzytkownikow {
         return u;
     }
 
-    public ArrayList<UserD> mapList(ArrayList<UserDTO> dtoUL) {
-        ArrayList<UserD> tmp = new ArrayList<>();
-        for (UserDTO dtoULe : dtoUL) {
-            UserD u = new UserD();
-            u.setId(dtoULe.getId());
-            u.setUsername(dtoULe.getUsername());
-            u.setPassword_hash(dtoULe.getPassword_hash());
-            u.seteMail(dtoULe.geteMail());
-            u.setIsOnline(dtoULe.isOnline());
-            u.setLast_login(dtoULe.getLast_login());
-            u.setRmask(dtoULe.getRmask());
-            tmp.add(u);
-        }
+    public List<UserD> mapList(List<UserDTO> dtoUL) {
+        List<UserD> tmp = new ArrayList<>();
+        dtoUL.forEach((dtoULe) -> {
+            tmp.add(map(dtoULe));
+        });
         return tmp;
     }
 

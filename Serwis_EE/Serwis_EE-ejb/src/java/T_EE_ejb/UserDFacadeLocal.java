@@ -19,14 +19,14 @@ public interface UserDFacadeLocal {
     void create(UserD user);
 
     void edit(UserD user);
+    
+    void editList(List<UserD> user);
 
     void remove(UserD user);
 
     UserD find(Object id);
     
     UserD findByName(String username);
-    
-    List<UserD> generateUserList();
 
     List<UserD> findAll();
 

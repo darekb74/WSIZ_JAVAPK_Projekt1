@@ -12,20 +12,19 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import T_EE_ejb.UserDFacadeLocal;
-import Tabele.UserD;
 import javax.inject.Named;
 
 /**
  *
  * @author Darek Xperia
  */
-@Stateless(mappedName="ejb/FasadaUserD_ejb")
+@Stateless(mappedName = "ejb/FasadaUserD_ejb")
 @Named
 public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
 
     @EJB
     private UserDFacadeLocal bazaUzytkownikow;
-    
+
     private MgrUzytkownikow mgr = new MgrUzytkownikow();
 
     @Override
@@ -35,32 +34,40 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
 
     @Override
     public List<UserDTO> listaUzytkownikow() {
-        return this.MapToDTO(bazaUzytkownikow.generateUserList());
+        return this.MapToDTO(bazaUzytkownikow.findAll());
     }
-    
+
     private List<UserDTO> MapToDTO(List<Tabele.UserD> lista) {
         List<UserDTO> result = new ArrayList<>();
-        
+
         lista.forEach((e) -> {
             result.add(e.getUserDTO());
         });
         return result;
     }
-    
+
     @Override
     public Boolean uzytkownikIstnieje(String userName) {
-        return (bazaUzytkownikow.find(userName).getUserDTO().getId() > 0 );
+        return (bazaUzytkownikow.find(userName).getUserDTO().getId() > 0);
     }
-    
+
     @Override
     public void aktualizujDane(UserDTO userDTO) {
-        UserD u = mgr.map(userDTO);
-        bazaUzytkownikow.edit(u);
+        bazaUzytkownikow.edit(mgr.map(userDTO));
     }
-    
+
     @Override
     public void usunUzytkownika(UserDTO userDTO) {
-        UserD u = mgr.map(userDTO);
-        bazaUzytkownikow.remove(u);
+        bazaUzytkownikow.remove(mgr.map(userDTO));
+    }
+
+    @Override
+    public List<UserDTO> pobierzZakresRekordow(int start, int limit) {
+        return this.MapToDTO(bazaUzytkownikow.findRange(new int[]{start, start + limit - 1}));
+    }
+
+    @Override
+    public void aktualizujListe(List<UserDTO> listaDTO) {
+        bazaUzytkownikow.editList(mgr.mapList(listaDTO));
     }
 }

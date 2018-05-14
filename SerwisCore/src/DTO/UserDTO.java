@@ -6,6 +6,7 @@
 package DTO;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -86,14 +87,70 @@ public class UserDTO implements Serializable {
     public void setRmask(Byte rmask) {
         this.rmask = rmask;
     }
-    
-    public Object[] toArray () {
-        return new Object[] {getId(), 
-                        username,
-                        password_hash,
-                        eMail,
-                        last_login,
-                        isOnline,
-                        rmask};
+
+    public Object[] toArray() {
+        return new Object[]{getId(),
+            username,
+            password_hash,
+            eMail,
+            last_login,
+            isOnline,
+            rmask};
     }
+
+    @Override
+    public String toString() {
+        return "" + getId() + ", "
+                + username + ", "
+                + password_hash + ", "
+                + eMail + ", "
+                + last_login + ", "
+                + isOnline + ", "
+                + rmask;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.username);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserDTO other = (UserDTO) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.password_hash, other.password_hash)) {
+            return false;
+        }
+        if (!Objects.equals(this.eMail, other.eMail)) {
+            return false;
+        }
+        if (!Objects.equals(this.last_login, other.last_login)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.isOnline, other.isOnline)) {
+            return false;
+        }
+        if (!Objects.equals(this.rmask, other.rmask)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

@@ -24,5 +24,9 @@ public interface FasadaUserD_ejbRemote {
     
     public void aktualizujDane(UserDTO user);
     
+    public void aktualizujListe(List<UserDTO> listaDTO);
+    
     public void usunUzytkownika(UserDTO user);
+    
+    public List<UserDTO> pobierzZakresRekordow(int start, int limit);
 }
