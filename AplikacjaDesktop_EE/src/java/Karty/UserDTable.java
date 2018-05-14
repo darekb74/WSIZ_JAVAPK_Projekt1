@@ -165,7 +165,7 @@ public class UserDTable extends JPanel implements Karta {
     public Object[] getData(int type, Object[] args) {
         switch (type) {
 
-            default:
+            default: // lista nazw kolumn 
                 return new Object[]{"Id",
                     "Nazwa użytkownika",
                     "Hasło",
@@ -173,7 +173,7 @@ public class UserDTable extends JPanel implements Karta {
                     "Ostatni login",
                     "Online",
                     "Poziom dostępu"};
-            case 1:
+            case 1: // lista kolumn w bazie
                 return new Object[]{"id",
                     "username",
                     "password_hash",
@@ -181,6 +181,9 @@ public class UserDTable extends JPanel implements Karta {
                     "last_login",
                     "isOnline",
                     "rmask"};
+            case 2: // lista typów danych poszczególnych kolumn
+                // 0 - Long, 1 - Integer, 2 - Byte, 3 - String, 4 - Boolean
+                return new Object[] { 0, 3, 3, 3, 3, 4, 2 };
 
         }
     }
