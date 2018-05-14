@@ -25,8 +25,8 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Darek Xperia
- * @classdesc 
- * Karta służy do wyszukiwania i edycji listy uzytkowników z tabeli UserD
+ * @classdesc Karta służy do wyszukiwania i edycji listy uzytkowników z tabeli
+ * UserD
  */
 public class UserDTable extends JPanel implements Karta {
 
@@ -45,16 +45,8 @@ public class UserDTable extends JPanel implements Karta {
 
     private void wypelnij() {
         this.removeAll();
-        String[] nazwyKolumn = {"Id",
-            "Nazwa użytkownika",
-            "Hasło",
-            "e-Mail",
-            "Ostatni login",
-            "Online",
-            "Poziom dostępu"};
-        model = new DefaultTableModel(nazwyKolumn, 0);
-        modelB = new DefaultTableModel(nazwyKolumn, 0);
-        //List<UserDTO> tmp = lookupFasadaUserD_ejbRemote().listaUzytkownikow();
+        model = new DefaultTableModel(getData(0, null), 0);
+        modelB = new DefaultTableModel(getData(0, null), 0);
         List<UserDTO> tmp = lookupFasadaUserD_ejbRemote().pobierzZakresRekordow(0, 9);
         formatujDane(tmp);
         tabela = new TabelaDanych(model, modelB, (byte) 0b00110101, this);
@@ -63,7 +55,22 @@ public class UserDTable extends JPanel implements Karta {
         tabela.setFillsViewportHeight(true);
         scrollPane = new JScrollPane(tabela);
         this.add(scrollPane, BorderLayout.CENTER);
-        przyciski = new ButtonsPanel(true, true, false, this);
+        przyciski = new ButtonsPanel(true, true, true, false, this);
+        this.add(przyciski, BorderLayout.SOUTH);
+    }
+    
+    private void wypelnij(List<UserDTO> dane) {
+        this.removeAll();
+        model = new DefaultTableModel(getData(0, null), 0);
+        modelB = new DefaultTableModel(getData(0, null), 0);
+        formatujDane(dane);
+        tabela = new TabelaDanych(model, modelB, (byte) 0b00110101, this);
+        tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
+        tabela.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        tabela.setFillsViewportHeight(true);
+        scrollPane = new JScrollPane(tabela);
+        this.add(scrollPane, BorderLayout.CENTER);
+        //przyciski = new ButtonsPanel(true, true, true, false, this);
         this.add(przyciski, BorderLayout.SOUTH);
     }
 
@@ -110,7 +117,7 @@ public class UserDTable extends JPanel implements Karta {
     }
 
     @Override
-    public void takeAction(int type) {
+    public void takeAction(int type, Object[] args) {
         switch (type) {
             default:
                 break;
@@ -130,6 +137,51 @@ public class UserDTable extends JPanel implements Karta {
                 wypelnij();
                 validate();
                 break;
+            case 4:
+                if (args[2] != null) {
+                    if (!Utils.Utils.sprawdzTekst((String) args[2])) {
+                        if (Def.DEBUG) {
+                            System.out.println("[BLĄD] String zawiera niedozwolone znaki!");
+                        }
+                        break;
+                    }
+                    if (args[2] == "" && (!((String) args[1]).contains("NULL") || !((String) args[1]).contains("EMPTY"))) {
+                        if (Def.DEBUG) {
+                            System.out.println("[BLĄD] Pole wyszukiwania puste!");
+                        }
+                    }
+
+                    List<UserDTO> wynik = lookupFasadaUserD_ejbRemote()
+                            .wyszukiwanie((String) getData(1,null)[(int)args[0]],
+                                    (String) args[1], (String) args[2]);
+                    
+                    wypelnij(wynik);
+                    validate();
+                }
+        }
+    }
+
+    @Override
+    public Object[] getData(int type, Object[] args) {
+        switch (type) {
+
+            default:
+                return new Object[]{"Id",
+                    "Nazwa użytkownika",
+                    "Hasło",
+                    "e-Mail",
+                    "Ostatni login",
+                    "Online",
+                    "Poziom dostępu"};
+            case 1:
+                return new Object[]{"id",
+                    "username",
+                    "password_hash",
+                    "eMail",
+                    "last_login",
+                    "isOnline",
+                    "rmask"};
+
         }
     }
 

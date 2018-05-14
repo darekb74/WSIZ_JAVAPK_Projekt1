@@ -31,6 +31,8 @@ public interface UserDFacadeLocal {
     List<UserD> findAll();
 
     List<UserD> findRange(int[] range);
+    
+    List<UserD> customQuery(String table, String operator, String keyword);
 
     int count();
     

@@ -74,4 +74,9 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
     public void aktualizujListe(List<UserDTO> listaDTO) {
         bazaUzytkownikow.editList(mgr.mapList(listaDTO));
     }
+    
+    @Override
+    public List<UserDTO> wyszukiwanie(String kolumna, String operator, String tekst) {
+        return this.MapToDTO(bazaUzytkownikow.customQuery(kolumna, operator, tekst));
+    }
 }

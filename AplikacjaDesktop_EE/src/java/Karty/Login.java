@@ -51,8 +51,8 @@ public class Login extends JPanel {
         }
         this.rodzic = rodzic;
         this.menuBar = menuBar;
-        nu.setPreferredSize(new Dimension(100, 25));
-        ha.setPreferredSize(new Dimension(100, 25));
+        nu.setPreferredSize(new Dimension(100, 27));
+        ha.setPreferredSize(new Dimension(100, 27));
 
         ActionListener acL = new ActionListener() {
             @Override

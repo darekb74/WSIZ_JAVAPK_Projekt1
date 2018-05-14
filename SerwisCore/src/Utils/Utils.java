@@ -38,4 +38,12 @@ public class Utils {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdfDate.format(data);
     }
+    
+    public static boolean sprawdzTekst(String t) {
+        String[] listaZ = new String[] {";","\\"};
+        for (String s : listaZ) {
+            if (t.contains(s)) return false;
+        }
+        return true;
+    }
 }

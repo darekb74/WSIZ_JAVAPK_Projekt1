@@ -34,14 +34,70 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
     @Override
     public UserD findByName(String userName) {
         try {
-        Query query = em.createQuery("SELECT c FROM UserD as c WHERE c.username = :userName",
-                UserD.class);
+            Query query = em.createQuery("SELECT c FROM UserD as c WHERE c.username = :userName",
+                    UserD.class);
 
-        return (UserD) query
-                .setParameter("userName", userName)
-                .getSingleResult();
+            return (UserD) query
+                    .setParameter("userName", userName)
+                    .getSingleResult();
         } catch (javax.persistence.NoResultException e) {
             return null;
         }
     }
+
+    private Query setParameter(Query q, String column, String keyword) {
+        switch (column) {
+            case "id":
+                q.setParameter("keyword", Long.parseLong(keyword));
+                break;
+            case "rmask":
+                q.setParameter("keyword", Byte.parseByte(keyword));
+                break;
+            case "isOnline":
+                q.setParameter("keyword", Boolean.parseBoolean(keyword));
+                break;
+            default:
+                q.setParameter("keyword", keyword);
+                break;
+        }
+        return q;
+    }
+
+    @Override
+    public List<UserD> customQuery(String column, String operator, String keyword) {
+        try {
+            String q1 = "";
+            Query query;
+            switch (operator) {
+                default:
+                    q1 = "c." + column + " " + operator + " :keyword";
+                    query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,
+                            UserD.class);
+
+                    query = setParameter(query,column,keyword);
+                    break;
+                case "LIKE":
+                case "NOT LIKE":
+                    q1 = "c." + column + " " + operator + " :keyword";
+                    query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,
+                            UserD.class);
+                    query.setParameter("keyword", "%" + keyword + "%");
+                    break;
+                case "IS NULL":
+                case "IS NOT NULL":
+                case "IS EMPTY":
+                case "IS NOT EMPTY":
+                    q1 = "c." + column + " " + operator;
+                    query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,
+                            UserD.class);
+                    break;
+            }
+
+            return (List<UserD>) query
+                    .getResultList();
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
+    }
+
 }

@@ -16,5 +16,7 @@ public interface Karta {
 
     public void logout();
 
-    public void takeAction(int type);
+    public void takeAction(int type, Object[] args);
+    
+    public Object[] getData(int type, Object[] args);
 }
