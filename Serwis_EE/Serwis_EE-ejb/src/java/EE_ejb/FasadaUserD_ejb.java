@@ -29,7 +29,11 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
 
     @Override
     public UserDTO znajdzUzytkownika(String userName) {
-        return bazaUzytkownikow.findByName(userName).getUserDTO();
+        try {
+            return bazaUzytkownikow.findByName(userName).getUserDTO();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

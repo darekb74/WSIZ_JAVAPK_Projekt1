@@ -30,14 +30,18 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
     public UserDFacade() {
         super(UserD.class);
     }
-    
+
     @Override
     public UserD findByName(String userName) {
+        try {
         Query query = em.createQuery("SELECT c FROM UserD as c WHERE c.username = :userName",
                 UserD.class);
-        
-        return (UserD)query
+
+        return (UserD) query
                 .setParameter("userName", userName)
                 .getSingleResult();
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
     }
 }

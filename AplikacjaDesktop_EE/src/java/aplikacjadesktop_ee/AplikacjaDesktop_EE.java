@@ -7,10 +7,14 @@ package aplikacjadesktop_ee;
 
 import Karty.Login;
 import Karty.UserDTable;
+import Karty.WelcomeCard;
+import Obiekty.Def;
 import Obiekty.MenuBar;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,6 +25,12 @@ public class AplikacjaDesktop_EE extends JFrame {
     private MenuBar menuBar = new MenuBar(null, this);
     private Login panel = new Login(this, menuBar);
     private UserDTable tabela = new UserDTable();
+    
+    public JPanel karty = new JPanel(new CardLayout());
+    
+    public CardLayout cl;
+    
+    private WelcomeCard sStartowa = new WelcomeCard();
 
     AplikacjaDesktop_EE() {
         super("Serwis komuterowy - aplikacja desktop");
@@ -29,15 +39,25 @@ public class AplikacjaDesktop_EE extends JFrame {
 
         // tabela użytkowników
         tabela.init(null);
-        this.add(tabela);
-
+        //this.add(tabela);
+        //this.add(sStartowa);
+        this.add(karty);
+        cl = (CardLayout)karty.getLayout();
+        
+        karty.add(sStartowa, Def.O_STARTOWA);
+        karty.add(tabela, Def.O_L_USERD);
+       
+        
         // login form
         this.add(panel, BorderLayout.SOUTH);
-
+        
+        
     }
 
     public void wyloguj() {
         panel.logout();
+        // przenieś na stronę startową
+        cl.show(karty, Def.O_STARTOWA);
     }
 
     public static void main(String[] args) {
@@ -47,6 +67,7 @@ public class AplikacjaDesktop_EE extends JFrame {
         main.pack();
         main.setSize(new Dimension(750, 300));
         main.setVisible(true);
+        main.setLocationRelativeTo(null);
     }
 
 }

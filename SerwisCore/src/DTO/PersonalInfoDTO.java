@@ -7,13 +7,13 @@ package DTO;
 
 import Tabele.UserD;
 import java.io.Serializable;
-import javax.swing.JComboBox;
 
 /**
  *
  * @author Darek Xperia
  */
-public class PersonalInfoDTO implements Serializable{
+public class PersonalInfoDTO implements Serializable {
+
     Long id;
     UserD user;
     String name;
@@ -22,11 +22,12 @@ public class PersonalInfoDTO implements Serializable{
     String phone2;
     // 0 - klient, 1 - firma, 2 - serwisant, 3 - magazynier, 4 - kireownik serwisu, 5 -
     Byte type;
-    
+
     public PersonalInfoDTO(Long id, UserD user, String nazwa, String adres, String telefon1, String telefon2, Byte typ) {
         this(user, nazwa, adres, telefon1, telefon2, typ);
         this.id = id;
     }
+
     public PersonalInfoDTO(UserD user, String nazwa, String adres, String telefon1, String telefon2, Byte typ) {
         this.user = user;
         this.name = nazwa;
@@ -91,14 +92,14 @@ public class PersonalInfoDTO implements Serializable{
     public void setType(Byte type) {
         this.type = type;
     }
-    
-    public Object[] toArray () {
-        return new Object[] {getId(), 
-                        user.getId(),
-                        name,
-                        address,
-                        phone1,
-                        phone2,
-                        type};
+
+    public Object[] toArray() {
+        return new Object[]{getId(),
+            user.getId(),
+            name,
+            address,
+            phone1,
+            phone2,
+            type};
     }
 }

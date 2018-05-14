@@ -40,6 +40,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
         menu = new JMenu("Program");
         menu.setMnemonic(KeyEvent.VK_P);
         add(menu);
+        menuItem = new JMenuItem(Def.O_STARTOWA, KeyEvent.VK_T);
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
         menuItem = new JMenuItem(Def.O_ZAKONCZ, KeyEvent.VK_Z);
         menuItem.addActionListener(this);
         menu.add(menuItem);
@@ -59,6 +62,17 @@ public class MenuBar extends JMenuBar implements ActionListener {
             menuItem.setEnabled(false); // brak uprawnień
         }
         menu.add(menuItem);
+        
+        menu = new JMenu("Administracja");
+        menu.setMnemonic(KeyEvent.VK_A);
+        add(menu);
+        menuItem = new JMenuItem(Def.O_L_USERD, KeyEvent.VK_L);
+        menuItem.addActionListener(this);
+        if ((rmask & Def.LVL5) == 0) {
+            menuItem.setEnabled(false); // brak uprawnień
+        }
+        menu.add(menuItem);
+        
         // menu użytkownika
         if (user != null) {
             menu = new JMenu("[" + user.getUsername() + "]");
@@ -83,6 +97,12 @@ public class MenuBar extends JMenuBar implements ActionListener {
                 break;
             case Def.O_SZUKAJ_CZESCI:
 
+                break;
+            case Def.O_STARTOWA:
+                ((AplikacjaDesktop_EE) rodzic).cl.show(((AplikacjaDesktop_EE) rodzic).karty, Def.O_STARTOWA);
+                break;
+            case Def.O_L_USERD:
+                ((AplikacjaDesktop_EE) rodzic).cl.show(((AplikacjaDesktop_EE) rodzic).karty, Def.O_L_USERD);
                 break;
             case Def.O_WYLOGUJ:
                 ((AplikacjaDesktop_EE) rodzic).wyloguj();

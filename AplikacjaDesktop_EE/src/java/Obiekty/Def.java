@@ -28,4 +28,6 @@ public class Def {
     public final static String O_SPRAWDZ_STANY = "Sprawdź stany magazynowe";
     public final static String O_SZUKAJ_CZESCI = "Szukaj części";
     public final static String O_WYLOGUJ = "Wyloguj";
+    public final static String O_STARTOWA = "Strona startowa";
+    public final static String O_L_USERD = "Lista użytkowników";
 }

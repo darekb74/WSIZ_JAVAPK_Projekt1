@@ -13,6 +13,8 @@ import java.util.Date;
 /**
  *
  * @author Darek Xperia
+ * @classdesc
+ * Klasa zawiera różne metody pomocnicze
  */
 public class Utils {
 

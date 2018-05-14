@@ -28,9 +28,10 @@ import javax.swing.JTextField;
 /**
  *
  * @author Darek Xperia
+ * @classdesc Panel logowania
  */
 public class Login extends JPanel {
-    
+
     private JTextField nu = new JTextField();
     private JPasswordField ha = new JPasswordField();
     private JButton bu = new JButton("Zaloguj");
@@ -38,12 +39,12 @@ public class Login extends JPanel {
 
     private Container rodzic;
     private MenuBar menuBar;
-    
+
     public boolean zalogowany;
     public UserDTO luser;
 
     public Login(Container rodzic, MenuBar menuBar) {
-        if (rodzic == null || menuBar == null ) {
+        if (rodzic == null || menuBar == null) {
             // nieprawidowa inicjacjia
             System.out.println("[BŁĄD] Nieprawidłowa inicjacja panelu logowania!");
             return;
@@ -52,40 +53,49 @@ public class Login extends JPanel {
         this.menuBar = menuBar;
         nu.setPreferredSize(new Dimension(100, 25));
         ha.setPreferredSize(new Dimension(100, 25));
-        
+
         ActionListener acL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!nu.getText().isEmpty() && ha.getPassword().length > 0) {
                     FasadaUserD_ejbRemote fasada = lookupFasadaUserD_ejbRemote();
                     UserDTO tmp = fasada.znajdzUzytkownika(nu.getText());
-                    if (tmp.getId() > 0) { // jest uzytkownik o takim username
-                        if (tmp.getPassword_hash().equals(Utils.Utils.md5(String.valueOf(ha.getPassword())))) {
-                            // hasło ok
-                            zalogowany = true;
-                            luser = tmp;
-                            wypelnijPanel();
-                            //pustaw datę i stan online
-                            luser.setIsOnline(true);
-                            luser.setLast_login(Utils.Utils.foramtujDate(new Date()));
-                            fasada.aktualizujDane(luser);
+                    if (tmp != null) {
+                        if (tmp.getId() > 0) { // jest uzytkownik o takim username
+                            if (tmp.getPassword_hash().equals(Utils.Utils.md5(String.valueOf(ha.getPassword())))) {
+                                // hasło ok
+                                zalogowany = true;
+                                luser = tmp;
+                                wypelnijPanel();
+                                //pustaw datę i stan online
+                                luser.setIsOnline(true);
+                                luser.setLast_login(Utils.Utils.foramtujDate(new Date()));
+                                fasada.aktualizujDane(luser);
+                            } else {
+                                wynik.setText("Nieprawidłowy login lub hasło!");
+                                wynik.setForeground(Color.red);
+                                ha.setText("");
+                            }
                         } else {
                             wynik.setText("Nieprawidłowy login lub hasło!");
                             wynik.setForeground(Color.red);
+                            ha.setText("");
                         }
                     } else {
                         wynik.setText("Nieprawidłowy login lub hasło!");
                         wynik.setForeground(Color.red);
+                        ha.setText("");
                     }
                 } else {
                     wynik.setText("Proszę wypełnić wszystkie pola!");
                     wynik.setForeground(Color.red);
                 }
+
             }
         };
         bu.addActionListener(acL);
         wypelnijPanel();
-        
+
     }
 
     private void wypelnijPanel() {
@@ -98,6 +108,8 @@ public class Login extends JPanel {
             rodzic.validate();
         } else {
             this.removeAll();
+            wynik.setText("Wprowadź dane i wciśnij Zaloguj");
+            wynik.setForeground(Color.black);
             JLabel l1 = new JLabel("Nazwa uzytkownika:");
             this.add(l1);
             this.add(nu);

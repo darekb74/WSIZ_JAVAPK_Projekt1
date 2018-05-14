@@ -24,8 +24,9 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Darek Xperia Karta służy do wyszukiwania i edycji listy uzytkowników
- * z tabeli UserD
+ * @author Darek Xperia
+ * @classdesc 
+ * Karta służy do wyszukiwania i edycji listy uzytkowników z tabeli UserD
  */
 public class UserDTable extends JPanel implements Karta {
 
