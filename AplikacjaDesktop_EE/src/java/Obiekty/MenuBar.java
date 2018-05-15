@@ -90,6 +90,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
         JMenuItem source = (JMenuItem) (e.getSource());
         switch (source.getText()) {
             case Def.O_ZAKONCZ:
+                ((AplikacjaDesktop_EE) rodzic).wyloguj();
                 System.exit(0);
                 break;
             case Def.O_SPRAWDZ_STANY:

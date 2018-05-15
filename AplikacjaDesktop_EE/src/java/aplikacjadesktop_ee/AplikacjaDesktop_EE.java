@@ -13,6 +13,8 @@ import Obiekty.MenuBar;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -25,11 +27,11 @@ public class AplikacjaDesktop_EE extends JFrame {
     private MenuBar menuBar = new MenuBar(null, this);
     private Login panel = new Login(this, menuBar);
     private UserDTable tabela = new UserDTable();
-    
+
     public JPanel karty = new JPanel(new CardLayout());
-    
+
     public CardLayout cl;
-    
+
     private WelcomeCard sStartowa = new WelcomeCard();
 
     AplikacjaDesktop_EE() {
@@ -42,16 +44,21 @@ public class AplikacjaDesktop_EE extends JFrame {
         //this.add(tabela);
         //this.add(sStartowa);
         this.add(karty);
-        cl = (CardLayout)karty.getLayout();
-        
+        cl = (CardLayout) karty.getLayout();
+
         karty.add(sStartowa, Def.O_STARTOWA);
         karty.add(tabela, Def.O_L_USERD);
-       
-        
+
         // login form
         this.add(panel, BorderLayout.SOUTH);
-        
-        
+
+        //logout przy zakończeniu
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                panel.logout();
+            }
+        });
     }
 
     public void wyloguj() {
@@ -63,7 +70,7 @@ public class AplikacjaDesktop_EE extends JFrame {
     public static void main(String[] args) {
 
         JFrame main = new AplikacjaDesktop_EE();
-        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.setDefaultCloseOperation(EXIT_ON_CLOSE);
         main.pack();
         main.setSize(new Dimension(750, 300));
         main.setVisible(true);
