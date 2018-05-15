@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -140,12 +141,14 @@ public class UserDTable extends JPanel implements Karta {
             case 4:
                 if (args[2] != null) {
                     if (!Utils.Utils.sprawdzTekst((String) args[2])) {
+                        Utils.Utils.msgBox("Wyszukiwany tekst zawiera niedozwolone znaki!", "Błąd danych.",JOptionPane.ERROR_MESSAGE,this);
                         if (Def.DEBUG) {
-                            System.out.println("[BLĄD] String zawiera niedozwolone znaki!");
+                            System.out.println("[BLĄD] Wyszukiwany tekst zawiera niedozwolone znaki!");
                         }
                         break;
                     }
-                    if (args[2] == "" && (!((String) args[1]).contains("NULL") || !((String) args[1]).contains("EMPTY"))) {
+                    if (((String)args[2]).isEmpty() && !(((String) args[1]).contains("NULL") || ((String) args[1]).contains("EMPTY"))) {
+                        Utils.Utils.msgBox("Pole wyszukiwania puste!", "Błąd danych.",JOptionPane.ERROR_MESSAGE,this);
                         if (Def.DEBUG) {
                             System.out.println("[BLĄD] Pole wyszukiwania puste!");
                         }

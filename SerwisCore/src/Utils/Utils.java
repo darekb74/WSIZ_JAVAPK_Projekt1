@@ -5,16 +5,17 @@
  */
 package Utils;
 
+import java.awt.Container;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Darek Xperia
- * @classdesc
- * Klasa zawiera różne metody pomocnicze
+ * @classdesc Klasa zawiera różne metody pomocnicze
  */
 public class Utils {
 
@@ -38,12 +39,18 @@ public class Utils {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdfDate.format(data);
     }
-    
+
     public static boolean sprawdzTekst(String t) {
-        String[] listaZ = new String[] {";","\\"};
+        String[] listaZ = new String[]{";", "\\"};
         for (String s : listaZ) {
-            if (t.contains(s)) return false;
+            if (t.contains(s)) {
+                return false;
+            }
         }
         return true;
+    }
+
+    public static void msgBox(String tekst, String tytul, int opcje, Container rodzic) {
+        JOptionPane.showMessageDialog(rodzic, tekst, tytul, opcje);
     }
 }
