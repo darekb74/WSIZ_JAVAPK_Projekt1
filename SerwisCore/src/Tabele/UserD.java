@@ -8,8 +8,10 @@ package Tabele;
 import DTO.UserDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -28,10 +30,10 @@ public class UserD extends Tabela implements Serializable {
     @Column(length = 64)
     private String eMail;
 
-    //@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     // 1970-01-01 00:00:00
-    @Column(length = 19)
-    private String last_login;
+    //@Column(length = 19)
+    private Date last_login;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isOnline;
@@ -68,11 +70,11 @@ public class UserD extends Tabela implements Serializable {
         this.eMail = eMail;
     }
 
-    public String getLast_login() {
+    public Date getLast_login() {
         return last_login;
     }
 
-    public void setLast_login(String last_login) {
+    public void setLast_login(Date last_login) {
         this.last_login = last_login;
     }
 

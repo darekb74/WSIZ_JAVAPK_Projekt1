@@ -11,7 +11,10 @@ import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import static java.lang.Math.pow;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -36,6 +39,7 @@ public class TabelaDanych extends JTable {
                 }
             });
         }
+        this.setDefaultRenderer(Date.class, new DateRenderer());
     }
 
     @Override
@@ -44,8 +48,8 @@ public class TabelaDanych extends JTable {
         Object value = getModel().getValueAt(row, col);
         if (!value.equals(model.getValueAt(row, col))) {
             comp.setBackground(Color.YELLOW);
-        } else if (!isCellEditable(row,col)) {
-            comp.setBackground(new Color(235,235,235));
+        } else if (!isCellEditable(row, col)) {
+            comp.setBackground(new Color(235, 235, 235));
             //} else if (sprawdzPoprawnosc(value)) {
             //  comp.setBackground(Color.red);
         } else {
@@ -78,11 +82,36 @@ public class TabelaDanych extends JTable {
     public Class<?> getColumnClass(int columnIndex) {
         return this.getValueAt(0, columnIndex).getClass();
     }
-    
-    @Override 
-    public boolean isCellEditable(int row, int column)
-    {
-        Double d = pow(2,column);
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        Double d = pow(2, column);
         return (d.intValue() & maskaEdycji) == 0;
+    }
+
+    // renderowanie Date
+    public class DateRenderer extends DefaultTableCellRenderer {
+
+        private final DateFormatter format = new DateFormatter("yyyy-MM-dd HH:mm:ss");
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            super.getTableCellRendererComponent(table, value, isSelected,
+                    hasFocus, row, column);
+
+            if (value instanceof Date) {
+                this.setText(format.format((Date) value));
+            }
+            return this;
+        }
+
+        public class DateFormatter extends SimpleDateFormat {
+
+            public DateFormatter(String patern) {
+                super(patern);
+            }
+        }
     }
 }

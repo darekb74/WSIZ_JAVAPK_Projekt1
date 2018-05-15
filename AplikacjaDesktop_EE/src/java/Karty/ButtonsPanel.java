@@ -62,20 +62,26 @@ public class ButtonsPanel extends JPanel {
             public void itemStateChanged(ItemEvent e) {
                 DefaultComboBoxModel dcm;
                 switch ( (int)((Karta) rodzic).getData(2, null)[column.getSelectedIndex()]) {
-                    case 0:
-                    case 1:
-                    case 2:
+                    case 0: // Long
+                    case 1: // Integer
+                    case 2: // Byte
                         dcm = new DefaultComboBoxModel(new String[]{"=", "<>",
                             "<=", ">=", "BETWEEN", "NOT BETWEEN"});
                         operator.removeAllItems();
                         operator.setModel(dcm);
                         break;
-                    case 4:
+                    case 4: //Boolean
                         dcm = new DefaultComboBoxModel(new String[]{"=", "<>"});
                         operator.removeAllItems();
                         operator.setModel(dcm);
                         break;
-                    case 3:
+                    case 5: //Date
+                        dcm = new DefaultComboBoxModel(new String[]{"=", "<>",
+                            "<=", ">=", "BETWEEN", "NOT BETWEEN"});
+                        operator.removeAllItems();
+                        operator.setModel(dcm);
+                        break;
+                    case 3: // Strring
                     default:
                         dcm = new DefaultComboBoxModel(new String[]{"LIKE",
                             "NOT LIKE", "=", "<>", "IS NULL", "IS NOT NULL"});

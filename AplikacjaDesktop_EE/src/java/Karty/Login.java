@@ -69,7 +69,8 @@ public class Login extends JPanel {
                                 wypelnijPanel();
                                 //pustaw datę i stan online
                                 luser.setIsOnline(true);
-                                luser.setLast_login(Utils.Utils.foramtujDate(new Date()));
+                                //luser.setLast_login(Utils.Utils.foramtujDate(new Date()));
+                                luser.setLast_login(new Date());
                                 fasada.aktualizujDane(luser);
                             } else {
                                 wynik.setText("Nieprawidłowy login lub hasło!");

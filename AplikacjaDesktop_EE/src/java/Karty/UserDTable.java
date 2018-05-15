@@ -12,6 +12,7 @@ import Obiekty.TabelaDanych;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,7 +92,7 @@ public class UserDTable extends JPanel implements Karta {
                     (String) model.getValueAt(i, 1),
                     (String) model.getValueAt(i, 2),
                     (String) model.getValueAt(i, 3),
-                    (String) model.getValueAt(i, 4),
+                    (Date) model.getValueAt(i, 4),
                     (Boolean) model.getValueAt(i, 5),
                     (Byte) model.getValueAt(i, 6));
             if (onlyMod) { // tylko zmodyfikowane
@@ -99,7 +100,7 @@ public class UserDTable extends JPanel implements Karta {
                         (String) modelB.getValueAt(i, 1),
                         (String) modelB.getValueAt(i, 2),
                         (String) modelB.getValueAt(i, 3),
-                        (String) modelB.getValueAt(i, 4),
+                        (Date) modelB.getValueAt(i, 4),
                         (Boolean) modelB.getValueAt(i, 5),
                         (Byte) modelB.getValueAt(i, 6));
                 if (!el.equals(el2)) { // zmodyfikowany ?
@@ -187,7 +188,7 @@ public class UserDTable extends JPanel implements Karta {
                     "rmask"};
             case 2: // lista typów danych poszczególnych kolumn
                 // 0 - Long, 1 - Integer, 2 - Byte, 3 - String, 4 - Boolean
-                return new Object[] { 0, 3, 3, 3, 3, 4, 2 };
+                return new Object[] { 0, 3, 3, 3, 5, 4, 2 };
 
         }
     }

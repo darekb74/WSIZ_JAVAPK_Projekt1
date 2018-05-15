@@ -6,6 +6,10 @@
 package T_EE_ejb;
 
 import Tabele.UserD;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -55,6 +59,26 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
                 break;
             case "isOnline":
                 q.setParameter(param, Boolean.parseBoolean(keyword));
+                break;
+            case "last_login":
+                DateFormat format;
+                if (Utils.Utils.sprawdzPoprawnoscDanych(5,keyword)) {
+                    keyword = keyword.replace("/", "-");
+                    keyword = keyword.replace(".", "-");
+                    format = new SimpleDateFormat("yyyy-MM-dd");
+                } else if(Utils.Utils.sprawdzPoprawnoscDanych(6,keyword)){ 
+                    keyword = keyword.replace("/", "-");
+                    keyword = keyword.replace(".", "-");
+                    format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                } else {
+                    keyword = "1970-01-01 00:00:00";
+                    format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                }
+                try {
+                    q.setParameter(param, format.parse(keyword));
+                } catch (ParseException e) {
+                    q.setParameter(param, new Date());
+                }
                 break;
             default:
                 q.setParameter(param, keyword);
