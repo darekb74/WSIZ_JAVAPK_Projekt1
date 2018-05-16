@@ -65,6 +65,7 @@ public class ButtonsPanel extends JPanel {
                     case 0: // Long
                     case 1: // Integer
                     case 2: // Byte
+                    case 6: // Short
                         dcm = new DefaultComboBoxModel(new String[]{"=", "<>",
                             "<=", ">=", "BETWEEN", "NOT BETWEEN"});
                         operator.removeAllItems();

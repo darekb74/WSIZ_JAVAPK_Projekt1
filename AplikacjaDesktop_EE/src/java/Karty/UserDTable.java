@@ -60,7 +60,7 @@ public class UserDTable extends JPanel implements Karta {
         przyciski = new ButtonsPanel(true, true, true, false, this);
         this.add(przyciski, BorderLayout.SOUTH);
     }
-    
+
     private void wypelnij(List<UserDTO> dane) {
         this.removeAll();
         model = new DefaultTableModel(getData(0, null), 0);
@@ -94,7 +94,7 @@ public class UserDTable extends JPanel implements Karta {
                     (String) model.getValueAt(i, 3),
                     (Date) model.getValueAt(i, 4),
                     (Boolean) model.getValueAt(i, 5),
-                    (Byte) model.getValueAt(i, 6));
+                    (Short) model.getValueAt(i, 6));
             if (onlyMod) { // tylko zmodyfikowane
                 UserDTO el2 = new UserDTO((Long) modelB.getValueAt(i, 0),
                         (String) modelB.getValueAt(i, 1),
@@ -102,7 +102,7 @@ public class UserDTable extends JPanel implements Karta {
                         (String) modelB.getValueAt(i, 3),
                         (Date) modelB.getValueAt(i, 4),
                         (Boolean) modelB.getValueAt(i, 5),
-                        (Byte) modelB.getValueAt(i, 6));
+                        (Short) modelB.getValueAt(i, 6));
                 if (!el.equals(el2)) { // zmodyfikowany ?
                     out.add(el);
                 }
@@ -142,26 +142,47 @@ public class UserDTable extends JPanel implements Karta {
             case 4:
                 if (args[2] != null) {
                     if (!Utils.Utils.sprawdzTekst((String) args[2])) {
-                        Utils.Utils.msgBox("Wyszukiwany tekst zawiera niedozwolone znaki!", "Błąd danych.",JOptionPane.ERROR_MESSAGE,this);
+                        Utils.Utils.msgBox("Wyszukiwany tekst zawiera niedozwolone znaki!", "Błąd danych.", JOptionPane.ERROR_MESSAGE, this);
                         if (Def.DEBUG) {
                             System.out.println("[BLĄD] Wyszukiwany tekst zawiera niedozwolone znaki!");
                         }
                         break;
-                    }
-                    if (((String)args[2]).isEmpty() && !(((String) args[1]).contains("NULL") || ((String) args[1]).contains("EMPTY"))) {
-                        Utils.Utils.msgBox("Pole wyszukiwania puste!", "Błąd danych.",JOptionPane.ERROR_MESSAGE,this);
+                    } else if (((String) args[2]).isEmpty() && !(((String) args[1]).contains("NULL") || ((String) args[1]).contains("EMPTY"))) {
+                        Utils.Utils.msgBox("Pole wyszukiwania puste!", "Błąd danych.", JOptionPane.ERROR_MESSAGE, this);
                         if (Def.DEBUG) {
                             System.out.println("[BLĄD] Pole wyszukiwania puste!");
                         }
                         break;
                     }
+                    //sprawdzanie poprawności
+                    boolean ok;
+                    int t = (int) getData(2, null)[(int) args[0]];
+                    switch (t) {
+                        case 0: //long
+                            break;
+                    }
+                    switch ((String) args[1]) {
+                        case "BETWEEN":
+                        case "NOT BETWEEN":
+                            t +=50; // specjalne testery
+                            ok = Utils.Utils.sprawdzPoprawnoscDanych(t, (String) args[2]);
+                            break;
+                        default:
+                            ok = Utils.Utils.sprawdzPoprawnoscDanych(t, (String) args[2]);
+                    }
+                    if (ok) {
+                        List<UserDTO> wynik = lookupFasadaUserD_ejbRemote()
+                                .wyszukiwanie((String) getData(1, null)[(int) args[0]],
+                                        (String) args[1], (String) args[2]);
 
-                    List<UserDTO> wynik = lookupFasadaUserD_ejbRemote()
-                            .wyszukiwanie((String) getData(1,null)[(int)args[0]],
-                                    (String) args[1], (String) args[2]);
-                    
-                    wypelnij(wynik);
-                    validate();
+                        wypelnij(wynik);
+                        validate();
+                    } else {
+                        Utils.Utils.msgBox("Warunek wyszukiwania jest nieprawidłowy!\n" +
+                                (String) args[2], "Błąd danych wyszukiania.", JOptionPane.ERROR_MESSAGE, this);
+                        if (Def.DEBUG)
+                            System.out.println("[BLĄD] Warunek wyszukiwania jest nieprawidłowy!");
+                    }
                 }
         }
     }
@@ -188,7 +209,8 @@ public class UserDTable extends JPanel implements Karta {
                     "rmask"};
             case 2: // lista typów danych poszczególnych kolumn
                 // 0 - Long, 1 - Integer, 2 - Byte, 3 - String, 4 - Boolean
-                return new Object[] { 0, 3, 3, 3, 5, 4, 2 };
+                // 5 - Date, 6 - Short
+                return new Object[]{0, 3, 3, 3, 5, 4, 6};
 
         }
     }

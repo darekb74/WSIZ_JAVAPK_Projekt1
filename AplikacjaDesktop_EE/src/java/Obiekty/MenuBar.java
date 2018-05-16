@@ -32,7 +32,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
     public void setRights(UserDTO user) {
 
-        Byte rmask = (user != null ? user.getRmask() : Obiekty.Def.LVL0);
+        Short rmask = (user != null ? user.getRmask() : Obiekty.Def.LVL0);
         JMenu menu, subMenu;
         JMenuItem menuItem;
 

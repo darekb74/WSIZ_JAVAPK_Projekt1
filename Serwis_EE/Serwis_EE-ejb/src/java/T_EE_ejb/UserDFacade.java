@@ -50,25 +50,25 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
     }
 
     private Query setParameter(Query q, String column, String param, String keyword) {
+        keyword = keyword.trim(); //tniemy niepotrzebne spacje
         switch (column) {
             case "id":
                 q.setParameter(param, Long.parseLong(keyword));
                 break;
             case "rmask":
-                q.setParameter(param, Byte.parseByte(keyword));
+                q.setParameter(param, Short.parseShort(keyword));
                 break;
             case "isOnline":
                 q.setParameter(param, Boolean.parseBoolean(keyword));
                 break;
             case "last_login":
                 DateFormat format;
-                if (Utils.Utils.sprawdzPoprawnoscDanych(5,keyword)) {
+                if (Utils.Utils.sprawdzPoprawnoscDanych(5, keyword)) {
                     keyword = keyword.replace("/", "-");
                     keyword = keyword.replace(".", "-");
-                    format = new SimpleDateFormat("yyyy-MM-dd");
-                } else if(Utils.Utils.sprawdzPoprawnoscDanych(6,keyword)){ 
-                    keyword = keyword.replace("/", "-");
-                    keyword = keyword.replace(".", "-");
+                    if (keyword.length() == 10) {
+                        keyword += " 00:00:00";
+                    }
                     format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 } else {
                     keyword = "1970-01-01 00:00:00";
@@ -109,6 +109,7 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
                     break;
                 case "BETWEEN":
                 case "NOT BETWEEN":
+                    keyword = keyword.replaceAll("\\x20((?i)and(?-i))\\x20",",");
                     String[] k = keyword.split(",");
                     q1 = "c." + column + " " + operator + " :min AND :max";
                     query = em.createQuery("SELECT c FROM UserD as c WHERE " + q1,

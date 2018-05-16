@@ -13,7 +13,11 @@ import java.awt.event.MouseEvent;
 import static java.lang.Math.pow;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -39,7 +43,31 @@ public class TabelaDanych extends JTable {
                 }
             });
         }
-        this.setDefaultRenderer(Date.class, new DateRenderer());
+        this.setDefaultRenderer(Date.class, new CustomTableRenderer());
+    }
+
+    @Override
+    public void editingStopped(ChangeEvent e) {
+        DefaultCellEditor cE = (DefaultCellEditor)e.getSource();
+        Object o = cE.getCellEditorValue();
+        if (Def.DEBUG) {
+            System.out.println("[EDITING] stopped");
+            System.out.println("Edytowana komórka zawiera wartość: '"
+                + o.toString() + "' type:"
+                + o.getClass().toString()
+                );
+        }
+        super.editingStopped(e);
+        //editCellAt(getSelectedRow(), getSelectedColumn());
+        if (!Utils.Utils.sprawdzPoprawnoscDanych(o.getClass().toString(), o.toString())) {
+            if (Def.DEBUG) {
+                System.out.println("[BŁĄD] Nowa wartośc komórki jest nieprawidłowa.");
+            }
+            ((JComponent)cE.getTableCellEditorComponent(this, o, true, getSelectedRow(), getSelectedColumn())).setBorder(new LineBorder(Color.RED));
+        } else {
+            ((JComponent)cE.getTableCellEditorComponent(this, o, true, getSelectedRow(), getSelectedColumn())).setBorder(null);
+        }
+        
     }
 
     @Override
@@ -59,7 +87,7 @@ public class TabelaDanych extends JTable {
         return comp;
     }
 
-    public void pokazDane() {
+    public void pokazDane() { //DEBUG=1
         if (getSelectedColumn() < 0) {
             return;
         }
@@ -90,7 +118,7 @@ public class TabelaDanych extends JTable {
     }
 
     // renderowanie Date
-    public class DateRenderer extends DefaultTableCellRenderer {
+    public class CustomTableRenderer extends DefaultTableCellRenderer {
 
         private final DateFormatter format = new DateFormatter("yyyy-MM-dd HH:mm:ss");
 
@@ -114,4 +142,5 @@ public class TabelaDanych extends JTable {
             }
         }
     }
+
 }

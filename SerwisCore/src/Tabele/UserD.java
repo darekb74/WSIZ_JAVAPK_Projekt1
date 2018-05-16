@@ -39,7 +39,7 @@ public class UserD extends Tabela implements Serializable {
     private Boolean isOnline;
 
     @Column(columnDefinition = "SMALLINT DEFAULT 0")
-    private Byte rmask;
+    private Short rmask;
 
     @Override
     public String toString() {
@@ -86,11 +86,11 @@ public class UserD extends Tabela implements Serializable {
         this.isOnline = isOnline;
     }
 
-    public Byte getRmask() {
+    public Short getRmask() {
         return rmask;
     }
 
-    public void setRmask(Byte rmask) {
+    public void setRmask(Short rmask) {
         this.rmask = rmask;
     }
 

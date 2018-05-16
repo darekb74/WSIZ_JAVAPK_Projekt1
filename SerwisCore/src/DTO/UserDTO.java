@@ -21,9 +21,9 @@ public class UserDTO implements Serializable {
     private String eMail;
     private Date last_login;
     private Boolean isOnline;
-    private Byte rmask;
+    private Short rmask;
 
-    public UserDTO(Long id_, String username_, String password_hash_, String eMail_, Date last_login_, Boolean isOnline_, Byte rmask_) {
+    public UserDTO(Long id_, String username_, String password_hash_, String eMail_, Date last_login_, Boolean isOnline_, Short rmask_) {
         id = id_;
         username = username_;
         password_hash = password_hash_;
@@ -81,11 +81,11 @@ public class UserDTO implements Serializable {
         this.isOnline = isOnline;
     }
 
-    public Byte getRmask() {
+    public Short getRmask() {
         return rmask;
     }
 
-    public void setRmask(Byte rmask) {
+    public void setRmask(Short rmask) {
         this.rmask = rmask;
     }
 
