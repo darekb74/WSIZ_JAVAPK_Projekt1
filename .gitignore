@@ -40,3 +40,5 @@ Serwis_EE/Serwis_EE-ejb/nbproject/genfiles.properties
 AplikacjaDesktop_EE/nbproject/genfiles.properties
 AplikacjaDesktop_EE/nbproject/ant-deploy.xml
 AplikacjaDesktop/build/built-clean.properties
+/ApkWeb/nbproject/private/
+/ApkWeb/build/
