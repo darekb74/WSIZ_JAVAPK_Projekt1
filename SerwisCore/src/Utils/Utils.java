@@ -8,6 +8,7 @@ package Utils;
 import java.awt.Container;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -18,9 +19,9 @@ import javax.swing.JOptionPane;
  * @classdesc Klasa zawiera różne metody pomocnicze
  */
 public class Utils {
+
     private static final String CHK_DATE = "^(19[0-9]{2}|[2-9][0-9]{3})(\\/|-|\\.)((0(1|3|5|7|8)|10|12)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|3[0-1])|(0(4|6|9)|11)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|30)|(02)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]))(\\x20(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2})?$";
     private static final String CHK_BETWEEN_DATE = "^(19[0-9]{2}|[2-9][0-9]{3})(\\/|-|\\.)((0(1|3|5|7|8)|10|12)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|3[0-1])|(0(4|6|9)|11)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|30)|(02)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]))(\\x20(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2})?(\\x20)?(\\x20((?i)and(?-i))\\x20|,)(\\x20)?(19[0-9]{2}|[2-9][0-9]{3})(\\/|-|\\.)((0(1|3|5|7|8)|10|12)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|3[0-1])|(0(4|6|9)|11)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|30)|(02)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]))(\\x20(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2})?$";
-    
 
     public static String md5(String pass) {
         try {
@@ -43,6 +44,16 @@ public class Utils {
         return sdfDate.format(data);
     }
 
+    public static Date usunMS(Date data) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    .parse(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            .format(data));
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
     public static boolean sprawdzTekst(String t) {
         String[] listaZ = new String[]{";", "\\"};
         for (String s : listaZ) {
@@ -56,10 +67,10 @@ public class Utils {
     public static void msgBox(String tekst, String tytul, int opcje, Container rodzic) {
         JOptionPane.showMessageDialog(rodzic, tekst, tytul, opcje);
     }
-    
+
     public static boolean sprawdzPoprawnoscDanych(String c, String s) {
         int cls;
-        switch(c) {
+        switch (c) {
             case "java.lang.Long":
                 cls = 0;
                 break;
@@ -85,7 +96,7 @@ public class Utils {
         }
         return sprawdzPoprawnoscDanych(cls, s);
     }
-    
+
     public static boolean sprawdzPoprawnoscDanych(int typDanych, String s) {
         boolean ret;
         switch (typDanych) {

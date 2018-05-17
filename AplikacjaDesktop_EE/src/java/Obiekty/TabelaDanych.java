@@ -61,7 +61,7 @@ public class TabelaDanych extends JTable {
         //editCellAt(getSelectedRow(), getSelectedColumn());
         if (!Utils.Utils.sprawdzPoprawnoscDanych(o.getClass().toString(), o.toString())) {
             if (Def.DEBUG) {
-                System.out.println("[BŁĄD] Nowa wartośc komórki jest nieprawidłowa.");
+                System.out.println("[BŁĄD] Nowa wartość komórki jest nieprawidłowa.");
             }
             ((JComponent)cE.getTableCellEditorComponent(this, o, true, getSelectedRow(), getSelectedColumn())).setBorder(new LineBorder(Color.RED));
         } else {
