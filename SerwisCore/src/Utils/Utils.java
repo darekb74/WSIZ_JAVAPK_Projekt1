@@ -44,6 +44,27 @@ public class Utils {
         return sdfDate.format(data);
     }
 
+    public static Date zamienNaDate(String text) {
+        SimpleDateFormat format;
+        if (sprawdzPoprawnoscDanych(5, text)) {
+            text = text.replace("/", "-");
+            text = text.replace(".", "-");
+            if (text.length() == 10) {
+                text += " 00:00:00";
+            }
+            format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        } else {
+            text = "1970-01-01 00:00:00";
+            format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+        try {
+            return format.parse(text);
+        } catch (ParseException e) {
+            return usunMS(new Date());
+        }
+            
+    }
+
     public static Date usunMS(Date data) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")

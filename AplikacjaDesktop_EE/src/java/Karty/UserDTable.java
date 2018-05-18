@@ -51,7 +51,7 @@ public class UserDTable extends JPanel implements Karta {
         modelB = new DefaultTableModel(getData(0, null), 0);
         List<UserDTO> tmp = lookupFasadaUserD_ejbRemote().pobierzZakresRekordow(0, 9);
         formatujDane(tmp);
-        tabela = new TabelaDanych(model, modelB, (byte) 0b00110101, this);
+        tabela = new TabelaDanych(model, modelB, (byte) 0b00100101, this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
         tabela.setPreferredScrollableViewportSize(new Dimension(500, 70));
         tabela.setFillsViewportHeight(true);

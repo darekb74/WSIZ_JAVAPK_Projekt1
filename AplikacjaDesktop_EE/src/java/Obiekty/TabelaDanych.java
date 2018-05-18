@@ -11,15 +11,18 @@ import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import static java.lang.Math.pow;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JComponent;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -43,31 +46,9 @@ public class TabelaDanych extends JTable {
                 }
             });
         }
-        this.setDefaultRenderer(Date.class, new CustomTableRenderer());
-    }
+        this.setDefaultRenderer(Date.class, new CustomDateRenderer());
+        this.setDefaultEditor(Date.class, new CustomDateEditor());
 
-    @Override
-    public void editingStopped(ChangeEvent e) {
-        DefaultCellEditor cE = (DefaultCellEditor)e.getSource();
-        Object o = cE.getCellEditorValue();
-        if (Def.DEBUG) {
-            System.out.println("[EDITING] stopped");
-            System.out.println("Edytowana komórka zawiera wartość: '"
-                + o.toString() + "' type:"
-                + o.getClass().toString()
-                );
-        }
-        super.editingStopped(e);
-        //editCellAt(getSelectedRow(), getSelectedColumn());
-        if (!Utils.Utils.sprawdzPoprawnoscDanych(o.getClass().toString(), o.toString())) {
-            if (Def.DEBUG) {
-                System.out.println("[BŁĄD] Nowa wartość komórki jest nieprawidłowa.");
-            }
-            ((JComponent)cE.getTableCellEditorComponent(this, o, true, getSelectedRow(), getSelectedColumn())).setBorder(new LineBorder(Color.RED));
-        } else {
-            ((JComponent)cE.getTableCellEditorComponent(this, o, true, getSelectedRow(), getSelectedColumn())).setBorder(null);
-        }
-        
     }
 
     @Override
@@ -117,10 +98,51 @@ public class TabelaDanych extends JTable {
         return (d.intValue() & maskaEdycji) == 0;
     }
 
-    // renderowanie Date
-    public class CustomTableRenderer extends DefaultTableCellRenderer {
+    // Edycja Date
+    public class CustomDateEditor extends AbstractCellEditor implements TableCellEditor {
 
-        private final DateFormatter format = new DateFormatter("yyyy-MM-dd HH:mm:ss");
+        Date cDate;
+        JTextField text;
+
+        public CustomDateEditor() {
+            text = new JTextField();
+        }
+
+        @Override
+        public boolean isCellEditable(EventObject anEvent) {
+            if (anEvent instanceof MouseEvent) {
+                return ((MouseEvent) anEvent).getClickCount() >= 2;
+            }
+            return true;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return Utils.Utils.zamienNaDate(text.getText());
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            if (!Utils.Utils.sprawdzPoprawnoscDanych(5, text.getText())) {
+                text.setBorder(new LineBorder(Color.red));
+                return false;
+            } else {
+                text.setBorder(new LineBorder(Color.black));
+            }
+            return super.stopCellEditing();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table,
+                Object value, boolean isSelected, int row, int column) {
+            cDate = (Date) value;
+            text.setText(Utils.Utils.foramtujDate(cDate));
+            return text;
+        }
+    }
+
+    // renderowanie Date
+    public class CustomDateRenderer extends DefaultTableCellRenderer {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
@@ -128,18 +150,8 @@ public class TabelaDanych extends JTable {
 
             super.getTableCellRendererComponent(table, value, isSelected,
                     hasFocus, row, column);
-
-            if (value instanceof Date) {
-                this.setText(format.format((Date) value));
-            }
+            this.setText(Utils.Utils.foramtujDate((Date) value));
             return this;
-        }
-
-        public class DateFormatter extends SimpleDateFormat {
-
-            public DateFormatter(String patern) {
-                super(patern);
-            }
         }
     }
 
