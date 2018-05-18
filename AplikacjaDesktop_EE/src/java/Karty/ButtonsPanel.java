@@ -34,12 +34,45 @@ public class ButtonsPanel extends JPanel {
     private JButton refresh = new JButton("Odśwież");
     private JButton update = new JButton("Aktualizuj");
     private JButton delete = new JButton("Usuń");
+    private JButton add = new JButton("Dodaj");
 
     private Container rodzic;
 
-    public ButtonsPanel(boolean s, boolean r, boolean u, boolean d, Container rodzic) {
+    public ButtonsPanel(Byte vMask, Byte eMask, Container rodzic) {
+        // vMask - maska widzialności
+        // eMask - maska dstępności (enabled)
+        // s - search, r - refresh, u - update, d - delete, a - add
+        // 0b000adurs
+        
         this.rodzic = rodzic;
         column = new JComboBox(((Karta) rodzic).getData(0, null));
+        //search
+        column.setVisible((vMask & (byte)0b1) != 0);
+        column.setEnabled((eMask & (byte)0b1) != 0);
+        operator.setVisible((vMask & (byte)0b1) != 0);
+        operator.setEnabled((eMask & (byte)0b1) != 0);
+        keyword.setVisible((vMask & (byte)0b1) != 0);
+        keyword.setEnabled((eMask & (byte)0b1) != 0);
+        search.setVisible((vMask & (byte)0b1) != 0);
+        search.setEnabled((eMask & (byte)0b1) != 0);
+        // refresh
+        refresh.setVisible((vMask & (byte)0b10) != 0);
+        refresh.setEnabled((eMask & (byte)0b10) != 0);
+        // update
+        update.setVisible((vMask & (byte)0b100) != 0);
+        update.setEnabled((eMask & (byte)0b100) != 0);
+        // delete
+        delete.setVisible((vMask & (byte)0b1000) != 0);
+        delete.setEnabled((eMask & (byte)0b1000) != 0);
+        // add
+        add.setVisible((vMask & (byte)0b10000) != 0);
+        add.setEnabled((eMask & (byte)0b10000) != 0);
+        
+        dodajElementy();
+    }
+    
+    public void dodajElementy() {
+        
         this.add(column);
         this.add(operator);
         this.add(keyword);
@@ -49,14 +82,8 @@ public class ButtonsPanel extends JPanel {
         this.add(update);
         this.add(delete);
         keyword.setPreferredSize(new Dimension(100, 27));
-        keyword.setVisible(s);
-        operator.setVisible(s);
-        column.setVisible(s);
-        search.setVisible(s);
-        refresh.setEnabled(r);
-        update.setEnabled(u);
-        delete.setEnabled(d);
-
+        this.add(add);
+        
         ItemListener oIL = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

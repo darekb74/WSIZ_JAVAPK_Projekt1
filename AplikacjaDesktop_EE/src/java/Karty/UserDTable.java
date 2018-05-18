@@ -57,7 +57,7 @@ public class UserDTable extends JPanel implements Karta {
         tabela.setFillsViewportHeight(true);
         scrollPane = new JScrollPane(tabela);
         this.add(scrollPane, BorderLayout.CENTER);
-        przyciski = new ButtonsPanel(true, true, true, false, this);
+        przyciski = new ButtonsPanel((byte)0b00001111, (byte)0b00000111,this);
         this.add(przyciski, BorderLayout.SOUTH);
     }
 

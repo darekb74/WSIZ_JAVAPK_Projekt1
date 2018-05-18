@@ -66,12 +66,24 @@ public class MenuBar extends JMenuBar implements ActionListener {
         menu = new JMenu("Administracja");
         menu.setMnemonic(KeyEvent.VK_A);
         add(menu);
+        subMenu = new JMenu("Użytkownicy");
+        menu.setMnemonic(KeyEvent.VK_Y);
+        menu.add(subMenu);
         menuItem = new JMenuItem(Def.O_L_USERD, KeyEvent.VK_L);
+        menuItem.addActionListener(this);
+        if ((rmask & Def.LVL5) == 0) {
+            subMenu.setEnabled(false); // brak uprawnień
+            menuItem.setEnabled(false); // brak uprawnień
+        }
+        subMenu.add(menuItem);
+        menuItem = new JMenuItem(Def.O_A_USERD, KeyEvent.VK_D);
         menuItem.addActionListener(this);
         if ((rmask & Def.LVL5) == 0) {
             menuItem.setEnabled(false); // brak uprawnień
         }
-        menu.add(menuItem);
+        subMenu.add(menuItem);
+        
+        
         
         // menu użytkownika
         if (user != null) {
@@ -104,6 +116,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
                 break;
             case Def.O_L_USERD:
                 ((AplikacjaDesktop_EE) rodzic).cl.show(((AplikacjaDesktop_EE) rodzic).karty, Def.O_L_USERD);
+                break;
+            case Def.O_A_USERD:
+                ((AplikacjaDesktop_EE) rodzic).cl.show(((AplikacjaDesktop_EE) rodzic).karty, Def.O_A_USERD);
                 break;
             case Def.O_WYLOGUJ:
                 ((AplikacjaDesktop_EE) rodzic).wyloguj();

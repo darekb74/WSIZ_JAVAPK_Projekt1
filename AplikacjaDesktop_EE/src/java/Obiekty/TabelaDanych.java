@@ -11,12 +11,9 @@ import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import static java.lang.Math.pow;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -48,7 +45,6 @@ public class TabelaDanych extends JTable {
         }
         this.setDefaultRenderer(Date.class, new CustomDateRenderer());
         this.setDefaultEditor(Date.class, new CustomDateEditor());
-
     }
 
     @Override
@@ -154,5 +150,4 @@ public class TabelaDanych extends JTable {
             return this;
         }
     }
-
 }

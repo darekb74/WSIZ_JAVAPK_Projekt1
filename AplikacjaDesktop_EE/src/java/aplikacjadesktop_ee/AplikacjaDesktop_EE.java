@@ -6,6 +6,7 @@
 package aplikacjadesktop_ee;
 
 import Karty.Login;
+import Karty.NewUserD;
 import Karty.UserDTable;
 import Karty.WelcomeCard;
 import Obiekty.Def;
@@ -26,7 +27,8 @@ public class AplikacjaDesktop_EE extends JFrame {
 
     private MenuBar menuBar = new MenuBar(null, this);
     private Login panel = new Login(this, menuBar);
-    private UserDTable tabela = new UserDTable();
+    private UserDTable userDt = new UserDTable();
+    private NewUserD userDa = new NewUserD();
 
     public JPanel karty = new JPanel(new CardLayout());
 
@@ -40,14 +42,16 @@ public class AplikacjaDesktop_EE extends JFrame {
         this.add(menuBar, BorderLayout.NORTH);
 
         // tabela użytkowników
-        tabela.init(null);
-        //this.add(tabela);
-        //this.add(sStartowa);
+        userDt.init(null);
+        // dodaj użytkownika
+        userDa.init(null);
+        
         this.add(karty);
         cl = (CardLayout) karty.getLayout();
 
         karty.add(sStartowa, Def.O_STARTOWA);
-        karty.add(tabela, Def.O_L_USERD);
+        karty.add(userDt, Def.O_L_USERD);
+        karty.add(userDa, Def.O_A_USERD);
 
         // login form
         this.add(panel, BorderLayout.SOUTH);
