@@ -30,5 +30,5 @@ public class Def {
     public final static String O_WYLOGUJ = "Wyloguj";
     public final static String O_STARTOWA = "Strona startowa";
     public final static String O_L_USERD = "Lista użytkowników";
-    public final static String O_A_USERD = "Dodaj użytkownika";
+    public final static String O_A_USERD = "Dodaj użytkownika/dane osobowe";
 }

@@ -45,13 +45,15 @@ public class AplikacjaDesktop_EE extends JFrame {
         userDt.init(null);
         // dodaj użytkownika
         userDa.init(null);
-        
+
         this.add(karty);
         cl = (CardLayout) karty.getLayout();
 
         karty.add(sStartowa, Def.O_STARTOWA);
         karty.add(userDt, Def.O_L_USERD);
         karty.add(userDa, Def.O_A_USERD);
+
+        cl.show(karty, Def.O_STARTOWA);
 
         // login form
         this.add(panel, BorderLayout.SOUTH);
@@ -65,6 +67,10 @@ public class AplikacjaDesktop_EE extends JFrame {
         });
     }
 
+    public void pokazKarte(String Id) {
+        cl.show(karty, Id);
+    }
+
     public void wyloguj() {
         panel.logout();
         // przenieś na stronę startową
@@ -76,7 +82,7 @@ public class AplikacjaDesktop_EE extends JFrame {
         JFrame main = new AplikacjaDesktop_EE();
         main.setDefaultCloseOperation(EXIT_ON_CLOSE);
         main.pack();
-        main.setSize(new Dimension(750, 300));
+        main.setSize(new Dimension(850, 400));
         main.setVisible(true);
         main.setLocationRelativeTo(null);
     }

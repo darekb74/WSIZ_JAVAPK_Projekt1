@@ -57,7 +57,7 @@ public class UserDTable extends JPanel implements Karta {
         tabela.setFillsViewportHeight(true);
         scrollPane = new JScrollPane(tabela);
         this.add(scrollPane, BorderLayout.CENTER);
-        przyciski = new ButtonsPanel((byte)0b00001111, (byte)0b00000111,this);
+        przyciski = new ButtonsPanel((byte) 0b00001111, (byte) 0b00000111, this);
         this.add(przyciski, BorderLayout.SOUTH);
     }
 
@@ -164,7 +164,7 @@ public class UserDTable extends JPanel implements Karta {
                     switch ((String) args[1]) {
                         case "BETWEEN":
                         case "NOT BETWEEN":
-                            t +=50; // specjalne testery
+                            t += 50; // specjalne testery
                             ok = Utils.Utils.sprawdzPoprawnoscDanych(t, (String) args[2]);
                             break;
                         default:
@@ -178,10 +178,11 @@ public class UserDTable extends JPanel implements Karta {
                         wypelnij(wynik);
                         validate();
                     } else {
-                        Utils.Utils.msgBox("Warunek wyszukiwania jest nieprawidłowy!\n" +
-                                (String) args[2], "Błąd danych wyszukiania.", JOptionPane.ERROR_MESSAGE, this);
-                        if (Def.DEBUG)
+                        Utils.Utils.msgBox("Warunek wyszukiwania jest nieprawidłowy!\n"
+                                + (String) args[2], "Błąd danych wyszukiania.", JOptionPane.ERROR_MESSAGE, this);
+                        if (Def.DEBUG) {
                             System.out.println("[BLĄD] Warunek wyszukiwania jest nieprawidłowy!");
+                        }
                     }
                 }
         }

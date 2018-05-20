@@ -22,7 +22,11 @@ public class Utils {
 
     private static final String CHK_DATE = "^(19[0-9]{2}|[2-9][0-9]{3})(\\/|-|\\.)((0(1|3|5|7|8)|10|12)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|3[0-1])|(0(4|6|9)|11)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|30)|(02)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]))(\\x20(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2})?$";
     private static final String CHK_BETWEEN_DATE = "^(19[0-9]{2}|[2-9][0-9]{3})(\\/|-|\\.)((0(1|3|5|7|8)|10|12)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|3[0-1])|(0(4|6|9)|11)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|30)|(02)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]))(\\x20(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2})?(\\x20)?(\\x20((?i)and(?-i))\\x20|,)(\\x20)?(19[0-9]{2}|[2-9][0-9]{3})(\\/|-|\\.)((0(1|3|5|7|8)|10|12)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|3[0-1])|(0(4|6|9)|11)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]|30)|(02)(\\/|-|\\.)(0[1-9]|1[0-9]|2[0-9]))(\\x20(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2})?$";
-
+    private static final String CHK_USERNAME = "^(?=.{3,32}$)[(?i)a-z(?-i)0-9]+$";
+    private static final String CHK_PASSWORD = "^(?=.{5,32}$)(?=.*\\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*)[(?i)a-z(?-i)0-9]+$";
+    //private static final String CHK_PASSWORD = "^(?=.{5,32}$)[(?i)a-z(?-i)0-9]+$";
+    private static final String CHK_EMAIL = "^[(?i)a-z(?-i)0-9._%+-]+@[(?i)a-z(?-i)0-9.-]+\\.[(?i)a-z(?-i)]{2,4}$";
+    
     public static String md5(String pass) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -118,6 +122,10 @@ public class Utils {
         return sprawdzPoprawnoscDanych(cls, s);
     }
 
+    public static boolean sprawdzString(int minDlugosc, int maxDlugosc, String tekst) {
+        return (tekst.length() >= minDlugosc && tekst.length() <= maxDlugosc );
+    }
+
     public static boolean sprawdzPoprawnoscDanych(int typDanych, String s) {
         boolean ret;
         switch (typDanych) {
@@ -163,6 +171,12 @@ public class Utils {
             // 50 + wstępna poprawność (NOT) BETWEEN
             case 55: // DATE
                 return s.matches(CHK_BETWEEN_DATE);
+            case 100: // username
+                return s.matches(CHK_USERNAME);
+            case 101: // password
+                return s.matches(CHK_PASSWORD);
+            case 102: // e-mail
+                return s.matches(CHK_EMAIL);
             default:
                 return true;
         }

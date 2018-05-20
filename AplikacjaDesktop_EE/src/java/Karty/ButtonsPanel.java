@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  */
 public class ButtonsPanel extends JPanel {
 
-    private JTextField keyword = new JTextField();
+    private JTextField keyword = new JTextField(10);
     private JComboBox column;
     private JComboBox operator = new JComboBox(new String[]{"=", "<>",
         "<=", ">=", "BETWEEN", "NOT BETWEEN"});
@@ -34,7 +34,7 @@ public class ButtonsPanel extends JPanel {
     private JButton refresh = new JButton("Odśwież");
     private JButton update = new JButton("Aktualizuj");
     private JButton delete = new JButton("Usuń");
-    private JButton add = new JButton("Dodaj");
+    private JButton addb = new JButton("Dodaj");
 
     private Container rodzic;
 
@@ -43,36 +43,36 @@ public class ButtonsPanel extends JPanel {
         // eMask - maska dstępności (enabled)
         // s - search, r - refresh, u - update, d - delete, a - add
         // 0b000adurs
-        
+
         this.rodzic = rodzic;
         column = new JComboBox(((Karta) rodzic).getData(0, null));
         //search
-        column.setVisible((vMask & (byte)0b1) != 0);
-        column.setEnabled((eMask & (byte)0b1) != 0);
-        operator.setVisible((vMask & (byte)0b1) != 0);
-        operator.setEnabled((eMask & (byte)0b1) != 0);
-        keyword.setVisible((vMask & (byte)0b1) != 0);
-        keyword.setEnabled((eMask & (byte)0b1) != 0);
-        search.setVisible((vMask & (byte)0b1) != 0);
-        search.setEnabled((eMask & (byte)0b1) != 0);
+        column.setVisible((vMask & (byte) 0b1) != 0);
+        column.setEnabled((eMask & (byte) 0b1) != 0);
+        operator.setVisible((vMask & (byte) 0b1) != 0);
+        operator.setEnabled((eMask & (byte) 0b1) != 0);
+        keyword.setVisible((vMask & (byte) 0b1) != 0);
+        keyword.setEnabled((eMask & (byte) 0b1) != 0);
+        search.setVisible((vMask & (byte) 0b1) != 0);
+        search.setEnabled((eMask & (byte) 0b1) != 0);
         // refresh
-        refresh.setVisible((vMask & (byte)0b10) != 0);
-        refresh.setEnabled((eMask & (byte)0b10) != 0);
+        refresh.setVisible((vMask & (byte) 0b10) != 0);
+        refresh.setEnabled((eMask & (byte) 0b10) != 0);
         // update
-        update.setVisible((vMask & (byte)0b100) != 0);
-        update.setEnabled((eMask & (byte)0b100) != 0);
+        update.setVisible((vMask & (byte) 0b100) != 0);
+        update.setEnabled((eMask & (byte) 0b100) != 0);
         // delete
-        delete.setVisible((vMask & (byte)0b1000) != 0);
-        delete.setEnabled((eMask & (byte)0b1000) != 0);
+        delete.setVisible((vMask & (byte) 0b1000) != 0);
+        delete.setEnabled((eMask & (byte) 0b1000) != 0);
         // add
-        add.setVisible((vMask & (byte)0b10000) != 0);
-        add.setEnabled((eMask & (byte)0b10000) != 0);
-        
+        addb.setVisible((vMask & (byte) 0b10000) != 0);
+        addb.setEnabled((eMask & (byte) 0b10000) != 0);
+
         dodajElementy();
     }
-    
+
     public void dodajElementy() {
-        
+
         this.add(column);
         this.add(operator);
         this.add(keyword);
@@ -80,15 +80,14 @@ public class ButtonsPanel extends JPanel {
         this.add(Box.createRigidArea(new Dimension(10, 1)));
         this.add(refresh);
         this.add(update);
-        this.add(delete);
-        keyword.setPreferredSize(new Dimension(100, 27));
-        this.add(add);
-        
+        //this.add(delete);
+        this.add(addb);
+
         ItemListener oIL = new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 DefaultComboBoxModel dcm;
-                switch ( (int)((Karta) rodzic).getData(2, null)[column.getSelectedIndex()]) {
+                switch ((int) ((Karta) rodzic).getData(2, null)[column.getSelectedIndex()]) {
                     case 0: // Long
                     case 1: // Integer
                     case 2: // Byte
@@ -109,7 +108,7 @@ public class ButtonsPanel extends JPanel {
                         operator.removeAllItems();
                         operator.setModel(dcm);
                         break;
-                    case 3: // Strring
+                    case 3: // String
                     default:
                         dcm = new DefaultComboBoxModel(new String[]{"LIKE",
                             "NOT LIKE", "=", "<>", "IS NULL", "IS NOT NULL"});
@@ -157,5 +156,16 @@ public class ButtonsPanel extends JPanel {
             }
         };
         search.addActionListener(scL);
+
+        ActionListener acL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //((Karta) rodzic).takeAction(4, new Object[]{column.getSelectedIndex(), operator.getSelectedItem(), keyword.getText()});
+                if (Def.DEBUG) {
+                    System.out.println("[ADD] Dodaję rekord dp bazy.");
+                }
+            }
+        };
+        addb.addActionListener(acL);
     }
 }
