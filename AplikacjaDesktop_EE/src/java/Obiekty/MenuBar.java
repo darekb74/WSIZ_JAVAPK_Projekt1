@@ -83,10 +83,19 @@ public class MenuBar extends JMenuBar implements ActionListener {
         }
         subMenu.add(menuItem);
 
+        // prawa strona menu
+        add(Box.createHorizontalGlue());
+        
+        // panel stron
+        PanelStron pS = new PanelStron();
+        pS.wygenerujPanel(new String[] {"<<","<","5","6","7","8","9",">",">>"});
+        add(pS);
+        
+        
         // menu użytkownika
         if (user != null) {
             menu = new JMenu("[" + user.getUsername() + "]");
-            add(Box.createHorizontalGlue());
+            
             menu.setMnemonic(KeyEvent.VK_U);
             add(menu);
             menuItem = new JMenuItem(Def.O_WYLOGUJ, KeyEvent.VK_W);

@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 /**
@@ -40,7 +41,8 @@ public class AplikacjaDesktop_EE extends JFrame {
         super("Serwis komuterowy - aplikacja desktop");
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
-
+        //this.setJMenuBar(menuBar);
+        
         // tabela użytkowników
         userDt.init(null);
         // dodaj użytkownika
