@@ -5,6 +5,7 @@
  */
 package Karty;
 
+import Obiekty.PanelStron;
 import Obiekty.TextComponentLimit;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,6 +34,8 @@ import layout.SpringUtilities;
  * @author Darek Xperia
  */
 public class NewUserD extends JPanel implements Karta {
+    
+    private PanelStron panelStron;
 
     private JPanel leftP = new JPanel();
     private JPanel rightP = new JPanel();
@@ -56,6 +59,7 @@ public class NewUserD extends JPanel implements Karta {
 
     @Override
     public void init(Object[] args) {
+        panelStron = (PanelStron) args[0];
         this.setLayout(new BorderLayout());
         wypelnij();
         ActionListener cAL = new ActionListener() {

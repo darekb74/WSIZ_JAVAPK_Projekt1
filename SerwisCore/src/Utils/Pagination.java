@@ -29,6 +29,10 @@ public class Pagination<T> implements Serializable {
         return page;
     }
 
+    public void setPage(int page) {
+        this.page = page;
+    }
+
     public int getRowsPerPage() {
         return rowsPerPage;
     }
@@ -41,18 +45,32 @@ public class Pagination<T> implements Serializable {
         this.collection = collection;
     }
 
-    public int getPagesCount() {
-        return collection.size() / rowsPerPage;
+    public int getPagesCount() { // ceil
+        return collection.size() / rowsPerPage + (collection.size() % rowsPerPage == 0 ? 0 : 1);
     }
 
     public String[] generateControlArray() {
-        String tmp = "<<,<";
-        int p;
-        for (p = page; p < page + 5 || p < getPagesCount(); p++) {
-            tmp += "," + p;
+        String tmp = "";
+        if (page > 4) {
+            tmp += "<<,";
         }
-        if (p != getPagesCount()) {
-            tmp += ",>,>>";
+        if (page > 1) {
+            tmp += "<,";
+        }
+        int p;
+        for (p = page - 3; p < page; p++) {
+            if (p > 0) {
+                tmp += p + ",";
+            }
+        }
+        for (p = page; p < page + 4 && p <= getPagesCount(); p++) {
+            tmp += p + ",";
+        }
+        if (page != getPagesCount()) {
+            tmp += ",>";
+        }
+        if (page < getPagesCount() - 3) {
+            tmp += ",>>";
         }
         return tmp.split(",");
     }
@@ -81,9 +99,9 @@ public class Pagination<T> implements Serializable {
         return generateDataArray();
     }
 
-    private List<T> generateDataArray() {
+    public List<T> generateDataArray() {
         ArrayList<T> out = new ArrayList<>();
-        for (int s = rowsPerPage * (page - 1); s < rowsPerPage * (page) || s < collection.size(); s++) {
+        for (int s = rowsPerPage * (page - 1); s < rowsPerPage * (page) && s < collection.size(); s++) {
             out.add(collection.get(s));
         }
         return out;

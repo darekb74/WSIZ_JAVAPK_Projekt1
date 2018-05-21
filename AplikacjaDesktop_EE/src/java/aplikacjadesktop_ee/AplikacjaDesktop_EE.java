@@ -17,7 +17,6 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 /**
@@ -42,11 +41,12 @@ public class AplikacjaDesktop_EE extends JFrame {
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
         //this.setJMenuBar(menuBar);
-        
+
         // tabela użytkowników
-        userDt.init(null);
+        userDt.init(new Object[]{menuBar.getPanelStron()});
+        menuBar.getPanelStron().setRodzic(userDt);
         // dodaj użytkownika
-        userDa.init(null);
+        userDa.init(new Object[]{menuBar.getPanelStron()});
 
         this.add(karty);
         cl = (CardLayout) karty.getLayout();
@@ -70,11 +70,24 @@ public class AplikacjaDesktop_EE extends JFrame {
     }
 
     public void pokazKarte(String Id) {
+        switch (Id) {
+            default:
+                break;
+            case Def.O_L_USERD:
+                userDt.takeAction(5, null); // pokaz panel stron
+                break;
+            case Def.O_A_USERD:
+            case Def.O_STARTOWA: // ukryj panel stron
+                menuBar.getPanelStron().ukryjWszystkieElementy();
+                break;
+        }
         cl.show(karty, Id);
     }
 
     public void wyloguj() {
         panel.logout();
+        // ukryj panel stron
+        menuBar.getPanelStron().ukryjWszystkieElementy();
         // przenieś na stronę startową
         cl.show(karty, Def.O_STARTOWA);
     }

@@ -23,10 +23,13 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar implements ActionListener {
 
     private Container rodzic;
+    private PanelStron pS;
 
     public MenuBar(UserDTO user, Container rodzic) {
         super();
         this.rodzic = rodzic;
+        this.pS = new PanelStron();
+        pS.setRodzic(rodzic);
         setRights(user);
     }
 
@@ -87,8 +90,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
         add(Box.createHorizontalGlue());
         
         // panel stron
-        PanelStron pS = new PanelStron();
-        pS.wygenerujPanel(new String[] {"<<","<","5","6","7","8","9",">",">>"});
+        //pS.wygenerujPanel(new String[] {"<<","<","5","6","7","8","9",">",">>"});
         add(pS);
         
         
@@ -133,5 +135,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
             default:
                 break;
         }
+    }
+
+    public PanelStron getPanelStron() {
+        return pS;
     }
 }

@@ -8,7 +8,9 @@ package Karty;
 import DTO.UserDTO;
 import EE_ejb.FasadaUserD_ejbRemote;
 import Menadzery.Def;
+import Obiekty.PanelStron;
 import Obiekty.TabelaDanych;
+import Utils.Pagination;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -37,9 +39,13 @@ public class UserDTable extends JPanel implements Karta {
     private ButtonsPanel przyciski;
     private DefaultTableModel model;
     private DefaultTableModel modelB;
+    private PanelStron panelStron;
+    private Pagination<UserDTO> pag;
+    private boolean inicjacja = false;
 
     @Override
     public void init(Object[] args) {
+        panelStron = (PanelStron) args[0];
         this.setLayout(new BorderLayout());
         wypelnij();
 
@@ -49,7 +55,9 @@ public class UserDTable extends JPanel implements Karta {
         this.removeAll();
         model = new DefaultTableModel(getData(0, null), 0);
         modelB = new DefaultTableModel(getData(0, null), 0);
-        List<UserDTO> tmp = lookupFasadaUserD_ejbRemote().pobierzZakresRekordow(0, 9);
+        List<UserDTO> tmp = lookupFasadaUserD_ejbRemote().listaUzytkownikow();
+        pag = new Pagination(5, tmp);
+        tmp = pag.generateDataArray();
         formatujDane(tmp);
         tabela = new TabelaDanych(model, modelB, (byte) 0b00100101, this);
         tabela.getTableHeader().setReorderingAllowed(false); // wyłączenie przenoszenia kolumn
@@ -72,7 +80,6 @@ public class UserDTable extends JPanel implements Karta {
         tabela.setFillsViewportHeight(true);
         scrollPane = new JScrollPane(tabela);
         this.add(scrollPane, BorderLayout.CENTER);
-        //przyciski = new ButtonsPanel(true, true, true, false, this);
         this.add(przyciski, BorderLayout.SOUTH);
     }
 
@@ -175,8 +182,10 @@ public class UserDTable extends JPanel implements Karta {
                                 .wyszukiwanie((String) getData(1, null)[(int) args[0]],
                                         (String) args[1], (String) args[2]);
 
-                        wypelnij(wynik);
-                        validate();
+                        pag = new Pagination(2, wynik);
+                        panelStron.wygenerujPanel(pag.generateControlArray(), pag.getPage());
+                        wypelnij(pag.generateDataArray());
+                        //validate();
                     } else {
                         Utils.Utils.msgBox("Warunek wyszukiwania jest nieprawidłowy!\n"
                                 + (String) args[2], "Błąd danych wyszukiania.", JOptionPane.ERROR_MESSAGE, this);
@@ -185,6 +194,36 @@ public class UserDTable extends JPanel implements Karta {
                         }
                     }
                 }
+                break;
+            case 5: // show panel (init)
+                panelStron.wygenerujPanel(pag.generateControlArray(), pag.getPage());
+                wypelnij(pag.generateDataArray());
+                break;
+            case 6: // zmiana strony
+                switch ((String)args[0]) {
+                    case "<<":
+                        pag.setPage(1);
+                        break;
+                    case "<":
+                        pag.setPage(pag.getPage()-1);
+                        break;
+                    case ">>":
+                        pag.setPage(pag.getPagesCount());
+                        break;
+                    case ">":
+                        pag.setPage(pag.getPage()+1);
+                        break;
+                    default:
+                        try {
+                            pag.setPage(Integer.parseInt((String)args[0]));
+                        } catch (NumberFormatException e) {
+                            
+                        }
+                        break;
+                }
+                panelStron.wygenerujPanel(pag.generateControlArray(), pag.getPage());
+                wypelnij(pag.generateDataArray());
+                break;
         }
     }
 
