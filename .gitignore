@@ -59,3 +59,6 @@ AplikacjaWeb/build/web/resources/css/cssLayout.css
 AplikacjaWeb/build/web/META-INF/MANIFEST.MF
 AplikacjaWeb/build/web/index.xhtml
 AplikacjaWeb/build/web/resources/css/login.css
+AplikacjaWeb/build/web/WEB-INF/classes/warstwa_internetowa/Def.class
+AplikacjaWeb/nbproject/private/private.properties
+AplikacjaWeb/nbproject/private/private.xml

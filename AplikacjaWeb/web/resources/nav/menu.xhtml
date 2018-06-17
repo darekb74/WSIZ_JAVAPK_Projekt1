@@ -20,16 +20,17 @@
                 </h:panelGroup>
                 <ul class="nav navbar-nav">
                     <!-- Magazyn -->
-                    <li class="dropdown">
-                        <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
-                            <h:panelGroup class="caret"/></h:link>
-                        <ul class="dropdown-menu">
-                            <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
+                    <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
+                        <li class="dropdown">
+                            <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
+                                <h:panelGroup class="caret"/></h:link>
+                            <ul class="dropdown-menu">
                                 <li><h:link>Sprawdź stany magazynowe</h:link></li>
                                 <li><h:link>Szukaj części</h:link></li>
-                            </c:if>
-                        </ul>
-                    </li>
+
+                            </ul>
+                        </li>
+                    </c:if>
                     <!-- Administracja -->
                     <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
                         <li class="dropdown">
@@ -44,30 +45,46 @@
                     <li><a href="#">Page 2</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown"><h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">
-                            <h:panelGroup class="glyphicon glyphicon-log-in"/> Logowanie <h:panelGroup class="caret"/></h:link>
-                        <ul id="login-dp" class="dropdown-menu">
-                            <li>
-                                <h:panelGroup layout="block" class="row">
-                                    <h:panelGroup layout="block" class="col-md-12">
-                                        <h:panelGroup layout="block" style="color: #045491">Wprowadź dane:</h:panelGroup>
-                                        <h:form class="form" role="form" acceptcharset="UTF-8" id="login-nav">
-                                            <h:panelGroup layout="block" class="form-group">
-                                                <h:outputLabel class="sr-only" for="exampleInputUserName2" value="Nazwa użytkownika"/>
-                                                <h:inputText class="form-control" id="exampleInputEmail2" a:placeholder="Nazwa użytkownika" required="true"/>
+                    <li class="dropdown">
+                        <c:choose>
+                            <c:when test="#{!menadzer_uzytkownikow.isZalogowany()}">
+                                <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                                    <h:panelGroup class="glyphicon glyphicon-log-in"/> Logowanie <h:panelGroup class="caret"/>
+                                </h:link>
+                                <ul id="login-dp" class="dropdown-menu">
+                                    <li>
+                                        <h:panelGroup layout="block" class="row">
+                                            <h:panelGroup layout="block" class="col-md-12">
+                                                <h:panelGroup layout="block" style="color: #045491">Wprowadź dane:</h:panelGroup>
+                                                <h:form class="form" role="form" acceptcharset="UTF-8" id="login-nav">
+                                                    <h:panelGroup layout="block" class="form-group">
+                                                        <h:outputLabel class="sr-only" for="uzytkownik" value="Nazwa użytkownika"/>
+                                                        <h:inputText class="form-control" value="#{menadzer_uzytkownikow.uzytkownik}" id="uzytkownik" a:placeholder="Nazwa użytkownika" required="true"/>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" class="form-group">
+                                                        <h:outputLabel class="sr-only" for="haslo" value="Hasło"/>
+                                                        <h:inputSecret class="form-control" value="#{menadzer_uzytkownikow.haslo}" id="haslo" a:placeholder="Hasło" required="true" />
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" class="form-group">
+                                                        <h:commandButton class="btn btn-primary btn-block" value="Zaloguj się" action="#{menadzer_uzytkownikow.login()}" />
+                                                    </h:panelGroup>
+                                                </h:form>
                                             </h:panelGroup>
-                                            <h:panelGroup layout="block" class="form-group">
-                                                <h:outputLabel class="sr-only" for="exampleInputPassword2" value="Hasło"/>
-                                                <h:inputSecret class="form-control" id="exampleInputPassword2" a:placeholder="Hasło" required="true" />
-                                            </h:panelGroup>
-                                            <h:panelGroup layout="block" class="form-group">
-                                                <h:button class="btn btn-primary btn-block" value="Zaloguj się"/>
-                                            </h:panelGroup>
-                                        </h:form>
-                                    </h:panelGroup>
-                                </h:panelGroup>
-                            </li>
-                        </ul>
+                                        </h:panelGroup>
+                                    </li>
+                                </ul>
+                            </c:when>
+                            <c:otherwise>
+                                <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                                    <h:panelGroup class="glyphicon glyphicon-user"/> Zalogowany jako <h:outputText class="text-primary" value="#{menadzer_uzytkownikow.uzytkownik}" escape="false" /><h:panelGroup class="caret"/>
+                                </h:link>
+                                <ul id="login-dp" class="dropdown-menu">
+                                    <li><h:form>
+                                            <h:commandButton class="btn btn-primary btn-block" value="Wyloguj się" action="#{menadzer_uzytkownikow.logout()}" />
+                                    </h:form></li>
+                                </ul>
+                            </c:otherwise>
+                        </c:choose>
                     </li>
                 </ul>
             </h:panelGroup>
