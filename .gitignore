@@ -45,3 +45,16 @@ AplikacjaDesktop/build/built-clean.properties
 /ApkWeb/dist/
 /ApkWeb/nbproject/private/private.properties
 ApkWeb/nbproject/private/private.properties
+AplikacjaWeb/dist/AplikacjaWeb.war
+AplikacjaWeb/nbproject/ant-deploy.xml
+AplikacjaWeb/build/web/WEB-INF/web.xml
+AplikacjaWeb/build/web/WEB-INF/lib/SerwisCore.jar
+AplikacjaWeb/build/web/WEB-INF/lib/Serwis_interfejs.jar
+AplikacjaWeb/build/web/WEB-INF/glassfish-web.xml
+AplikacjaWeb/build/web/WEB-INF/classes/warstwa_internetowa/menadzer_uzytkownikow.class
+AplikacjaWeb/build/web/Template.xhtml
+AplikacjaWeb/build/web/resources/nav/menu.xhtml
+AplikacjaWeb/build/web/resources/css/default.css
+AplikacjaWeb/build/web/resources/css/cssLayout.css
+AplikacjaWeb/build/web/META-INF/MANIFEST.MF
+AplikacjaWeb/build/web/index.xhtml

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <nav class="navbar navbar-inverse" id="menubar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand active" href="">Serwis komputerowy</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <!-- Magazyn -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Magazyn
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
+                                <li><a href="#">Sprawdź stany magazynowe</a></li>
+                                <li><a href="#">Szukaj części</a></li>
+                            </c:if>
+                            <li><a href="#">Page 1-3</a></li>
+                        </ul>
+                    </li>
+                    <!-- Administracja -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administracja
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
+                                <li><h:link outcome="index" value="Lista użytkowników"></h:link></li>
+                                <li><h:link outcome="index" value="Dodaj użytkownika"></h:link></li>
+                            </c:if>
+                            <li><h:link outcome="index">Page 1-3</h:link></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Page 2</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><h:link outcome="index"><span class="glyphicon glyphicon-user"/> Rejestracja</h:link></li>
+                    <li><h:link outcome="index"><span class="glyphicon glyphicon-log-in"/> Logowanie</h:link></li>
+                </ul>
+            </div>
+        </nav>
+    </cc:implementation>
+</html>
