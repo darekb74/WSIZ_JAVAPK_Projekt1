@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      >
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -12,42 +14,63 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <nav class="navbar navbar-inverse" id="menubar">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand active" href="">Serwis komputerowy</a>
-                </div>
+            <h:panelGroup layout="block" class="container-fluid">
+                <h:panelGroup layout="block" class="navbar-header">
+                    <h:link class="navbar-brand active" outcome="index" value="Serwis komputerowy"/>
+                </h:panelGroup>
                 <ul class="nav navbar-nav">
                     <!-- Magazyn -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Magazyn
-                            <span class="caret"></span></a>
+                        <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
+                            <h:panelGroup class="caret"/></h:link>
                         <ul class="dropdown-menu">
                             <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
-                                <li><a href="#">Sprawdź stany magazynowe</a></li>
-                                <li><a href="#">Szukaj części</a></li>
+                                <li><h:link>Sprawdź stany magazynowe</h:link></li>
+                                <li><h:link>Szukaj części</h:link></li>
                             </c:if>
-                            <li><a href="#">Page 1-3</a></li>
                         </ul>
                     </li>
                     <!-- Administracja -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administracja
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
+                    <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
+                        <li class="dropdown">
+                            <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Administracja
+                                <h:panelGroup class="caret"/></h:link>
+                            <ul class="dropdown-menu">
                                 <li><h:link outcome="index" value="Lista użytkowników"></h:link></li>
                                 <li><h:link outcome="index" value="Dodaj użytkownika"></h:link></li>
-                            </c:if>
-                            <li><h:link outcome="index">Page 1-3</h:link></li>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    </c:if>
                     <li><a href="#">Page 2</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><h:link outcome="index"><span class="glyphicon glyphicon-user"/> Rejestracja</h:link></li>
-                    <li><h:link outcome="index"><span class="glyphicon glyphicon-log-in"/> Logowanie</h:link></li>
+                    <li class="dropdown"><h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                            <h:panelGroup class="glyphicon glyphicon-log-in"/> Logowanie <h:panelGroup class="caret"/></h:link>
+                        <ul id="login-dp" class="dropdown-menu">
+                            <li>
+                                <h:panelGroup layout="block" class="row">
+                                    <h:panelGroup layout="block" class="col-md-12">
+                                        <h:panelGroup layout="block" style="color: #045491">Wprowadź dane:</h:panelGroup>
+                                        <h:form class="form" role="form" acceptcharset="UTF-8" id="login-nav">
+                                            <h:panelGroup layout="block" class="form-group">
+                                                <h:outputLabel class="sr-only" for="exampleInputUserName2" value="Nazwa użytkownika"/>
+                                                <h:inputText class="form-control" id="exampleInputEmail2" a:placeholder="Nazwa użytkownika" required="true"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" class="form-group">
+                                                <h:outputLabel class="sr-only" for="exampleInputPassword2" value="Hasło"/>
+                                                <h:inputSecret class="form-control" id="exampleInputPassword2" a:placeholder="Hasło" required="true" />
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" class="form-group">
+                                                <h:button class="btn btn-primary btn-block" value="Zaloguj się"/>
+                                            </h:panelGroup>
+                                        </h:form>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-            </div>
+            </h:panelGroup>
         </nav>
     </cc:implementation>
 </html>

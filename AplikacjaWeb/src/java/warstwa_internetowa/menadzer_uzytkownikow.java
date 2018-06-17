@@ -17,6 +17,12 @@ import javax.inject.Named;
 public class menadzer_uzytkownikow {
 
     public boolean posiadaUprawnienia(String typ) {
-        return true;
+        switch (typ) {
+            default: 
+                return false;
+            case "magazynier":
+                return true;
+        }
+        
     }
 }
