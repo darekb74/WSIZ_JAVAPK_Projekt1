@@ -37,8 +37,19 @@ public class UserDTO implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Object id) {
+        try {
+            switch (id.getClass().getName()) {
+                case "java.lang.String":
+                    this.id = Long.parseLong((String)id);
+                    break;
+                default:
+                    this.id = (Long)id;
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            id = null;
+        }
     }
 
     public String getUsername() {

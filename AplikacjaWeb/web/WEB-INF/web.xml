@@ -21,4 +21,12 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <display-name>Restrict access to resources</display-name>
+        <web-resource-collection>
+            <web-resource-name>RESOURCES</web-resource-name>
+            <url-pattern>/resources/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
 </web-app>

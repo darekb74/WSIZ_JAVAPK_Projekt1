@@ -11,32 +11,32 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>       
-        <title>Serwis PC and NBK</title>
+        <title>Serwis komputerowy - <ui:insert name="title">Template</ui:insert></title>
         <h:outputStylesheet name="css/default.css"/>
         <h:outputStylesheet name="css/cssLayout.css"/>
         <h:outputStylesheet name="css/login.css"/>
     </h:head>
 
     <h:body>
-<div id="contener">
-        <div id="top">
-            <ui:insert name="top">
-                <nav:menu/>
-            </ui:insert>
-            
-        </div>
-        <div>
-            <div id="left">
-                <ui:insert name="left">Left</ui:insert>
+        <div id="contener">
+            <div id="top">
+                <ui:insert name="top">
+                    <nav:menu/>
+                </ui:insert>
+
             </div>
-            <div id="content" class="left_content">
-                <ui:insert name="content">Content</ui:insert>
+            <div>
+                <div id="left">
+                    <ui:insert name="left">Left</ui:insert>
+                </div>
+                <div id="content" class="left_content">
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+            </div>
+            <div id="bottom">
+                <ui:insert name="bottom">Bottom</ui:insert>
             </div>
         </div>
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
-        </div>
-</div>
     </h:body>
 
 </html>

@@ -4,8 +4,7 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      >
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -16,7 +15,7 @@
         <nav class="navbar navbar-inverse" id="menubar">
             <h:panelGroup layout="block" class="container-fluid">
                 <h:panelGroup layout="block" class="navbar-header">
-                    <h:link class="navbar-brand active" outcome="index" value="Serwis komputerowy"/>
+                    <h:link class="navbar-brand active" outcome="/index" value="Serwis komputerowy"/>
                 </h:panelGroup>
                 <ul class="nav navbar-nav">
                     <!-- Magazyn -->
@@ -37,8 +36,8 @@
                             <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Administracja
                                 <h:panelGroup class="caret"/></h:link>
                             <ul class="dropdown-menu">
-                                <li><h:link outcome="index" value="Lista użytkowników"></h:link></li>
-                                <li><h:link outcome="index" value="Dodaj użytkownika"></h:link></li>
+                                <li><h:link outcome="/resources/admin/lista_uzytkownikow" value="Lista użytkowników"></h:link></li>
+                                <li><h:link outcome="/index" value="Dodaj użytkownika"></h:link></li>
                             </ul>
                         </li>
                     </c:if>

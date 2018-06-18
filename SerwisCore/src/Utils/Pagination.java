@@ -75,6 +75,32 @@ public class Pagination<T> implements Serializable {
         return tmp.split(",");
     }
 
+    public List<String> generateControlList() {
+        List<String> tmp = new ArrayList<>();
+        if (page > 4) {
+            tmp.add("<<");
+        }
+        if (page > 1) {
+            tmp.add("<");
+        }
+        int p;
+        for (p = page - 3; p < page; p++) {
+            if (p > 0) {
+                tmp.add("" + p);
+            }
+        }
+        for (p = page; p < page + 4 && p <= getPagesCount(); p++) {
+            tmp.add("" + p);
+        }
+        if (page != getPagesCount()) {
+            tmp.add(">");
+        }
+        if (page < getPagesCount() - 3) {
+            tmp.add(">>");
+        }
+        return tmp;
+    }
+
     public List<T> nextPage() {
         if (page + 1 > getPagesCount()) {
             return null;
@@ -88,6 +114,16 @@ public class Pagination<T> implements Serializable {
             return null;
         }
         page--;
+        return generateDataArray();
+    }
+
+    public List<T> firstPage() {
+        page = 1;
+        return generateDataArray();
+    }
+
+    public List<T> lastPage() {
+        page = getPagesCount();
         return generateDataArray();
     }
 
@@ -105,5 +141,14 @@ public class Pagination<T> implements Serializable {
             out.add(collection.get(s));
         }
         return out;
+    }
+
+    public String getControlArrayItem(int pos) {
+        String[] cAL = generateControlArray();
+        System.out.println("REQ:" + pos);
+        if (pos >= 0 && pos < cAL.length) {
+            return cAL[pos];
+        }
+        return "";
     }
 }
