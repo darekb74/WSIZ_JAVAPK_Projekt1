@@ -9,7 +9,6 @@ import DTO.UserDTO;
 import EE_ejb.FasadaUserD_ejbRemote;
 import Utils.Pagination;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -74,12 +73,18 @@ public class menadzer_uzytkownikow implements Serializable {
     }
 
     public void setPage(int pageNo) {
-        System.out.println("STRONY:" + strony.toString() + ", PAGE:" + pageNo);
         if (strony != null) {
             lista = strony.getPageNo(pageNo);
         }
     }
 
+    public String czyWylaczony(int pageNo) {
+        System.out.println("STRONY:" + strony.toString() + ", PAGE:" + pageNo);
+        if (strony != null) {
+            if( strony.getPage()==pageNo) return "disabled";
+        }
+        return "enabled";
+    }
     private void setPagination() {
         strony = new Pagination(5, fasadaUser.listaUzytkownikow());
         lista = strony.generateDataArray();
@@ -127,10 +132,8 @@ public class menadzer_uzytkownikow implements Serializable {
 
     public String getControlArrayItem(int pos) {
         if (strony != null) {
-            System.out.println("DEBUG 1");
             return strony.getControlArrayItem(pos);
         } else {
-            System.out.println("DEBUG 2");
             setPagination();
             return strony.getControlArrayItem(pos);
         }

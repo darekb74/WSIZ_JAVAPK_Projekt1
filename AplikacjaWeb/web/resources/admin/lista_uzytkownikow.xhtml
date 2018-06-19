@@ -25,31 +25,31 @@
                         <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;" rendered="#{menadzer_uzytkownikow.doRenderowania(1)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.previousPage()}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(0)}" rendered="#{menadzer_uzytkownikow.doRenderowania(2)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(0))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(0)}" rendered="#{menadzer_uzytkownikow.doRenderowania(2)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(0))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(1)}" rendered="#{menadzer_uzytkownikow.doRenderowania(3)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(1))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(1)}" rendered="#{menadzer_uzytkownikow.doRenderowania(3)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(1))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(2)}" rendered="#{menadzer_uzytkownikow.doRenderowania(4)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(2))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(2)}" rendered="#{menadzer_uzytkownikow.doRenderowania(4)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(2))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(3)}" rendered="#{menadzer_uzytkownikow.doRenderowania(5)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(3))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(3)}" rendered="#{menadzer_uzytkownikow.doRenderowania(5)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(3))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(4)}" rendered="#{menadzer_uzytkownikow.doRenderowania(6)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(4))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(4)}" rendered="#{menadzer_uzytkownikow.doRenderowania(6)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(4))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(5)}" rendered="#{menadzer_uzytkownikow.doRenderowania(7)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(5))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(5)}" rendered="#{menadzer_uzytkownikow.doRenderowania(7)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(5))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(6)}" rendered="#{menadzer_uzytkownikow.doRenderowania(8)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(6))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(6)}" rendered="#{menadzer_uzytkownikow.doRenderowania(8)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(6))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(7)}" rendered="#{menadzer_uzytkownikow.doRenderowania(9)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(7))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(7)}" rendered="#{menadzer_uzytkownikow.doRenderowania(9)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(7))}"/>
                         </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(8)}" rendered="#{menadzer_uzytkownikow.doRenderowania(10)}">
+                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(8))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(8)}" rendered="#{menadzer_uzytkownikow.doRenderowania(10)}">
                             <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(8))}"/>
                         </h:commandButton>
                         <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;" rendered="#{menadzer_uzytkownikow.doRenderowania(12)}">
@@ -61,8 +61,8 @@
                     </h:form>
                 </h:panelGroup>
                 <!-- LISTA UŻYTKOWNIKÓW -->
-                <h:dataTable class="table table-hover table-responsive" var="user" rules="all"
-                             value="${lista}">
+                <h:dataTable class="custom_table table table-hover table-responsive" var="user" rules="all"
+                             value="${lista}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
                     <h:column> 
                         <f:facet name="header">
                             <h:outputText value="Id"/>
