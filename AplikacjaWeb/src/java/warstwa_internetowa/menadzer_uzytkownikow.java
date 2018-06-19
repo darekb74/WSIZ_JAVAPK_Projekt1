@@ -42,9 +42,51 @@ public class menadzer_uzytkownikow implements Serializable {
 
     private List<UserDTO> lista;
     private Pagination<UserDTO> strony;
+    
+    private String username, password, password2, pasword_hash, email, rmask;
 
     public Pagination<UserDTO> getStrony() {
         return strony;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String eMail) {
+        this.email = eMail;
+    }
+
+    public String getRmask() {
+        return rmask;
+    }
+
+    public void setRmask(String rmask) {
+        this.rmask = rmask;
     }
 
     public void lastPage() {
@@ -60,7 +102,6 @@ public class menadzer_uzytkownikow implements Serializable {
     }
 
     public void nextPage() {
-        System.out.println("STRONY:" + strony.toString());
         if (strony != null) {
             lista = strony.nextPage();
         }
@@ -79,7 +120,6 @@ public class menadzer_uzytkownikow implements Serializable {
     }
 
     public String czyWylaczony(int pageNo) {
-        System.out.println("STRONY:" + strony.toString() + ", PAGE:" + pageNo);
         if (strony != null) {
             if( strony.getPage()==pageNo) return "disabled";
         }
@@ -221,7 +261,12 @@ public class menadzer_uzytkownikow implements Serializable {
                 }
                 break;
             case "administrator":
-                if ((uDTO.getRmask() & Def.ADM) > 0) {
+                if ((uDTO.getRmask() & Def.LVL9) > 0) {
+                    return true;
+                }
+                break;
+            case "zaopatrzenie":
+                if ((uDTO.getRmask() & Def.LVL4) > 0) {
                     return true;
                 }
                 break;

@@ -24,9 +24,21 @@
                             <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
                                 <h:panelGroup class="caret"/></h:link>
                             <ul class="dropdown-menu">
-                                <li><h:link>Sprawdź stany magazynowe</h:link></li>
-                                <li><h:link>Szukaj części</h:link></li>
-
+                                <li><h:link outcome="/resources/magazyn/zawartosc_magazynu">Lista części w magazynie</h:link></li>
+                                <li><h:link outcome="/resources/magazyn/przyjecie_czesci">Przyjęcie części do magazynu</h:link></li>
+                                <li><h:link outcome="/resources/magazyn/wydanie_czesci">Wydanie części z magazynu</h:link></li>
+                                <li><h:link outcome="/resources/magazyn/sprawdz_stany_magazynowe">Sprawdź stany magazynowe</h:link></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <!-- Zaopatrzenie -->
+                    <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('zaopatrzenie')}">
+                        <li class="dropdown">
+                            <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Zaopatrzenie
+                                <h:panelGroup class="caret"/></h:link>
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="/resources/zaopatrzenie/lista_czesci" value="Lista definicji części"></h:link></li>
+                                <li><h:link outcome="/resources/zaopatrzenie/dodaj_czesc" value="Dodaj definicję części"></h:link></li>
                             </ul>
                         </li>
                     </c:if>
@@ -37,11 +49,10 @@
                                 <h:panelGroup class="caret"/></h:link>
                             <ul class="dropdown-menu">
                                 <li><h:link outcome="/resources/admin/lista_uzytkownikow" value="Lista użytkowników"></h:link></li>
-                                <li><h:link outcome="/index" value="Dodaj użytkownika"></h:link></li>
+                                <li><h:link outcome="/resources/admin/dodaj_uzytkownika" value="Dodaj użytkownika"></h:link></li>
                             </ul>
                         </li>
                     </c:if>
-                    <li><a href="#">Page 2</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">

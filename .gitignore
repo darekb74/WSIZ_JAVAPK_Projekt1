@@ -64,3 +64,10 @@ AplikacjaWeb/nbproject/private/private.properties
 AplikacjaWeb/nbproject/private/private.xml
 AplikacjaWeb/build/web/resources/admin/lista_uzytkownikow.xhtml
 AplikacjaWeb/build/web/resources/templates/template.xhtml
+AplikacjaWeb/build/web/resources/admin/dodaj_uzytkownika.xhtml
+AplikacjaWeb/build/web/resources/magazyn/przyjecie_czesci.xhtml
+AplikacjaWeb/build/web/resources/magazyn/sprawdz_stany_magazynowe.xhtml
+AplikacjaWeb/build/web/resources/magazyn/wydanie_czesci.xhtml
+AplikacjaWeb/build/web/resources/magazyn/zawartosc_magazynu.xhtml
+AplikacjaWeb/build/web/resources/zaopatrzenie/dodaj_czesc.xhtml
+AplikacjaWeb/build/web/resources/zaopatrzenie/lista_czesci.xhtml
