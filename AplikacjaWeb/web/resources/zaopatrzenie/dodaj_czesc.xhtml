@@ -43,16 +43,16 @@
                     <h:panelGroup layout="block" class="form-row">
                         <h:panelGroup layout="block" class="form-group col-md-6">
                             <h:outputLabel for="jednostka" value="Jednostka:"/>
-                            <h:inputSecret id="jednostka" required="true" class="form-control" a:placeholder="Jednostka"
+                            <h:inputText id="jednostka" required="true" class="form-control" a:placeholder="Jednostka"
                                            maxlength="10" value="#{menadzer_czesci.jednostka}"/>
                         </h:panelGroup>
                         <h:panelGroup layout="block" class="form-group col-md-6">
                             <h:outputLabel for="cena_jendostkowa" value="Cena jednostkowa:"/>
-                            <h:inputSecret id="cena_jendostkowa" required="true" class="form-control" a:placeholder="Cena jednostkowa"
+                            <h:inputText id="cena_jendostkowa" required="true" class="form-control" a:placeholder="Cena jednostkowa"
                                            maxlength="32" value="#{menadzer_czesci.cena_jednostkowa}"/>
                         </h:panelGroup>
                     </h:panelGroup>
-                    &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Dodaj"/>
+                    &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Dodaj" action="#{menadzer_czesci.dodaj()}"/>
                 </h:form>
             </ui:define>
 

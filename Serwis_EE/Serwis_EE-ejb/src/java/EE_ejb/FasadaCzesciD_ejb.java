@@ -35,6 +35,15 @@ public class FasadaCzesciD_ejb implements FasadaCzesciD_ejbRemote {
             return null;
         }
     }
+    
+    @Override
+    public CzesciDTO znajdzCzesc(Long id) {
+        try {
+            return bazaCzesci.find(id).getCzesciDTO();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     public List<CzesciDTO> listaCzesci() {
@@ -53,5 +62,15 @@ public class FasadaCzesciD_ejb implements FasadaCzesciD_ejbRemote {
     @Override
     public void aktualizujDane(CzesciDTO czesc) {
         bazaCzesci.edit(mgr.map(czesc));
+    }
+
+    @Override
+    public Long znajdzNastepneID() {
+        return bazaCzesci.findNextId();
+    }
+    
+    @Override
+    public void dodajCzesc(CzesciDTO czescDTO) {
+        bazaCzesci.create(mgr.map(czescDTO));
     }
 }

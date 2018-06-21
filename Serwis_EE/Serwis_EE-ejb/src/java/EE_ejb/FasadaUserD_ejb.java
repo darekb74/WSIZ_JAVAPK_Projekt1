@@ -66,6 +66,11 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
     }
 
     @Override
+    public void dodajUzytkownika(UserDTO userDTO) {
+        bazaUzytkownikow.create(mgr.map(userDTO));
+    }
+
+    @Override
     public List<UserDTO> pobierzZakresRekordow(int start, int limit) {
         return this.MapToDTO(bazaUzytkownikow.findRange(new int[]{start, start + limit - 1}));
     }
@@ -78,5 +83,10 @@ public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
     @Override
     public List<UserDTO> wyszukiwanie(String kolumna, String operator, String tekst) {
         return this.MapToDTO(bazaUzytkownikow.customQuery(kolumna, operator, tekst));
+    }
+    
+    @Override
+    public Long znajdzNastepneID() {
+        return bazaUzytkownikow.findNextId();
     }
 }

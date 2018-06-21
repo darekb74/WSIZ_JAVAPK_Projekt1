@@ -1,122 +1,120 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-    <ui:composition template="/resources/templates/template.xhtml">
-        <ui:define name="title">
-            Administaracja - Lista użytkowników
-        </ui:define>
-        <ui:define name="left">
-            SEARCH ?
-            Do przemyślenia
-        </ui:define>
-        <ui:define name="content">
-            <!-- panel zmiany stron -->
-            <h:form id="main_list">
+<ui:composition template="/resources/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="title">
+        <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
+        Administaracja - Lista użytkowników
+    </ui:define>
+    <ui:define name="left">
+        SEARCH ?
+        Do przemyślenia
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="main_list">
             <c:set var="listaU" value="#{menadzer_uzytkownikow.getListaU()}"/>
             <h:panelGroup layout="block" rendered="#{!menadzer_uzytkownikow.czyRenderowacTabele()}">
                 <br/>
                 <h:outputText class="alert alert-warning" escape="false" value="Lista użytkowników jest pusta."/>
                 <br/><br/>
             </h:panelGroup>
-                <h:panelGroup rendered="#{menadzer_uzytkownikow.czyRenderowacTabele()}">
-                    <h:panelGroup layout="block" class="btn-group justify-content-end">
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;&lt;" rendered="#{menadzer_uzytkownikow.doRenderowania(0)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.firstPage()}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;" rendered="#{menadzer_uzytkownikow.doRenderowania(1)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.previousPage()}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(0))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(0)}" rendered="#{menadzer_uzytkownikow.doRenderowania(2)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(0))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(1))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(1)}" rendered="#{menadzer_uzytkownikow.doRenderowania(3)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(1))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(2))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(2)}" rendered="#{menadzer_uzytkownikow.doRenderowania(4)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(2))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(3))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(3)}" rendered="#{menadzer_uzytkownikow.doRenderowania(5)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(3))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(4))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(4)}" rendered="#{menadzer_uzytkownikow.doRenderowania(6)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(4))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(5))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(5)}" rendered="#{menadzer_uzytkownikow.doRenderowania(7)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(5))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(6))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(6)}" rendered="#{menadzer_uzytkownikow.doRenderowania(8)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(6))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(7))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(7)}" rendered="#{menadzer_uzytkownikow.doRenderowania(9)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(7))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(8))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(8)}" rendered="#{menadzer_uzytkownikow.doRenderowania(10)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(8))}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;" rendered="#{menadzer_uzytkownikow.doRenderowania(12)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.nextPage()}"/>
-                        </h:commandButton>
-                        <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;&gt;" rendered="#{menadzer_uzytkownikow.doRenderowania(13)}">
-                            <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.lastPage()}"/>
-                        </h:commandButton>
-                    </h:panelGroup>
-                    <!-- LISTA UŻYTKOWNIKÓW -->
-                    <h:dataTable class="custom_table table table-hover table-responsive" var="user" rules="all"
-                                 value="#{menadzer_uzytkownikow.listaU}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="Id"/>
-                            </f:facet>
-                            <h:outputText value="#{user.id}"/>
-                        </h:column>
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="Nazwa użytkownika"/>
-                            </f:facet>
-                            <h:outputText value="#{user.username}"/>
-                        </h:column>
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="Hasło"/>
-                            </f:facet>
-                            <h:outputText value="#{user.password_hash}"/>
-                        </h:column>
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="E-mail"/>
-                            </f:facet>
-                            <h:outputText value="#{user.eMail}"/>
-                        </h:column>
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="Osatatnie logowanie"/>
-                            </f:facet>
-                            <h:outputText value="#{user.last_login}"/>
-                        </h:column>
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="Zalogowany"/>
-                            </f:facet>
-                            <h:outputText value="#{user.isOnline()}"/>
-                        </h:column>
-                        <h:column> 
-                            <f:facet name="header">
-                                <h:outputText value="Maska uprawnień"/>
-                            </f:facet>
-                            <h:outputText value="#{user.rmask}"/>
-                        </h:column>
-                    </h:dataTable>
+            <h:panelGroup rendered="#{menadzer_uzytkownikow.czyRenderowacTabele()}">
+                <h:panelGroup layout="block" class="btn-group justify-content-end">
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;&lt;" rendered="#{menadzer_uzytkownikow.doRenderowania(0)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.firstPage()}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;" rendered="#{menadzer_uzytkownikow.doRenderowania(1)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.previousPage()}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(0))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(0)}" rendered="#{menadzer_uzytkownikow.doRenderowania(2)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(0))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(1))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(1)}" rendered="#{menadzer_uzytkownikow.doRenderowania(3)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(1))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(2))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(2)}" rendered="#{menadzer_uzytkownikow.doRenderowania(4)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(2))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(3))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(3)}" rendered="#{menadzer_uzytkownikow.doRenderowania(5)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(3))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(4))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(4)}" rendered="#{menadzer_uzytkownikow.doRenderowania(6)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(4))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(5))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(5)}" rendered="#{menadzer_uzytkownikow.doRenderowania(7)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(5))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(6))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(6)}" rendered="#{menadzer_uzytkownikow.doRenderowania(8)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(6))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(7))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(7)}" rendered="#{menadzer_uzytkownikow.doRenderowania(9)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(7))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_uzytkownikow.czyWylaczony(menadzer_uzytkownikow.getControlArrayItem(8))}" a:href="#" value="#{menadzer_uzytkownikow.getControlArrayItem(8)}" rendered="#{menadzer_uzytkownikow.doRenderowania(10)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.setPage(menadzer_uzytkownikow.getControlArrayItem(8))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;" rendered="#{menadzer_uzytkownikow.doRenderowania(12)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.nextPage()}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;&gt;" rendered="#{menadzer_uzytkownikow.doRenderowania(13)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.lastPage()}"/>
+                    </h:commandButton>
                 </h:panelGroup>
-                <h:commandButton class="btn btn-primary" a:href="#" value="Odśwież">
-                    <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.refresh()}"/>
-                </h:commandButton>
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</html>
-
+                <!-- LISTA UŻYTKOWNIKÓW -->
+                <h:dataTable class="custom_table table table-hover" var="user" rules="all"
+                             value="#{menadzer_uzytkownikow.listaU}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{user.id}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Nazwa użytkownika"/>
+                        </f:facet>
+                        <h:outputText value="#{user.username}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Hasło"/>
+                        </f:facet>
+                        <h:outputText value="#{user.password_hash}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="E-mail"/>
+                        </f:facet>
+                        <h:outputText value="#{user.eMail}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Osatatnie logowanie"/>
+                        </f:facet>
+                        <h:outputText value="#{user.last_login}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Zalogowany"/>
+                        </f:facet>
+                        <h:outputText value="#{user.isOnline()}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Maska uprawnień"/>
+                        </f:facet>
+                        <h:outputText value="#{user.rmask}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <h:commandButton class="btn btn-primary" a:href="#" value="Odśwież">
+                <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.refresh()}"/>
+            </h:commandButton>
+        </h:form>
+    </ui:define>
+</ui:composition>

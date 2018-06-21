@@ -7,6 +7,7 @@ package warstwa_internetowa;
 
 import DTO.CzesciDTO;
 import DTO.MagazynDTO;
+import EE_ejb.FasadaCzesciD_ejbRemote;
 import EE_ejb.FasadaMagazynD_ejbRemote;
 import Utils.Pagination;
 import java.util.ArrayList;
@@ -29,23 +30,36 @@ public class menadzer_magazynu {
     @EJB(mappedName = "ejb/FasadaMagazynD_ejb")
     FasadaMagazynD_ejbRemote fasadaMagazynu;
 
+    @EJB(mappedName = "ejb/FasadaCzesciD_ejb")
+    FasadaCzesciD_ejbRemote fasadaCzesci;
+
     @PostConstruct
     public void init() {
         setPagination();
+        System.out.println(""
+                + "STRON:" + strony.getPagesCount() + " "
+                + "aktualna:" + strony.getPage() + " "
+                + "elementów:" + lista.size() + " "
+        );
     }
-    
+
     private List<MagazynDTO> lista;
     private Pagination<MagazynDTO> strony;
 
     private CzesciDTO czesc;
     private Integer regal, polka, ilosc;
-    
-    // zmienne dodatkowe
-    private String nazwa, model, producent, jednostka;
-    private Double cena_jednostkowa, wartosc;
 
     public List<MagazynDTO> getLista() {
         return lista;
+    }
+
+    public void dodaj() {
+        fasadaMagazynu.dodajPozycje(new MagazynDTO(fasadaMagazynu.znajdzNastepneID(), czesc, regal, polka, ilosc));
+        setPagination();
+    }
+
+    public FasadaCzesciD_ejbRemote getFasadaCzesci() {
+        return fasadaCzesci;
     }
 
     public void setLista(List<MagazynDTO> lista) {
@@ -92,52 +106,8 @@ public class menadzer_magazynu {
         this.ilosc = ilosc;
     }
 
-    public String getNazwa() {
-        return czesc.getNazwa();
-    }
-
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
-    }
-
-    public String getModel() {
-        return czesc.getModel();
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getProducent() {
-        return czesc.getProducent();
-    }
-
-    public void setProducent(String producent) {
-        this.producent = producent;
-    }
-
-    public String getJednostka() {
-        return czesc.getJednostka();
-    }
-
-    public void setJednostka(String jednostka) {
-        this.jednostka = jednostka;
-    }
-
-    public Double getCena_jednostkowa() {
-        return czesc.getCena_jednostkowa();
-    }
-
-    public void setCena_jednostkowa(Double cena_jednostkowa) {
-        this.cena_jednostkowa = cena_jednostkowa;
-    }
-
-    public Double getWartosc() {
-        return ilosc * czesc.getCena_jednostkowa();
-    }
-
-    public void setWartosc(Double wartosc) {
-        this.wartosc = wartosc;
+    public Double getWartosc(Double cena_jednostkowa, Double ilosc) {
+        return ilosc * cena_jednostkowa;
     }
 
     public boolean czyRenderowacTabele() {

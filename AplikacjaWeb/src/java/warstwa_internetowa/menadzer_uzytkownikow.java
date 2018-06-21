@@ -8,6 +8,7 @@ package warstwa_internetowa;
 import DTO.UserDTO;
 import EE_ejb.FasadaUserD_ejbRemote;
 import Utils.Pagination;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
@@ -46,7 +49,8 @@ public class menadzer_uzytkownikow implements Serializable {
     private List<UserDTO> listaU;
     private Pagination<UserDTO> strony;
 
-    private String username, password, password2, pasword_hash, email, rmask;
+    private String username, password, password2, pasword_hash, email;
+    private Short rmask;
 
     public Pagination<UserDTO> getStrony() {
         return strony;
@@ -84,11 +88,11 @@ public class menadzer_uzytkownikow implements Serializable {
         this.email = eMail;
     }
 
-    public String getRmask() {
+    public Short getRmask() {
         return rmask;
     }
 
-    public void setRmask(String rmask) {
+    public void setRmask(Short rmask) {
         this.rmask = rmask;
     }
 
@@ -122,6 +126,11 @@ public class menadzer_uzytkownikow implements Serializable {
         }
     }
 
+    public void dodaj() {
+        fasadaUser.dodajUzytkownika(new UserDTO(fasadaUser.znajdzNastepneID(), username, Utils.Utils.md5(password), email, null, false, rmask));
+        setPagination();
+    }
+
     public String czyWylaczony(int pageNo) {
         if (strony != null) {
             if (strony.getPage() == pageNo) {
@@ -134,6 +143,16 @@ public class menadzer_uzytkownikow implements Serializable {
     private void setPagination() {
         strony = new Pagination(5, fasadaUser.listaUzytkownikow());
         listaU = strony.generateDataArray();
+    }
+
+    public void redirectTest() {
+        try {
+            if (!zalogowany) {
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                ec.redirect(ec.getRequestContextPath() + "/");
+            }
+        } catch (IOException e) {
+        }
     }
 
     public void refresh() {
@@ -301,15 +320,4 @@ public class menadzer_uzytkownikow implements Serializable {
         }
         return false;
     }
-    /*
-    private FasadaUserD_ejbRemote lookupFasadaUserD_ejbRemote() {
-        try {
-            Context c = new InitialContext();
-            return (FasadaUserD_ejbRemote) c.lookup("ejb/FasadaUserD_ejb");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-     */
 }

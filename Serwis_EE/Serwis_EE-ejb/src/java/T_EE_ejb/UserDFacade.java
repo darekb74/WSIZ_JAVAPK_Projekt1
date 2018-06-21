@@ -134,4 +134,16 @@ public class UserDFacade extends AbstractFacade<UserD> implements UserDFacadeLoc
         }
     }
 
+    @Override
+    public Long findNextId() {
+        try {
+            Query query = em.createQuery("SELECT i.id FROM UserD i ORDER BY i.id DESC");
+
+            return (Long) query
+                    .setMaxResults(1)
+                    .getSingleResult() + 1;
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
+    }
 }

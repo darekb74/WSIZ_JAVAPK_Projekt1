@@ -17,9 +17,14 @@ import javax.ejb.Remote;
 public interface FasadaCzesciD_ejbRemote {
 
     public CzesciDTO znajdzCzesc(String nazwa);
+    
+    public CzesciDTO znajdzCzesc(Long id);
 
     public List<CzesciDTO> listaCzesci();
 
     public void aktualizujDane(CzesciDTO czesc);
 
+    public Long znajdzNastepneID();
+    
+    public void dodajCzesc(CzesciDTO czescDTO);
 }

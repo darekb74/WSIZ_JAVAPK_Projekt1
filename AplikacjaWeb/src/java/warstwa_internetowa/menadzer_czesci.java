@@ -32,11 +32,16 @@ public class menadzer_czesci {
     public void init() {
         setPagination();
     }
-    
+
     private List<CzesciDTO> lista;
     private Pagination<CzesciDTO> strony;
 
-    private String nazwa, producent, model, jednostka, cena_jednostkowa;
+    private String nazwa, producent, model, jednostka;
+    private Double cena_jednostkowa;
+
+    public FasadaCzesciD_ejbRemote getFasadaCzesci() {
+        return fasadaCzesci;
+    }
 
     public List<CzesciDTO> getLista() {
         return lista;
@@ -86,11 +91,11 @@ public class menadzer_czesci {
         this.jednostka = jednostka;
     }
 
-    public String getCena_jednostkowa() {
+    public Double getCena_jednostkowa() {
         return cena_jednostkowa;
     }
 
-    public void setCena_jednostkowa(String cena_jednostkowa) {
+    public void setCena_jednostkowa(Double cena_jednostkowa) {
         this.cena_jednostkowa = cena_jednostkowa;
     }
 
@@ -114,6 +119,11 @@ public class menadzer_czesci {
         }
     }
 
+    public void dodaj() {
+        fasadaCzesci.dodajCzesc(new CzesciDTO(fasadaCzesci.znajdzNastepneID(), nazwa, producent, model, jednostka, cena_jednostkowa));
+        setPagination();
+    }
+    
     public Boolean doRenderowania(int pos) {
         if (strony == null) {
             setPagination();

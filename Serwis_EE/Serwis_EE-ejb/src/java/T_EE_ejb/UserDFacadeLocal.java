@@ -36,4 +36,5 @@ public interface UserDFacadeLocal {
 
     int count();
     
+    public Long findNextId();
 }

@@ -12,53 +12,52 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <nav class="navbar navbar-inverse" id="menubar">
-            <h:panelGroup layout="block" class="container-fluid">
-                <h:panelGroup layout="block" class="navbar-header">
-                    <h:link class="navbar-brand active" outcome="/index" value="Serwis komputerowy"/>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded" id="menubar">
+                <h:panelGroup layout="block" class="navbar-brand">
+                    <h:link class="navbar-brand" outcome="/index" value="Serwis komputerowy"/>
                 </h:panelGroup>
-                <ul class="nav navbar-nav">
+                <ul class="navbar-nav mr-auto">
                     <!-- Magazyn -->
                     <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
-                        <li class="dropdown">
-                            <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
+                        <li class="nav-item dropdown">
+                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
                                 <h:panelGroup class="caret"/></h:link>
                             <ul class="dropdown-menu">
-                                <li><h:link outcome="/resources/magazyn/zawartosc_magazynu">Lista części w magazynie</h:link></li>
-                                <li><h:link outcome="/resources/magazyn/przyjecie_czesci">Przyjęcie części do magazynu</h:link></li>
-                                <li><h:link outcome="/resources/magazyn/wydanie_czesci">Wydanie części z magazynu</h:link></li>
-                                <li><h:link outcome="/resources/magazyn/sprawdz_stany_magazynowe">Sprawdź stany magazynowe</h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/magazyn/zawartosc_magazynu">Lista części w magazynie</h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/magazyn/przyjecie_czesci">Przyjęcie części do magazynu</h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/magazyn/wydanie_czesci">Wydanie części z magazynu</h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/magazyn/sprawdz_stany_magazynowe">Sprawdź stany magazynowe</h:link></li>
                             </ul>
                         </li>
                     </c:if>
                     <!-- Zaopatrzenie -->
                     <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('zaopatrzenie')}">
-                        <li class="dropdown">
-                            <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Zaopatrzenie
+                        <li class="nav-item dropdown">
+                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">Zaopatrzenie
                                 <h:panelGroup class="caret"/></h:link>
                             <ul class="dropdown-menu">
-                                <li><h:link outcome="/resources/zaopatrzenie/lista_czesci" value="Lista definicji części"></h:link></li>
-                                <li><h:link outcome="/resources/zaopatrzenie/dodaj_czesc" value="Dodaj definicję części"></h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/zaopatrzenie/lista_czesci" value="Lista definicji części"></h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/zaopatrzenie/dodaj_czesc" value="Dodaj definicję części"></h:link></li>
                             </ul>
                         </li>
                     </c:if>
                     <!-- Administracja -->
                     <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
-                        <li class="dropdown">
-                            <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">Administracja
+                        <li class="nav-item dropdown">
+                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">Administracja
                                 <h:panelGroup class="caret"/></h:link>
                             <ul class="dropdown-menu">
-                                <li><h:link outcome="/resources/admin/lista_uzytkownikow" value="Lista użytkowników"></h:link></li>
-                                <li><h:link outcome="/resources/admin/dodaj_uzytkownika" value="Dodaj użytkownika"></h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/admin/lista_uzytkownikow" value="Lista użytkowników"></h:link></li>
+                                <li><h:link class="dropdown-item" outcome="/resources/admin/dodaj_uzytkownika" value="Dodaj użytkownika"></h:link></li>
                             </ul>
                         </li>
                     </c:if>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-inline my-2 my-sm-0">
                     <li class="dropdown">
                         <c:choose>
                             <c:when test="#{!menadzer_uzytkownikow.isZalogowany()}">
-                                <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                                <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">
                                     <h:panelGroup class="glyphicon glyphicon-log-in"/> Logowanie <h:panelGroup class="caret"/>
                                 </h:link>
                                 <ul id="login-dp" class="dropdown-menu">
@@ -85,7 +84,7 @@
                                 </ul>
                             </c:when>
                             <c:otherwise>
-                                <h:link class="dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                                <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">
                                     <h:panelGroup class="glyphicon glyphicon-user"/> Zalogowany jako <h:outputText class="text-primary" value="#{menadzer_uzytkownikow.uzytkownik}" escape="false" /><h:panelGroup class="caret"/>
                                 </h:link>
                                 <ul id="login-dp" class="dropdown-menu">
@@ -97,7 +96,6 @@
                         </c:choose>
                     </li>
                 </ul>
-            </h:panelGroup>
         </nav>
     </cc:implementation>
 </html>

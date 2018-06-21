@@ -7,23 +7,21 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-
     <ui:define name="title">
+        <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
         Zaopatrzenie - Lista części
     </ui:define>
-
     <ui:define name="left">
         -/\/\/\/\/(OO) Sss..
     </ui:define>
-
     <ui:define name="content">
         <h:form id="main_list">
-        <c:set var="lista" value="#{menadzer_czesci.getLista()}"/>
-        <h:panelGroup layout="block" rendered="#{!menadzer_czesci.czyRenderowacTabele()}">
-            <br/>
-            <h:outputText class="alert alert-warning" escape="false" value="Lista części jest pusta"/>
-            <br/><br/>
-        </h:panelGroup>
+            <c:set var="lista" value="#{menadzer_czesci.getLista()}"/>
+            <h:panelGroup layout="block" rendered="#{!menadzer_czesci.czyRenderowacTabele()}">
+                <br/>
+                <h:outputText class="alert alert-warning" escape="false" value="Lista części jest pusta"/>
+                <br/><br/>
+            </h:panelGroup>
             <h:panelGroup rendered="#{menadzer_czesci.czyRenderowacTabele()}" >
                 <h:panelGroup layout="block" class="btn-group justify-content-end">
                     <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;&lt;" rendered="#{menadzer_czesci.doRenderowania(0)}">
@@ -66,8 +64,8 @@
                         <f:ajax event="click" render="main_list" listener="#{menadzer_czesci.lastPage()}"/>
                     </h:commandButton>
                 </h:panelGroup>
-                <!-- LISTA UŻYTKOWNIKÓW -->
-                <h:dataTable class="custom_table table table-hover table-responsive" var="czesc" rules="all"
+                <!-- LISTA CZĘŚCI -->
+                <h:dataTable class="custom_table table table-hover" var="czesc" rules="all"
                              value="#{menadzer_czesci.lista}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
                     <h:column> 
                         <f:facet name="header">
@@ -112,5 +110,4 @@
             </h:commandButton>
         </h:form>
     </ui:define>
-
 </ui:composition>

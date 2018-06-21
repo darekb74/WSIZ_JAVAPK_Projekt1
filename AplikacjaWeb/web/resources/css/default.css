@@ -5,6 +5,10 @@ body {
     margin: 10px;
 }
 
+.table.custom_table {
+    font-size: 12px;
+}
+
 .table.custom_table th {
     border-bottom: 2px solid #003366;
 }

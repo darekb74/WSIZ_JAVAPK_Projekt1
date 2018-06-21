@@ -67,10 +67,10 @@ public class Pagination<T> implements Serializable {
             tmp += p + ",";
         }
         if (page != getPagesCount()) {
-            tmp += ",>";
+            tmp += ">,";
         }
         if (page < getPagesCount() - 3) {
-            tmp += ",>>";
+            tmp += ">>";
         }
         return tmp.split(",");
     }
@@ -102,7 +102,6 @@ public class Pagination<T> implements Serializable {
     }
 
     public List<T> nextPage() {
-        System.out.println("[PAGENAV] next:" +(page+1)+" count:"+getPagesCount());
         if (page + 1 > getPagesCount()) {
             return null;
         }
@@ -111,7 +110,6 @@ public class Pagination<T> implements Serializable {
     }
 
     public List<T> previousPage() {
-        System.out.println("[PAGENAV] previous:" +(page+1)+" count:"+getPagesCount());
         if (page - 1 <= 0) {
             return null;
         }
@@ -120,19 +118,16 @@ public class Pagination<T> implements Serializable {
     }
 
     public List<T> firstPage() {
-        System.out.println("[PAGENAV] first:" +(page+1)+" count:"+getPagesCount());
         page = 1;
         return generateDataArray();
     }
 
     public List<T> lastPage() {
-        System.out.println("[PAGENAV] last:" +(page+1)+" count:"+getPagesCount());
         page = getPagesCount();
         return generateDataArray();
     }
 
     public List<T> getPageNo(int pageNo) {
-        System.out.println("[PAGENAV] get:" +(page+1)+" count:"+getPagesCount());
         if (pageNo <= 0 || pageNo > getPagesCount()) {
             return null;
         }

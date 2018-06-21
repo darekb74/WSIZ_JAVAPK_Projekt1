@@ -28,7 +28,11 @@ public interface FasadaUserD_ejbRemote {
     
     public void usunUzytkownika(UserDTO user);
     
+    public void dodajUzytkownika(UserDTO userDTO);
+    
     public List<UserDTO> pobierzZakresRekordow(int start, int limit);
     
     public List<UserDTO> wyszukiwanie(String kolumna, String operator, String tekst);
+    
+    public Long znajdzNastepneID();
 }

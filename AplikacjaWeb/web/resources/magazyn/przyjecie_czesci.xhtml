@@ -1,18 +1,49 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../templates/template.xhtml">
+                template="./../templates/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <ui:define name="title">
         Magazyn - Przyjęcie części
     </ui:define>
 
     <ui:define name="left">
-        left
+        O/
     </ui:define>
 
     <ui:define name="content">
-        content
+        <!-- formularz -->
+        <h:form>
+            <h:panelGroup layout="block" class="form-row">
+                <h:panelGroup layout="block" class="form-group col-md-3">
+                    <h:outputLabel for="nazwa" value="Id czesci:"/>
+                    <h:inputText id="nazwa" required="true" class="form-control" a:placeholder="Id części"
+                                 maxlength="128" value="#{menadzer_magazynu.czesc}" >
+                        <f:converter converterId="KonwerterCzesciDTO"/>
+                        <f:ajax event="blur" execute="nazwa" render="messagePanel"/>
+                    </h:inputText>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-3">
+                    <h:outputLabel for="regal" value="Nr regalu:"/>
+                    <h:inputText id="regal" required="true" class="form-control" a:placeholder="Nr regału"
+                                 maxlength="32" value="#{menadzer_magazynu.regal}"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-3">
+                    <h:outputLabel for="polka" value="Nr półki:"/>
+                    <h:inputText id="polka" required="true" class="form-control" a:placeholder="Nr półki"
+                                 maxlength="32" value="#{menadzer_magazynu.polka}"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-3">
+                    <h:outputLabel for="ilosc" value="Ilość:"/>
+                    <h:inputText id="ilosc" required="true" class="form-control" a:placeholder="Ilość"
+                                   maxlength="10" value="#{menadzer_magazynu.ilosc}"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Dodaj" action="#{menadzer_magazynu.dodaj}"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>

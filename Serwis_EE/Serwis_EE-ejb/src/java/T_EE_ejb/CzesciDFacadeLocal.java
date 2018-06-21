@@ -32,4 +32,5 @@ public interface CzesciDFacadeLocal {
 
     int count();
     
+    Long findNextId();
 }

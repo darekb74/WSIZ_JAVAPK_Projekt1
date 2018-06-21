@@ -1,15 +1,22 @@
--- usuwamy foregin key
+-- usuwamy foregin keys
 ALTER TABLE SERWIS.PERSONALINFO DROP CONSTRAINT PERSONALINFOUSERID;
+ALTER TABLE SERWIS.MAGAZYND DROP CONSTRAINT MAGAZYND_ID_CZESCI;
 -- czyścimy tabele
 TRUNCATE TABLE SERWIS.PERSONALINFO;
 TRUNCATE TABLE SERWIS.USERD;
 TRUNCATE TABLE SERWIS.CZESCID;
--- przywracamy foregin key
+TRUNCATE TABLE SERWIS.MAGAZYND;
+-- przywracamy foregin keys
 ALTER TABLE SERWIS.PERSONALINFO 
     ADD CONSTRAINT PERSONALINFOUSERID 
     FOREIGN KEY (USER_ID)
     REFERENCES SERWIS.USERD(ID);
+ALTER TABLE SERWIS.MAGAZYND 
+    ADD CONSTRAINT MAGAZYND_ID_CZESCI 
+    FOREIGN KEY (ID_CZESCI)
+    REFERENCES SERWIS.CZESCID(ID);
 -- dodajemy dane
+-- konta
 INSERT INTO SERWIS.USERD (id, username, password_hash, email, isonline, last_login, rmask) VALUES 
 ( 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@serwis.pl', false, '1970-01-01 00:00:00',255),
 ( 2, 'darek', 'b64a76fbfcbc7b85bc416a53240bb077', 'darek@serwis.pl', false, '1970-01-01 00:00:00',1),
@@ -31,6 +38,7 @@ INSERT INTO SERWIS.PERSONALINFO (id, user_id, name, address, phone1, phone2, typ
 ( 1, 1, 'Adminiusz Wszechmocny', 'ul. Procesorowa 10; 51-777 Wrocław', '+48711234567', '', 2),
 ( 2, 2, 'Dariusz Magazyński', 'ul. Wózkarska 13/2; 51-650 Wrocław', '0048713480000', '', 2),
 ( 3, 3, 'Robert Psujka', 'al. Rozrabiaki 3/4; 00-777 Warszawa', '+48609123456', '', 0);
+-- części (def)
 INSERT INTO SERWIS.CZESCID (id, nazwa, model, producent, jednostka, cena_jednostkowa) VALUES
 (1,'Procesor AMD Ryzen 3 1200 AM4', 'YD1200BBAEBOX','AMD','szt.',405.00),
 (2,'Procesor Intel Core Extreme i9-7980XE 2,6 GHz LGA 2066 BoX (bez chlodzenia)', 'BX80673I97980X','Intel','szt.',7999.00),
@@ -39,3 +47,9 @@ INSERT INTO SERWIS.CZESCID (id, nazwa, model, producent, jednostka, cena_jednost
 (5,'Gigabyte GeForce GTX 1070 Aorus 8GB GDDR5 256Bit PCI-E (GV-N1070AORUS-8GD)', 'GV-N1070AORUS-8GD','Gigabyte','szt.',2719.00),
 (6,'Monitor BenQ GW2760HS 27"', '9H.L9NLB.RBE','BenQ','szt.',799.00),
 (7,'iiyama G-Master GB2560HSU-B1 RED EAGLE 24,5" FHD 1ms 144Hz PIVOT FreeSync', 'GB2560HSU-B1','iiyama','szt.',1049.00);
+-- magazyn
+INSERT INTO SERWIS.MAGAZYND (id, id_czesci, regal, polka, ilosc) VALUES
+(1,1,1,1,5),
+(2,1,2,3,2),
+(3,2,1,2,3),
+(4,5,1,2,4);

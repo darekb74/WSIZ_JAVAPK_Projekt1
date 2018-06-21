@@ -32,4 +32,5 @@ public interface MagazynDFacadeLocal {
 
     int count();
     
+    Long findNextId();
 }

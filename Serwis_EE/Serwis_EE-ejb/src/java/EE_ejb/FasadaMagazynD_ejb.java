@@ -54,4 +54,19 @@ public class FasadaMagazynD_ejb implements FasadaMagazynD_ejbRemote {
     public void aktualizujDane(MagazynDTO czesc) {
         bazaMagazynu.edit(mgr.map(czesc));
     }
+    
+    @Override
+    public void dodajPozycje(MagazynDTO czesc) {
+        bazaMagazynu.create(mgr.map(czesc));
+    }
+    
+    @Override
+    public void usunPozycje(MagazynDTO czesc) {
+        bazaMagazynu.remove(mgr.map(czesc));
+    }
+    
+    @Override
+    public Long znajdzNastepneID() {
+        return bazaMagazynu.findNextId();
+    }
 }

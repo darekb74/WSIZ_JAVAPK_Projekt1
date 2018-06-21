@@ -22,4 +22,9 @@ public interface FasadaMagazynD_ejbRemote {
 
     public void aktualizujDane(MagazynDTO czesc);
 
+    public void dodajPozycje(MagazynDTO userDTO);
+
+    public void usunPozycje(MagazynDTO czesc);
+    
+    public Long znajdzNastepneID();
 }

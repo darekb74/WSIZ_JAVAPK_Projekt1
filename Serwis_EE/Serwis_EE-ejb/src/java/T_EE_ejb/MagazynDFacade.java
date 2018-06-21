@@ -40,6 +40,19 @@ public class MagazynDFacade extends AbstractFacade<MagazynD> implements MagazynD
         }
     }
     
+    @Override
+    public Long findNextId() {
+        try {
+            Query query = em.createQuery("SELECT i.id FROM MagazynD i ORDER BY i.id DESC");
+
+            return (Long) query
+                    .setMaxResults(1)
+                    .getSingleResult() + 1;
+        } catch (javax.persistence.NoResultException e) {
+            return null;
+        }
+    }
+    
     public MagazynDFacade() {
         super(MagazynD.class);
     }
