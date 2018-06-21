@@ -3,6 +3,7 @@ ALTER TABLE SERWIS.PERSONALINFO DROP CONSTRAINT PERSONALINFOUSERID;
 -- czyścimy tabele
 TRUNCATE TABLE SERWIS.PERSONALINFO;
 TRUNCATE TABLE SERWIS.USERD;
+TRUNCATE TABLE SERWIS.CZESCID;
 -- przywracamy foregin key
 ALTER TABLE SERWIS.PERSONALINFO 
     ADD CONSTRAINT PERSONALINFOUSERID 
@@ -30,3 +31,11 @@ INSERT INTO SERWIS.PERSONALINFO (id, user_id, name, address, phone1, phone2, typ
 ( 1, 1, 'Adminiusz Wszechmocny', 'ul. Procesorowa 10; 51-777 Wrocław', '+48711234567', '', 2),
 ( 2, 2, 'Dariusz Magazyński', 'ul. Wózkarska 13/2; 51-650 Wrocław', '0048713480000', '', 2),
 ( 3, 3, 'Robert Psujka', 'al. Rozrabiaki 3/4; 00-777 Warszawa', '+48609123456', '', 0);
+INSERT INTO SERWIS.CZESCID (id, nazwa, model, producent, jednostka, cena_jednostkowa) VALUES
+(1,'Procesor AMD Ryzen 3 1200 AM4', 'YD1200BBAEBOX','AMD','szt.',405.00),
+(2,'Procesor Intel Core Extreme i9-7980XE 2,6 GHz LGA 2066 BoX (bez chlodzenia)', 'BX80673I97980X','Intel','szt.',7999.00),
+(3,'ASUS GeForce GTX 1060 6GB GDDR5 EX-GTX1060-6G', 'EX-GTX1060-6G','ASUS','szt.',1679.00),
+(4,'EVGA GeForce GTX 1070 SC GAMING, 08G-P4-6173-KR, 8GB GDDR5, ACX 3.0 & LED', '08G-P4-6173-KR','EVGA','szt.',2699.00),
+(5,'Gigabyte GeForce GTX 1070 Aorus 8GB GDDR5 256Bit PCI-E (GV-N1070AORUS-8GD)', 'GV-N1070AORUS-8GD','Gigabyte','szt.',2719.00),
+(6,'Monitor BenQ GW2760HS 27"', '9H.L9NLB.RBE','BenQ','szt.',799.00),
+(7,'iiyama G-Master GB2560HSU-B1 RED EAGLE 24,5" FHD 1ms 144Hz PIVOT FreeSync', 'GB2560HSU-B1','iiyama','szt.',1049.00);

@@ -4,6 +4,8 @@
     <jta-data-source>jdbc/SerwisKomputerowy</jta-data-source>
     <class>Tabele.UserD</class>
     <class>Tabele.PersonalInfo</class>
+    <class>Tabele.CzesciD</class>
+    <class>Tabele.MagazynD</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

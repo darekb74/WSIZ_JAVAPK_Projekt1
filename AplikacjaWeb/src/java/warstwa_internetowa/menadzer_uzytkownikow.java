@@ -9,40 +9,43 @@ import DTO.UserDTO;
 import EE_ejb.FasadaUserD_ejbRemote;
 import Utils.Pagination;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.inject.Named;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
  * @author Darek Xperia
  */
 @ManagedBean
+//@Named(value = "menadzer_uzytkownikow")
 @SessionScoped
-@Named(value = "menadzer_uzytkownikow")
+//@Stateful
 public class menadzer_uzytkownikow implements Serializable {
 
-    private FasadaUserD_ejbRemote fasadaUser = lookupFasadaUserD_ejbRemote();
-    ;
+    @EJB(mappedName = "ejb/FasadaUserD_ejb")
+    private FasadaUserD_ejbRemote fasadaUser;
 
+    @PostConstruct
+    public void init() {
+        setPagination();
+    }
+    //private FasadaUserD_ejbRemote fasadaUser = lookupFasadaUserD_ejbRemote();
     private boolean zalogowany = false;
     private UserDTO uDTO = null;
 
     private String uzytkownik;
     private String haslo;
 
-    private List<UserDTO> lista;
+    private List<UserDTO> listaU;
     private Pagination<UserDTO> strony;
-    
+
     private String username, password, password2, pasword_hash, email, rmask;
 
     public Pagination<UserDTO> getStrony() {
@@ -91,47 +94,63 @@ public class menadzer_uzytkownikow implements Serializable {
 
     public void lastPage() {
         if (strony != null) {
-            lista = strony.lastPage();
+            listaU = strony.lastPage();
         }
     }
 
     public void firstPage() {
         if (strony != null) {
-            lista = strony.firstPage();
+            listaU = strony.firstPage();
         }
     }
 
     public void nextPage() {
         if (strony != null) {
-            lista = strony.nextPage();
+            listaU = strony.nextPage();
         }
     }
 
     public void previousPage() {
         if (strony != null) {
-            lista = strony.previousPage();
+            listaU = strony.previousPage();
         }
     }
 
     public void setPage(int pageNo) {
         if (strony != null) {
-            lista = strony.getPageNo(pageNo);
+            listaU = strony.getPageNo(pageNo);
         }
     }
 
     public String czyWylaczony(int pageNo) {
         if (strony != null) {
-            if( strony.getPage()==pageNo) return "disabled";
+            if (strony.getPage() == pageNo) {
+                return "disabled";
+            }
         }
         return "enabled";
     }
+
     private void setPagination() {
         strony = new Pagination(5, fasadaUser.listaUzytkownikow());
-        lista = strony.generateDataArray();
+        listaU = strony.generateDataArray();
     }
-    
+
+    public void refresh() {
+        int cPage = strony.getPage();
+        strony.setCollection((ArrayList<UserDTO>) fasadaUser.listaUzytkownikow());
+        listaU = strony.generateDataArray();
+        if (cPage > strony.getPagesCount()) {
+            strony.setPage(cPage - 1 < 1 ? 1 : cPage - 1);
+            listaU = strony.previousPage();
+        } else {
+            strony.setPage(cPage);
+            listaU = strony.generateDataArray();
+        }
+    }
+
     public Boolean doRenderowania(int pos) {
-        if (strony==null) {
+        if (strony == null) {
             setPagination();
         }
         List<String> tmp = strony.generateControlList();
@@ -157,7 +176,7 @@ public class menadzer_uzytkownikow implements Serializable {
                 }
                 break;
             default:
-                String code = strony.getControlArrayItem(pos-2);
+                String code = strony.getControlArrayItem(pos - 2);
                 try {
                     if (Long.parseLong(code) > 0) {
                         return true;
@@ -207,17 +226,26 @@ public class menadzer_uzytkownikow implements Serializable {
         this.fasadaUser = fasadaUser;
     }
 
-    public DataModel getLista() {
+    public boolean czyRenderowacTabele() {
+        if (strony == null) {
+            return false;
+        }
+        return (listaU == null ? false : !listaU.isEmpty());
+    }
+
+    public DataModel getListaU() {
 
         if (fasadaUser != null) {
-            if (lista == null) {
+            if (listaU == null) {
+                setPagination();
+            } else if (listaU.isEmpty()) {
                 setPagination();
             }
         } else {
             return null;
         }
 
-        return new ListDataModel(lista);
+        return new ListDataModel(listaU);
     }
 
     public String logout() {
@@ -273,7 +301,7 @@ public class menadzer_uzytkownikow implements Serializable {
         }
         return false;
     }
-
+    /*
     private FasadaUserD_ejbRemote lookupFasadaUserD_ejbRemote() {
         try {
             Context c = new InitialContext();
@@ -283,4 +311,5 @@ public class menadzer_uzytkownikow implements Serializable {
             throw new RuntimeException(ne);
         }
     }
+     */
 }

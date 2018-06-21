@@ -1,18 +1,140 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../templates/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/resources/templates/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <ui:define name="title">
         Magazyn - Lista części
     </ui:define>
 
     <ui:define name="left">
-        left
+        (^__^)
     </ui:define>
 
     <ui:define name="content">
-        content
+        <h:form id="main_list">
+        <c:set var="lista" value="#{menadzer_magazynu.getLista()}"/>
+        <h:panelGroup layout="block" rendered="#{!menadzer_magazynu.czyRenderowacTabele()}">
+            <br/>
+            <h:outputText class="alert alert-warning" escape="false" value="Magazyn jest pusty."/>
+            <br/><br/>
+        </h:panelGroup>
+            <h:panelGroup rendered="#{menadzer_magazynu.czyRenderowacTabele()}" >
+                <h:panelGroup layout="block" class="btn-group justify-content-end">
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;&lt;" rendered="#{menadzer_magazynu.doRenderowania(0)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.firstPage()}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&lt;" rendered="#{menadzer_magazynu.doRenderowania(1)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.previousPage()}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(0))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(0)}" rendered="#{menadzer_magazynu.doRenderowania(2)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(0))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(1))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(1)}" rendered="#{menadzer_magazynu.doRenderowania(3)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(1))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(2))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(2)}" rendered="#{menadzer_magazynu.doRenderowania(4)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(2))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(3))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(3)}" rendered="#{menadzer_magazynu.doRenderowania(5)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(3))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(4))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(4)}" rendered="#{menadzer_magazynu.doRenderowania(6)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(4))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(5))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(5)}" rendered="#{menadzer_magazynu.doRenderowania(7)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(5))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(6))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(6)}" rendered="#{menadzer_magazynu.doRenderowania(8)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(6))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(7))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(7)}" rendered="#{menadzer_magazynu.doRenderowania(9)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(7))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary #{menadzer_magazynu.czyWylaczony(menadzer_czesci.getControlArrayItem(8))}" a:href="#" value="#{menadzer_magazynu.getControlArrayItem(8)}" rendered="#{menadzer_magazynu.doRenderowania(10)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.setPage(menadzer_czesci.getControlArrayItem(8))}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;" rendered="#{menadzer_magazynu.doRenderowania(12)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.nextPage()}"/>
+                    </h:commandButton>
+                    <h:commandButton class="btn btn-secondary" a:href="#" value="&gt;&gt;" rendered="#{menadzer_magazynu.doRenderowania(13)}">
+                        <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.lastPage()}"/>
+                    </h:commandButton>
+                </h:panelGroup>
+                <!-- LISTA UŻYTKOWNIKÓW -->
+                <h:dataTable class="custom_table table table-hover table-responsive" var="czesc" rules="all"
+                             value="#{menadzer_magazynu.lista}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.id}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Nazwa części"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.nazwa}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Model"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.model}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Producent"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.producent}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Numer regału"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.regal}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Numer półki"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.polka}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Ilość"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.ilosc}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Jednostka"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.jednostka}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Cena jednostkowa"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.cena_jednostkowa}"/>
+                    </h:column>
+                    <h:column> 
+                        <f:facet name="header">
+                            <h:outputText value="Wartość całkowita"/>
+                        </f:facet>
+                        <h:outputText value="#{czesc.wartosc}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <h:commandButton class="btn btn-primary" a:href="#" value="Odśwież">
+                <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.refresh()}"/>
+            </h:commandButton>
+        </h:form>
     </ui:define>
 
 </ui:composition>

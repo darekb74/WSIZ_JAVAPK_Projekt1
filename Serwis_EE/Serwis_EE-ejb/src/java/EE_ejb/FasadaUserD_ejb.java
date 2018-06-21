@@ -18,7 +18,7 @@ import javax.inject.Named;
  *
  * @author Darek Xperia
  */
-@Stateless(mappedName = "ejb/FasadaUserD_ejb")
+@Stateless(mappedName="ejb/FasadaUserD_ejb")
 @Named
 public class FasadaUserD_ejb implements FasadaUserD_ejbRemote {
 

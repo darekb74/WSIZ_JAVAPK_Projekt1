@@ -27,6 +27,11 @@
             <web-resource-name>RESOURCES</web-resource-name>
             <url-pattern>/resources/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint />
+        <auth-constraint/>
     </security-constraint>
+    <ejb-ref>
+        <ejb-ref-name>FasadaCzesciD_ejb</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>EE_ejb.FasadaCzesciD_ejbRemote</remote>
+    </ejb-ref>
 </web-app>

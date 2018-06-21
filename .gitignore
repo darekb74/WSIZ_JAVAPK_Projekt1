@@ -71,3 +71,5 @@ AplikacjaWeb/build/web/resources/magazyn/wydanie_czesci.xhtml
 AplikacjaWeb/build/web/resources/magazyn/zawartosc_magazynu.xhtml
 AplikacjaWeb/build/web/resources/zaopatrzenie/dodaj_czesc.xhtml
 AplikacjaWeb/build/web/resources/zaopatrzenie/lista_czesci.xhtml
+/AplikacjaWeb/dist/
+/AplikacjaWeb/build/
