@@ -18,7 +18,7 @@ import javax.inject.Named;
  *
  * @author Darek Xperia
  */
-@Stateless(mappedName="ejb/FasadaCzesciD_ejb")
+@Stateless(mappedName = "ejb/FasadaCzesciD_ejb")
 @Named
 public class FasadaCzesciD_ejb implements FasadaCzesciD_ejbRemote {
 
@@ -26,7 +26,7 @@ public class FasadaCzesciD_ejb implements FasadaCzesciD_ejbRemote {
     private CzesciDFacadeLocal bazaCzesci;
 
     private MgrCzesci mgr = new MgrCzesci();
-    
+
     @Override
     public CzesciDTO znajdzCzesc(String nazwa) {
         try {
@@ -35,7 +35,7 @@ public class FasadaCzesciD_ejb implements FasadaCzesciD_ejbRemote {
             return null;
         }
     }
-    
+
     @Override
     public CzesciDTO znajdzCzesc(Long id) {
         try {
@@ -58,17 +58,22 @@ public class FasadaCzesciD_ejb implements FasadaCzesciD_ejbRemote {
         });
         return result;
     }
-    
+
     @Override
     public void aktualizujDane(CzesciDTO czesc) {
         bazaCzesci.edit(mgr.map(czesc));
     }
 
     @Override
+    public void usunPozycje(CzesciDTO czesc) {
+        bazaCzesci.remove(mgr.map(czesc));
+    }
+
+    @Override
     public Long znajdzNastepneID() {
         return bazaCzesci.findNextId();
     }
-    
+
     @Override
     public void dodajCzesc(CzesciDTO czescDTO) {
         bazaCzesci.create(mgr.map(czescDTO));

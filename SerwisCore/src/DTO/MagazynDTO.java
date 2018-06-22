@@ -32,19 +32,16 @@ public class MagazynDTO implements Serializable {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(String id) {
         try {
-            switch (id.getClass().getName()) {
-                case "java.lang.String":
-                    this.id = Long.parseLong((String) id);
-                    break;
-                default:
-                    this.id = (Long) id;
-                    break;
-            }
+            this.id = Long.parseLong((String) id);
         } catch (NumberFormatException e) {
-            id = null;
+            this.id = null;
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public CzesciDTO getCzesc() {
@@ -59,57 +56,48 @@ public class MagazynDTO implements Serializable {
         return regal;
     }
 
-    public void setRegal(Object regal) {
+    public void setRegal(String regal) {
         try {
-            switch (id.getClass().getName()) {
-                case "java.lang.String":
-                    this.regal = Integer.parseInt((String) regal);
-                    break;
-                default:
-                    this.regal = (Integer) regal;
-                    break;
-            }
+            this.regal = Integer.parseInt((String) regal);
         } catch (NumberFormatException e) {
-            regal = null;
+            this.regal = null;
         }
+    }
+
+    public void setRegal(Integer regal) {
+        this.regal = regal;
     }
 
     public Integer getPolka() {
         return polka;
     }
 
-    public void setPolka(Object polka) {
+    public void setPolka(String polka) {
         try {
-            switch (id.getClass().getName()) {
-                case "java.lang.String":
-                    this.polka = Integer.parseInt((String) polka);
-                    break;
-                default:
-                    this.polka = (Integer) polka;
-                    break;
-            }
+            this.polka = Integer.parseInt((String) polka);
         } catch (NumberFormatException e) {
-            polka = null;
+            this.polka = null;
         }
+    }
+
+    public void setPolka(Integer polka) {
+        this.polka = polka;
     }
 
     public Integer getIlosc() {
         return ilosc;
     }
 
-    public void setIlosc(Object ilosc) {
+    public void setIlosc(String ilosc) {
         try {
-            switch (id.getClass().getName()) {
-                case "java.lang.String":
-                    this.ilosc = Integer.parseInt((String) ilosc);
-                    break;
-                default:
-                    this.ilosc = (Integer) ilosc;
-                    break;
-            }
+            this.ilosc = Integer.parseInt((String) ilosc);
         } catch (NumberFormatException e) {
-            ilosc = null;
+            this.ilosc = null;
         }
+    }
+
+    public void setIlosc(Integer ilosc) {
+        this.ilosc = ilosc;
     }
 
     public Object[] toArray() {
@@ -133,9 +121,6 @@ public class MagazynDTO implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.czesc);
-        hash = 89 * hash + Objects.hashCode(this.regal);
-        hash = 89 * hash + Objects.hashCode(this.polka);
         return hash;
     }
 
@@ -154,18 +139,6 @@ public class MagazynDTO implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.czesc, other.czesc)) {
-            return false;
-        }
-        if (!Objects.equals(this.regal, other.regal)) {
-            return false;
-        }
-        if (!Objects.equals(this.polka, other.polka)) {
-            return false;
-        }
         return true;
     }
-
-    
-
 }

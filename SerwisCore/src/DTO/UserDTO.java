@@ -37,19 +37,16 @@ public class UserDTO implements Serializable {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(String id) {
         try {
-            switch (id.getClass().getName()) {
-                case "java.lang.String":
-                    this.id = Long.parseLong((String)id);
-                    break;
-                default:
-                    this.id = (Long)id;
-                    break;
-            }
+            this.id = Long.parseLong((String) id);
         } catch (NumberFormatException e) {
-            id = null;
+            this.id = null;
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -124,8 +121,7 @@ public class UserDTO implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 41 * hash + Objects.hashCode(this.id);
-        hash = 41 * hash + Objects.hashCode(this.username);
+        hash = 13 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -141,28 +137,10 @@ public class UserDTO implements Serializable {
             return false;
         }
         final UserDTO other = (UserDTO) obj;
-        if (!Objects.equals(this.username, other.username)) {
-            return false;
-        }
-        if (!Objects.equals(this.password_hash, other.password_hash)) {
-            return false;
-        }
-        if (!Objects.equals(this.eMail, other.eMail)) {
-            return false;
-        }
-        if (!Objects.equals(this.last_login, other.last_login)) {
-            return false;
-        }
         if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.isOnline, other.isOnline)) {
-            return false;
-        }
-        if (!Objects.equals(this.rmask, other.rmask)) {
             return false;
         }
         return true;
     }
-    
+
 }

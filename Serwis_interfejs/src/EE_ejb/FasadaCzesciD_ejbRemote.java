@@ -27,4 +27,6 @@ public interface FasadaCzesciD_ejbRemote {
     public Long znajdzNastepneID();
     
     public void dodajCzesc(CzesciDTO czescDTO);
+    
+    public void usunPozycje(CzesciDTO czesc);
 }

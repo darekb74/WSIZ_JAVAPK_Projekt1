@@ -34,19 +34,16 @@ public class CzesciDTO implements Serializable {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(String id) {
         try {
-            switch (id.getClass().getName()) {
-                case "java.lang.String":
-                    this.id = Long.parseLong((String) id);
-                    break;
-                default:
-                    this.id = (Long) id;
-                    break;
-            }
+            this.id = Long.parseLong((String) id);
         } catch (NumberFormatException e) {
-            id = null;
+            this.id = null;
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNazwa() {
@@ -85,19 +82,16 @@ public class CzesciDTO implements Serializable {
         return cena_jednostkowa;
     }
 
-    public void setCena_jednostkowa(Object cena_jednostkowa) {
+    public void setCena_jednostkowa(String cena_jednostkowa) {
         try {
-            switch (cena_jednostkowa.getClass().getName()) {
-                case "java.lang.String":
-                    this.cena_jednostkowa = Double.parseDouble((String) cena_jednostkowa);
-                    break;
-                default:
-                    this.cena_jednostkowa = (Double) cena_jednostkowa;
-                    break;
-            }
+            this.cena_jednostkowa = Double.parseDouble((String) cena_jednostkowa);
         } catch (NumberFormatException e) {
-            cena_jednostkowa = null;
+            this.cena_jednostkowa = null;
         }
+    }
+
+    public void setCena_jednostkowa(Double cena_jednostkowa) {
+        this.cena_jednostkowa = cena_jednostkowa;
     }
 
     public Object[] toArray() {
@@ -123,9 +117,6 @@ public class CzesciDTO implements Serializable {
     public int hashCode() {
         int hash = 5;
         hash = 41 * hash + Objects.hashCode(this.id);
-        hash = hash + Objects.hashCode(this.nazwa);
-        hash = 11 * hash + Objects.hashCode(this.model);
-        hash = 3 * hash + Objects.hashCode(this.cena_jednostkowa);
         return hash;
     }
 
@@ -142,21 +133,6 @@ public class CzesciDTO implements Serializable {
         }
         final CzesciDTO other = (CzesciDTO) obj;
         if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.nazwa, other.nazwa)) {
-            return false;
-        }
-        if (!Objects.equals(this.producent, other.producent)) {
-            return false;
-        }
-        if (!Objects.equals(this.model, other.model)) {
-            return false;
-        }
-        if (!Objects.equals(this.jednostka, other.jednostka)) {
-            return false;
-        }
-        if (!Objects.equals(this.cena_jednostkowa, other.cena_jednostkowa)) {
             return false;
         }
         return true;

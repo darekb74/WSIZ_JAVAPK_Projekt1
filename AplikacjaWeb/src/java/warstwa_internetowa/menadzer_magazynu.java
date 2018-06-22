@@ -10,12 +10,15 @@ import DTO.MagazynDTO;
 import EE_ejb.FasadaCzesciD_ejbRemote;
 import EE_ejb.FasadaMagazynD_ejbRemote;
 import Utils.Pagination;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -25,7 +28,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 //@Stateful
 //@Named(value = "menadzer_czesci")
-public class menadzer_magazynu {
+public class menadzer_magazynu implements Serializable {
 
     @EJB(mappedName = "ejb/FasadaMagazynD_ejb")
     FasadaMagazynD_ejbRemote fasadaMagazynu;
@@ -36,26 +39,54 @@ public class menadzer_magazynu {
     @PostConstruct
     public void init() {
         setPagination();
-        System.out.println(""
-                + "STRON:" + strony.getPagesCount() + " "
-                + "aktualna:" + strony.getPage() + " "
-                + "elementów:" + lista.size() + " "
-        );
     }
 
     private List<MagazynDTO> lista;
     private Pagination<MagazynDTO> strony;
 
+    private Long id;
     private CzesciDTO czesc;
     private Integer regal, polka, ilosc;
+    private MagazynDTO toEdit;
 
     public List<MagazynDTO> getLista() {
         return lista;
     }
 
-    public void dodaj() {
-        fasadaMagazynu.dodajPozycje(new MagazynDTO(fasadaMagazynu.znajdzNastepneID(), czesc, regal, polka, ilosc));
+    public MagazynDTO getToEdit() {
+        return toEdit;
+    }
+
+    public void setToEdit(MagazynDTO toEdit) {
+        this.toEdit = toEdit;
+    }
+
+    public String dodaj() {
+        try {
+            fasadaMagazynu.dodajPozycje(new MagazynDTO(fasadaMagazynu.znajdzNastepneID(), czesc, regal, polka, ilosc));
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została dodana.", "Część została dodana.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie dodawania części.", "Błąd w czasie dodawania części.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        int cPage = strony.getPage();
         setPagination();
+        strony.setPage(cPage);
+        lista = strony.generateDataArray();
+        return "/resources/magazyn/zawartosc_magazynu";
+    }
+        
+    public String aktualizuj() {
+        try {
+            fasadaMagazynu.aktualizujDane(toEdit);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została zaktualizowana.", "Część została zaktualizowana.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd aktualizacji danych części.", "Błąd aktualizacji danych części");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        return "/resources/magazyn/zawartosc_magazynu";
     }
 
     public FasadaCzesciD_ejbRemote getFasadaCzesci() {
@@ -72,6 +103,14 @@ public class menadzer_magazynu {
 
     public void setStrony(Pagination<MagazynDTO> strony) {
         this.strony = strony;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public CzesciDTO getCzesc() {
@@ -128,6 +167,31 @@ public class menadzer_magazynu {
             strony.setPage(cPage);
             lista = strony.generateDataArray();
         }
+    }
+
+    public String czescDTOcolor() {
+        return czesc != null ? "green" : "red";
+    }
+
+    public String edytuj(MagazynDTO item) {
+        toEdit = item;
+        return "/resources/magazyn/edycja_czesci";
+    }
+
+    public String usun(MagazynDTO item) {
+        try {
+            fasadaMagazynu.usunPozycje(item);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została usunięta z magazynu.", "Część została usunięta z magazynu.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie usuwania części.", "Błąd w czasie usuwania części.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        int cPage = strony.getPage();
+        setPagination();
+        strony.setPage(cPage);
+        lista = strony.generateDataArray();
+        return "zawartosc_magazynu";
     }
 
     public Boolean doRenderowania(int pos) {

@@ -34,4 +34,8 @@
         <ejb-ref-type>Session</ejb-ref-type>
         <remote>EE_ejb.FasadaCzesciD_ejbRemote</remote>
     </ejb-ref>
+    <mime-mapping>  
+        <extension>woff2</extension>  
+        <mime-type>application/x-font-woff2</mime-type>  
+    </mime-mapping>
 </web-app>

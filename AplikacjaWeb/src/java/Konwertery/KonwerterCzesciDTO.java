@@ -33,9 +33,10 @@ public class KonwerterCzesciDTO implements Converter {
         }
         menadzer_magazynu m = context.getApplication().evaluateExpressionGet(context, "#{menadzer_magazynu}", menadzer_magazynu.class);
         try {
-            System.out.println("fasadaCzesci:" + m.getFasadaCzesci());
             CzesciDTO cDTO = m.getFasadaCzesci().znajdzCzesc(Long.valueOf(value));
+            m.setCzesc(cDTO);
             if (cDTO==null) throw new NumberFormatException();
+            context.addMessage(component.getClientId(), new FacesMessage(cDTO.getNazwa()));
             return cDTO;
         } catch (NumberFormatException | NullPointerException e) {
             throw new ConverterException(new FacesMessage(value + " nie jest prawidłowym ID części."), e);

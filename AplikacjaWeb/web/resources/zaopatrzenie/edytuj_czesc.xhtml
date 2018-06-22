@@ -18,11 +18,12 @@
     <ui:define name="content">
         <!-- formularz -->
         <h:form>
+            <h:inputHidden id="id" value="#{menadzer_czesci.toEdit.id}" />
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="nazwa" value="Nazwa części:"/>
                     <h:inputText id="nazwa" required="true" class="form-control" a:placeholder="Nazwa części"
-                                 maxlength="128" value="#{menadzer_czesci.nazwa}"
+                                 maxlength="128" value="#{menadzer_czesci.toEdit.nazwa}"
                                  requiredMessage="To pole jest wymagane."
                                  binding="#{nazwa}">
                         <f:ajax event="blur" execute="nazwa" render="nvErr submit" />
@@ -32,7 +33,7 @@
                 <h:panelGroup layout="block" class="form-group col-md-3">
                     <h:outputLabel for="model" value="Model części:"/>
                     <h:inputText id="model" required="true" class="form-control" a:placeholder="Model"
-                                 maxlength="32" value="#{menadzer_czesci.model}"
+                                 maxlength="32" value="#{menadzer_czesci.toEdit.model}"
                                  requiredMessage="To pole jest wymagane."
                                  binding="#{model}">
                         <f:ajax event="blur" execute="model" render="mvErr submit"/>
@@ -42,7 +43,7 @@
                 <h:panelGroup layout="block" class="form-group col-md-3">
                     <h:outputLabel for="producent" value="Nazwa producenta:"/>
                     <h:inputText id="producent" required="true" class="form-control" a:placeholder="Producent"
-                                 maxlength="32" value="#{menadzer_czesci.producent}"
+                                 maxlength="32" value="#{menadzer_czesci.toEdit.producent}"
                                  requiredMessage="To pole jest wymagane."
                                  binding="#{producent}">
                         <f:ajax event="blur" execute="producent" render="pvErr submit"/>
@@ -54,7 +55,7 @@
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="jednostka" value="Jednostka:"/>
                     <h:inputText id="jednostka" required="true" class="form-control" a:placeholder="Jednostka"
-                                 maxlength="10" value="#{menadzer_czesci.jednostka}"
+                                 maxlength="10" value="#{menadzer_czesci.toEdit.jednostka}"
                                  requiredMessage="To pole jest wymagane."
                                  binding="#{jednostka}">
                         <f:ajax event="blur" execute="jednostka" render="jvErr submit"/>
@@ -64,7 +65,7 @@
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="cena_jendostkowa" value="Cena jednostkowa:"/>
                     <h:inputText id="cena_jendostkowa" required="true" class="form-control" a:placeholder="Cena jednostkowa"
-                                 maxlength="32" value="#{menadzer_czesci.cena_jednostkowa}"
+                                 maxlength="32" value="#{menadzer_czesci.toEdit.cena_jednostkowa}"
                                  validatorMessage="Cena jednostkowa musi być dodatnia."
                                  converterMessage="Cena jednostkowa musi być liczbą."
                                  requiredMessage="To pole jest wymagane."
@@ -75,7 +76,7 @@
                     <h:message id="cjvErr" for="cena_jendostkowa" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
             </h:panelGroup>
-            &nbsp;&nbsp;&nbsp;<h:commandButton id ="submit" type="submit" class="btn btn-primary" value="Dodaj" action="#{menadzer_czesci.dodaj()}"
+            &nbsp;&nbsp;&nbsp;<h:commandButton id ="submit" type="submit" class="btn btn-primary" value="Aktualizuj" action="#{menadzer_czesci.aktualizuj()}"
                                                disabled="#{not facesContext.postback or not (nazwa.valid and model.valid and producent.valid and jednostka.valid and cena_jednostkowa.valid)}">
             </h:commandButton>
         </h:form>

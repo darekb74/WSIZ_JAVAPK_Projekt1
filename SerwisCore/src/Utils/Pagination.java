@@ -30,7 +30,7 @@ public class Pagination<T> implements Serializable {
     }
 
     public void setPage(int page) {
-        this.page = page;
+        this.page = page > getPagesCount() ? getPagesCount() : page;
     }
 
     public int getRowsPerPage() {
@@ -137,6 +137,7 @@ public class Pagination<T> implements Serializable {
 
     public List<T> generateDataArray() {
         ArrayList<T> out = new ArrayList<>();
+        if (collection.isEmpty()) return out;
         for (int s = rowsPerPage * (page - 1); s < rowsPerPage * (page) && s < collection.size(); s++) {
             out.add(collection.get(s));
         }

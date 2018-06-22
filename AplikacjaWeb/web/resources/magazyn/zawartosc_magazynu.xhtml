@@ -130,6 +130,18 @@
                         </f:facet>
                         <h:outputText value="#{menadzer_magazynu.getWartosc(czesc.czesc.cena_jednostkowa, czesc.ilosc)}"/>
                     </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Operacje"/>
+                        </f:facet>
+                        <h:panelGroup layout="block" class="btn-group" a:role="group">
+                            <h:commandButton class="btn btn-warning btn-sm rounded" 
+                                value="Edytuj" action="#{menadzer_magazynu.edytuj(czesc)}"/>
+                            <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
+                                onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?')) return false"
+                                action="#{menadzer_magazynu.usun(czesc)}"/>
+                        </h:panelGroup>
+                    </h:column>
                 </h:dataTable>
             </h:panelGroup>
             <h:commandButton class="btn btn-primary" a:href="#" value="Odśwież">

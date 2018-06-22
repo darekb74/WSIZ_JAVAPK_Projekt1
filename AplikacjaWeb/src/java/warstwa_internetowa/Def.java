@@ -18,7 +18,7 @@ public class Def {
     public final static byte LVL4 = (byte) 0x8;    // 00001000 - menu zaopatrzeniowca
     public final static byte LVL5 = (byte) 0x10;   // 00010000 - dodawanie przesuniec magazynowych
     public final static byte LVL6 = (byte) 0x20;   // 00100000 - dodawanie danych osobowych
-    public final static byte LVL7 = (byte) 0x40;   // 01000000 - 
+    public final static byte LVL7 = (byte) 0x40;   // 01000000 - usuwanie definicji czesci
     public final static byte LVL9 = (byte) 0x80;   // 10000000 -                                              
     public final static byte ADM = (byte) 0xFF;    // 11111111 - wszystkie (administrator)
 }

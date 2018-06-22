@@ -8,12 +8,15 @@ package warstwa_internetowa;
 import DTO.CzesciDTO;
 import EE_ejb.FasadaCzesciD_ejbRemote;
 import Utils.Pagination;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -23,7 +26,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 //@Stateful
 //@Named(value = "menadzer_czesci")
-public class menadzer_czesci {
+public class menadzer_czesci implements Serializable{
 
     @EJB(mappedName = "ejb/FasadaCzesciD_ejb")
     FasadaCzesciD_ejbRemote fasadaCzesci;
@@ -35,6 +38,8 @@ public class menadzer_czesci {
 
     private List<CzesciDTO> lista;
     private Pagination<CzesciDTO> strony;
+    
+    private CzesciDTO toEdit;
 
     private String nazwa, producent, model, jednostka;
     private Double cena_jednostkowa;
@@ -43,6 +48,46 @@ public class menadzer_czesci {
         return fasadaCzesci;
     }
 
+    public CzesciDTO getToEdit() {
+        return toEdit;
+    }
+
+    public void setToEdit(CzesciDTO toEdit) {
+        this.toEdit = toEdit;
+    }
+
+    public String edytuj(CzesciDTO item) {
+        toEdit = item;
+        return "/resources/zaopatrzenie/edytuj_czesc";
+    }
+
+    public String usun(CzesciDTO item) {
+        try {
+            fasadaCzesci.usunPozycje(item);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została usunięta.", "Definicja części została usunięta.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie usuwania definicji części.", "Błąd w czasie usuwania definicji części.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        int cPage = strony.getPage();
+        setPagination();
+        strony.setPage(cPage);
+        lista = strony.generateDataArray();
+        return "/resources/zaopatrzenie/lista_czesci";
+    }
+    
+    public String aktualizuj() {
+        try {
+            fasadaCzesci.aktualizujDane(toEdit);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została zaktualizowana.", "Definicja części została zaktualizowana.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd aktualizacji danych definicji części.", "Błąd aktualizacji danych definicji części");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        return "/resources/zaopatrzenie/lista_czesci";
+    }
     public List<CzesciDTO> getLista() {
         return lista;
     }
@@ -119,9 +164,20 @@ public class menadzer_czesci {
         }
     }
 
-    public void dodaj() {
-        fasadaCzesci.dodajCzesc(new CzesciDTO(fasadaCzesci.znajdzNastepneID(), nazwa, producent, model, jednostka, cena_jednostkowa));
+    public String dodaj() {
+        try {
+            fasadaCzesci.dodajCzesc(new CzesciDTO(fasadaCzesci.znajdzNastepneID(), nazwa, producent, model, jednostka, cena_jednostkowa));
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została dodana.", "Definicja części została dodana.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie dodawani definicji części.", "Błąd w czasie dodawania definicji części.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        int cPage = strony.getPage();
         setPagination();
+        strony.setPage(cPage);
+        lista = strony.generateDataArray();
+        return "/resources/zaopatrzenie/lista_czesci";
     }
     
     public Boolean doRenderowania(int pos) {

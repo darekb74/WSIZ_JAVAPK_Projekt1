@@ -18,11 +18,12 @@
     <ui:define name="content">
         <!-- formularz -->
         <h:form>
+            <h:inputHidden id="id" value="#{menadzer_uzytkownikow.toEdit.id}" />
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-4">
                     <h:outputLabel for="username" value="Nazwa użytkownika:"/>
                     <h:inputText id="username" required="true" class="form-control" a:placeholder="Nazwa użytkownika"
-                                 maxlength="32" value="#{menadzer_uzytkownikow.username}"
+                                 maxlength="32" value="#{menadzer_uzytkownikow.toEdit.username}"
                                  validatorMessage="Nieprawidłowa nazwa użytkownika."
                                  requiredMessage="To pole jest wymagane.">
                         <f:validateRegex 
@@ -34,7 +35,7 @@
                 <h:panelGroup layout="block" class="form-group col-md-4">
                     <h:outputLabel for="eMail" value="E-mail:"/>
                     <h:inputText id="eMail" required="true" class="form-control" a:placeholder="E-mail"
-                                 maxlength="64" value="#{menadzer_uzytkownikow.email}"
+                                 maxlength="64" value="#{menadzer_uzytkownikow.toEdit.eMail}"
                                  validatorMessage="Nieprawidłowy adres e-mail."
                                  requiredMessage="To pole jest wymagane.">
                         <f:validateRegex 
@@ -46,7 +47,7 @@
                 <h:panelGroup layout="block" class="form-group col-md-4">
                     <h:outputLabel for="rmask" value="Typ użytkownika:"/>
                     <h:selectOneMenu id="rmask" required="true" class="form-control" 
-                                     value="#{menadzer_uzytkownikow.rmask}">
+                                     value="#{menadzer_uzytkownikow.toEdit.rmask}">
                         <f:selectItem itemValue="0" itemLabel="Klient"/> 
                         <f:selectItem itemValue="1" itemLabel="Magazynier"/>
                         <f:selectItem itemValue="2" itemLabel="Serwisant"/> 
@@ -58,29 +59,24 @@
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="password" value="Hasło:"/>
-                    <h:inputSecret id="password" required="true" class="form-control" a:placeholder="Hasło"
-                                   maxlength="32" value="#{menadzer_uzytkownikow.password}"
-                                   validatorMessage="Hasło nie spełnia wymogów."
-                                   requiredMessage="To pole jest wymagane.">
-                        <f:validateRegex 
-                            pattern="^(?=.{5,32}$)(?=.*\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*)[(?i)a-z(?-i)0-9]+$" />
+                    <h:inputSecret id="password" required="false" class="form-control" a:placeholder="Hasło"
+                                   maxlength="32" value="#{menadzer_uzytkownikow.password}">
                         <f:ajax event="blur" execute="password" render="passwordvErr"/>
                     </h:inputSecret>
                     <h:message id="passwordvErr" for="password" class="feedback" style="font-size: 10px;  color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="password2" value="Powtórz hasło:"/>
-                    <h:inputSecret id="password2" required="true" class="form-control" a:placeholder="Powtórz hasło"
+                    <h:inputSecret id="password2" required="false" class="form-control" a:placeholder="Powtórz hasło"
                                    maxlength="32" value="#{menadzer_uzytkownikow.password2}"
                                    validatorMessage="Hasła nie są identyczne."
-                                   requiredMessage="To pole jest wymagane."
                                    validator="#{menadzer_uzytkownikow.porownajHasla}" >
                         <f:ajax event="blur" execute="password2" render="password2vErr"/>
                     </h:inputSecret>
                     <h:message id="password2vErr" for="password2" class="feedback" style="font-size: 10px;  color: red"/>
                 </h:panelGroup>
             </h:panelGroup>
-            &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Dodaj" action="#{menadzer_uzytkownikow.dodaj()}"/>
+            &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Aktualizuj" action="#{menadzer_uzytkownikow.aktualizuj()}"/>
         </h:form>
 
     </ui:define>

@@ -15,12 +15,15 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.faces.validator.ValidatorException;
 
 /**
  *
@@ -48,9 +51,54 @@ public class menadzer_uzytkownikow implements Serializable {
 
     private List<UserDTO> listaU;
     private Pagination<UserDTO> strony;
+    private UserDTO toEdit;
 
     private String username, password, password2, pasword_hash, email;
     private Short rmask;
+
+    public UserDTO getToEdit() {
+        return toEdit;
+    }
+
+    public void setToEdit(UserDTO toEdit) {
+        this.toEdit = toEdit;
+    }
+
+    public String aktualizuj() {
+        try {
+            if (password != null || !password.equals("")) {
+                toEdit.setPassword_hash(Utils.Utils.md5(password));
+            }
+            fasadaUser.aktualizujDane(toEdit);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została zaktualizowana.", "Część została zaktualizowana.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd aktualizacji danych części.", "Błąd aktualizacji danych części");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        return "/resources/admin/lista_uzytkownikow";
+    }
+
+    public String edytuj(UserDTO item) {
+        toEdit = item;
+        return "/resources/admin/edytuj_uzytkownika";
+    }
+
+    public String usun(UserDTO item) {
+        try {
+            fasadaUser.usunUzytkownika(item);
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Użytkownik został usunięty.", "Użytkownik został usunięty.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd usuwania użytkownika.", "Błąd usuwania użytkownika.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        int cPage = strony.getPage();
+        setPagination();
+        strony.setPage(cPage);
+        listaU = strony.generateDataArray();
+        return "/resources/admin/lista_uzytkownikow";
+    }
 
     public Pagination<UserDTO> getStrony() {
         return strony;
@@ -126,9 +174,27 @@ public class menadzer_uzytkownikow implements Serializable {
         }
     }
 
-    public void dodaj() {
-        fasadaUser.dodajUzytkownika(new UserDTO(fasadaUser.znajdzNastepneID(), username, Utils.Utils.md5(password), email, null, false, rmask));
+    public String dodaj() {
+        try {
+            fasadaUser.dodajUzytkownika(new UserDTO(fasadaUser.znajdzNastepneID(), username, Utils.Utils.md5(password), email, null, false, rmask));
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Użytkownik został dodany.", "Użytkownik został dodany.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie dodawania użytkownika.", "Błąd w czasie dodawania użytkownika.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+        int cPage = strony.getPage();
         setPagination();
+        strony.setPage(cPage);
+        listaU = strony.generateDataArray();
+        return "/resources/admin/lista_uzytkownikow";
+    }
+
+    public void porownajHasla(FacesContext context, UIComponent toValidate, Object value) {
+        if (!((String) value).equals(password)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Passwords do not match!", "Passwords do not match!");
+            throw new ValidatorException(message);
+        }
     }
 
     public String czyWylaczony(int pageNo) {
@@ -314,6 +380,11 @@ public class menadzer_uzytkownikow implements Serializable {
                 break;
             case "zaopatrzenie":
                 if ((uDTO.getRmask() & Def.LVL4) > 0) {
+                    return true;
+                }
+                break;
+            case "zaopatrzenie-usuwanie":
+                if ((uDTO.getRmask() & Def.LVL7) > 0) {
                     return true;
                 }
                 break;
