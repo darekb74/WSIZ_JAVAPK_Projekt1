@@ -48,6 +48,16 @@ public class menadzer_magazynu implements Serializable {
     private CzesciDTO czesc;
     private Integer regal, polka, ilosc;
     private MagazynDTO toEdit;
+    private MagazynDTO toWyd;
+    private Integer do_wyd;
+
+    public Integer getDo_wyd() {
+        return do_wyd;
+    }
+
+    public void setDo_wyd(Integer do_wyd) {
+        this.do_wyd = do_wyd;
+    }
 
     public List<MagazynDTO> getLista() {
         return lista;
@@ -76,7 +86,20 @@ public class menadzer_magazynu implements Serializable {
         lista = strony.generateDataArray();
         return "/resources/magazyn/zawartosc_magazynu";
     }
-        
+
+    public MagazynDTO getToWyd() {
+        return toWyd;
+    }
+
+    public void setToWyd(MagazynDTO toWyd) {
+        this.toWyd = toWyd;
+    }
+
+    public String wydaj(MagazynDTO item) {
+        toWyd = item;
+        return "/resources/magazyn/wydanie_czesci";
+    }
+
     public String aktualizuj() {
         try {
             fasadaMagazynu.aktualizujDane(toEdit);
@@ -176,6 +199,32 @@ public class menadzer_magazynu implements Serializable {
     public String edytuj(MagazynDTO item) {
         toEdit = item;
         return "/resources/magazyn/edycja_czesci";
+    }
+
+    public String wydaj() {
+        System.out.println("[WYDAJ] item=" + toWyd + "; ilosc=" + do_wyd);
+        boolean tmp = toWyd.getIlosc() == do_wyd;
+        try {
+            if (tmp) {
+                fasadaMagazynu.usunPozycje(toWyd);
+            } else {
+                toWyd.setIlosc(toWyd.getIlosc() - do_wyd);
+                fasadaMagazynu.aktualizujDane(toWyd);
+            }
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została wydana z magazynu.", "Część została wydana z magazynu.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        } catch (Exception e) {
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd wydawania części.", "Błąd wydawania części.");
+            FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        }
+
+        if (tmp) {
+            int cPage = strony.getPage();
+            setPagination();
+            strony.setPage(cPage);
+            lista = strony.generateDataArray();
+        }
+        return "/resources/magazyn/zawartosc_magazynu";
     }
 
     public String usun(MagazynDTO item) {

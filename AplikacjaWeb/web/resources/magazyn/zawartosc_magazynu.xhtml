@@ -135,6 +135,8 @@
                             <h:outputText value="Operacje"/>
                         </f:facet>
                         <h:panelGroup layout="block" class="btn-group" a:role="group">
+                            <h:commandButton class="btn btn-info btn-sm rounded" 
+                                value="Wydaj" action="#{menadzer_magazynu.wydaj(czesc)}"/>
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
                                 value="Edytuj" action="#{menadzer_magazynu.edytuj(czesc)}"/>
                             <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
