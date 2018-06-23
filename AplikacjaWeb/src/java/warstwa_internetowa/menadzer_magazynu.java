@@ -50,6 +50,15 @@ public class menadzer_magazynu implements Serializable {
     private MagazynDTO toEdit;
     private MagazynDTO toWyd;
     private Integer do_wyd;
+    private String nazwa_s;
+
+    public String getNazwa_s() {
+        return nazwa_s;
+    }
+
+    public void setNazwa_s(String nazwa_s) {
+        this.nazwa_s = nazwa_s;
+    }
 
     public Integer getDo_wyd() {
         return do_wyd;
@@ -69,6 +78,27 @@ public class menadzer_magazynu implements Serializable {
 
     public void setToEdit(MagazynDTO toEdit) {
         this.toEdit = toEdit;
+    }
+
+    public String filtruj() {
+        List<MagazynDTO> aktualnaLista = strony.getCollection();
+        List<MagazynDTO> filtrowanaLista = new ArrayList<>();
+        for (MagazynDTO mD : aktualnaLista) {
+            if (mD.getCzesc().getNazwa().contains(nazwa_s)){
+            filtrowanaLista.add(mD);
+            }
+        }
+        System.out.println("FILTER: filterList size" + filtrowanaLista.size());
+        strony.setF_collection(filtrowanaLista);
+        strony.refresh(5);
+        lista = strony.generateDataArray();
+        return "/resources/magazyn/zawartosc_magazynu";
+    }
+    
+    public String resetuj () {
+        setPagination();
+        nazwa_s = "";
+        return "/resources/magazyn/zawartosc_magazynu";
     }
 
     public String dodaj() {

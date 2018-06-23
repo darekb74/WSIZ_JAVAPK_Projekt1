@@ -18,11 +18,34 @@ public class Pagination<T> implements Serializable {
     private int page;
     private int rowsPerPage;
     private List<T> collection;
+    private List<T> f_collection;
 
     public Pagination(int rowsPerPage, List<T> collection) {
         this.page = 1;
-        this.collection = collection;
+        this.collection = f_collection!=null ? f_collection : collection;
         this.rowsPerPage = rowsPerPage;
+    }
+
+    public void refresh(int rowsPerPage) {
+        this.page = 1;
+        this.collection = f_collection!=null ? f_collection : collection;
+        this.rowsPerPage = rowsPerPage;
+    }
+    
+    public List<T> getCollection() {
+        return collection;
+    }
+
+    public void setCollection(List<T> collection) {
+        this.collection = collection;
+    }
+
+    public List<T> getF_collection() {
+        return f_collection;
+    }
+
+    public void setF_collection(List<T> f_collection) {
+        this.f_collection = f_collection;
     }
 
     public int getPage() {

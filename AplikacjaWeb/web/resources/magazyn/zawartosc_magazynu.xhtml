@@ -14,7 +14,23 @@
     </ui:define>
 
     <ui:define name="left">
-        (^__^)
+        <h:form id="search">
+            <h:panelGroup layout="block" rendered="#{menadzer_magazynu.czyRenderowacTabele()}">
+                <h:panelGroup layout="block" class="form-row">
+                    <h:panelGroup layout="block" class="form-group col-md-12">
+                        <h:outputLabel for="nazwa_s" value="Nazwa części:"/>
+                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="Nazwa części"
+                                     maxlength="32" value="#{menadzer_magazynu.nazwa_s}"
+                                     requiredMessage="Filtr musi zawierać minimum 1 znak.">
+                            <f:ajax event="blur" execute="nazwa_s" render="nazwa_svErr"/>
+                        </h:inputText>
+                        <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_magazynu.filtruj}"/>
+            </h:panelGroup>
+        </h:form>
+        <h:form>&nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_magazynu.resetuj}"/></h:form>
     </ui:define>
 
     <ui:define name="content">
@@ -136,12 +152,13 @@
                         </f:facet>
                         <h:panelGroup layout="block" class="btn-group" a:role="group">
                             <h:commandButton class="btn btn-info btn-sm rounded" 
-                                value="Wydaj" action="#{menadzer_magazynu.wydaj(czesc)}"/>
+                                             value="Wydaj" action="#{menadzer_magazynu.wydaj(czesc)}"/>
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
-                                value="Edytuj" action="#{menadzer_magazynu.edytuj(czesc)}"/>
+                                             value="Edytuj" action="#{menadzer_magazynu.edytuj(czesc)}"/>
                             <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
-                                onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?')) return false"
-                                action="#{menadzer_magazynu.usun(czesc)}"/>
+                                             onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?'))
+                                                         return false"
+                                             action="#{menadzer_magazynu.usun(czesc)}"/>
                         </h:panelGroup>
                     </h:column>
                 </h:dataTable>
