@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="/resources/templates/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -12,8 +12,29 @@
         Administaracja - Lista użytkowników
     </ui:define>
     <ui:define name="left">
-        SEARCH ?
-        Do przemyślenia
+        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center" rendered="#{menadzer_uzytkownikow.czyRenderowacTabele()}">
+            <h:form id="search">
+                <h:panelGroup layout="block" class="form-row">
+                    <h:panelGroup layout="block" class="form-group col-md-12">
+                        <h:outputLabel for="nazwa_s" value="Nazwa użytkownika:"/>
+                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="Nazwa użytkownika"
+                                     maxlength="32" value="#{menadzer_uzytkownikow.nazwa_s}"
+                                     requiredMessage="Filtr musi zawierać minimum 1 znak.">
+                            <f:ajax event="blur" execute="nazwa_s" render="nazwa_svErr"/>
+                        </h:inputText>
+                        <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
+                    <h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_uzytkownikow.filtruj}"/>
+                </h:panelGroup>
+            </h:form>
+            <h:form>
+                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
+                    <h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_uzytkownikow.resetuj}"/>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
     </ui:define>
     <ui:define name="content">
         <h:form id="main_list">

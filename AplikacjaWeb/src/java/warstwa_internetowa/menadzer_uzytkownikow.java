@@ -30,9 +30,7 @@ import javax.faces.validator.ValidatorException;
  * @author Darek Xperia
  */
 @ManagedBean
-//@Named(value = "menadzer_uzytkownikow")
 @SessionScoped
-//@Stateful
 public class menadzer_uzytkownikow implements Serializable {
 
     @EJB(mappedName = "ejb/FasadaUserD_ejb")
@@ -42,7 +40,6 @@ public class menadzer_uzytkownikow implements Serializable {
     public void init() {
         setPagination();
     }
-    //private FasadaUserD_ejbRemote fasadaUser = lookupFasadaUserD_ejbRemote();
     private boolean zalogowany = false;
     private UserDTO uDTO = null;
 
@@ -55,7 +52,9 @@ public class menadzer_uzytkownikow implements Serializable {
 
     private String username, password, password2, pasword_hash, email;
     private Short rmask;
-
+    
+    private String nazwa_s;
+ 
     public UserDTO getToEdit() {
         return toEdit;
     }
@@ -99,7 +98,26 @@ public class menadzer_uzytkownikow implements Serializable {
         listaU = strony.generateDataArray();
         return "/resources/admin/lista_uzytkownikow";
     }
-
+    public String filtruj() {
+        List<UserDTO> aktualnaLista = strony.getCollection();
+        List<UserDTO> filtrowanaLista = new ArrayList<>();
+        for (UserDTO mD : aktualnaLista) {
+            if (mD.getUsername().contains(nazwa_s)){
+            filtrowanaLista.add(mD);
+            }
+        }
+        strony.setF_collection(filtrowanaLista);
+        strony.refresh(5);
+        listaU = strony.generateDataArray();
+        return "/resources/admin/lista_uzytkownikow";
+    }
+    
+    public String resetuj () {
+        setPagination();
+        nazwa_s = "";
+        return "/resources/admin/lista_uzytkownikow";
+    }
+    
     public Pagination<UserDTO> getStrony() {
         return strony;
     }
@@ -142,6 +160,14 @@ public class menadzer_uzytkownikow implements Serializable {
 
     public void setRmask(Short rmask) {
         this.rmask = rmask;
+    }
+
+    public String getNazwa_s() {
+        return nazwa_s;
+    }
+
+    public void setNazwa_s(String nazwa_s) {
+        this.nazwa_s = nazwa_s;
     }
 
     public void lastPage() {

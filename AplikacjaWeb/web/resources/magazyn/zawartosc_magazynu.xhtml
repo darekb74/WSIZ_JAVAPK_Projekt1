@@ -14,8 +14,8 @@
     </ui:define>
 
     <ui:define name="left">
-        <h:form id="search">
-            <h:panelGroup layout="block" rendered="#{menadzer_magazynu.czyRenderowacTabele()}">
+        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center" rendered="#{menadzer_magazynu.czyRenderowacTabele()}">
+            <h:form id="search">
                 <h:panelGroup layout="block" class="form-row">
                     <h:panelGroup layout="block" class="form-group col-md-12">
                         <h:outputLabel for="nazwa_s" value="Nazwa części:"/>
@@ -27,10 +27,16 @@
                         <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
                     </h:panelGroup>
                 </h:panelGroup>
-                &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_magazynu.filtruj}"/>
-            </h:panelGroup>
-        </h:form>
-        <h:form>&nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_magazynu.resetuj}"/></h:form>
+                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
+                    <h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_magazynu.filtruj}"/>
+                </h:panelGroup>
+            </h:form>
+            <h:form>
+                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
+                    <h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_magazynu.resetuj}"/>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
     </ui:define>
 
     <ui:define name="content">

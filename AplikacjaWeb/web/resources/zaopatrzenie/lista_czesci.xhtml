@@ -12,7 +12,29 @@
         Zaopatrzenie - Lista części
     </ui:define>
     <ui:define name="left">
-        -/\/\/\/\/(OO) Sss..
+        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center" rendered="#{menadzer_czesci.czyRenderowacTabele()}">
+            <h:form id="search">
+                <h:panelGroup layout="block" class="form-row">
+                    <h:panelGroup layout="block" class="form-group col-md-12">
+                        <h:outputLabel for="nazwa_s" value="Nazwa części:"/>
+                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="Nazwa części"
+                                     maxlength="32" value="#{menadzer_czesci.nazwa_s}"
+                                     requiredMessage="Filtr musi zawierać minimum 1 znak.">
+                            <f:ajax event="blur" execute="nazwa_s" render="nazwa_svErr"/>
+                        </h:inputText>
+                        <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
+                    <h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_czesci.filtruj}"/>
+                </h:panelGroup>
+            </h:form>
+            <h:form>
+                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
+                    <h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_czesci.resetuj}"/>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
     </ui:define>
     <ui:define name="content">
         <h:form id="main_list">

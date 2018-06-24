@@ -24,9 +24,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-//@Stateful
-//@Named(value = "menadzer_czesci")
-public class menadzer_czesci implements Serializable{
+public class menadzer_czesci implements Serializable {
 
     @EJB(mappedName = "ejb/FasadaCzesciD_ejb")
     FasadaCzesciD_ejbRemote fasadaCzesci;
@@ -38,11 +36,12 @@ public class menadzer_czesci implements Serializable{
 
     private List<CzesciDTO> lista;
     private Pagination<CzesciDTO> strony;
-    
+
     private CzesciDTO toEdit;
 
     private String nazwa, producent, model, jednostka;
     private Double cena_jednostkowa;
+    private String nazwa_s;
 
     public FasadaCzesciD_ejbRemote getFasadaCzesci() {
         return fasadaCzesci;
@@ -76,7 +75,7 @@ public class menadzer_czesci implements Serializable{
         lista = strony.generateDataArray();
         return "/resources/zaopatrzenie/lista_czesci";
     }
-    
+
     public String aktualizuj() {
         try {
             fasadaCzesci.aktualizujDane(toEdit);
@@ -88,6 +87,7 @@ public class menadzer_czesci implements Serializable{
         }
         return "/resources/zaopatrzenie/lista_czesci";
     }
+
     public List<CzesciDTO> getLista() {
         return lista;
     }
@@ -102,6 +102,34 @@ public class menadzer_czesci implements Serializable{
 
     public void setStrony(Pagination<CzesciDTO> strony) {
         this.strony = strony;
+    }
+
+    public String getNazwa_s() {
+        return nazwa_s;
+    }
+
+    public void setNazwa_s(String nazwa_s) {
+        this.nazwa_s = nazwa_s;
+    }
+
+    public String filtruj() {
+        List<CzesciDTO> aktualnaLista = strony.getCollection();
+        List<CzesciDTO> filtrowanaLista = new ArrayList<>();
+        for (CzesciDTO mD : aktualnaLista) {
+            if (mD.getNazwa().contains(nazwa_s)) {
+                filtrowanaLista.add(mD);
+            }
+        }
+        strony.setF_collection(filtrowanaLista);
+        strony.refresh(5);
+        lista = strony.generateDataArray();
+        return "/resources/zaopatrzenie/lista_czesci";
+    }
+
+    public String resetuj() {
+        setPagination();
+        nazwa_s = "";
+        return "/resources/zaopatrzenie/lista_czesci";
     }
 
     public String getNazwa() {
@@ -179,7 +207,7 @@ public class menadzer_czesci implements Serializable{
         lista = strony.generateDataArray();
         return "/resources/zaopatrzenie/lista_czesci";
     }
-    
+
     public Boolean doRenderowania(int pos) {
         if (strony == null) {
             setPagination();

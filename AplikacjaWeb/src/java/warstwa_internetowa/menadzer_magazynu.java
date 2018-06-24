@@ -26,8 +26,6 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-//@Stateful
-//@Named(value = "menadzer_czesci")
 public class menadzer_magazynu implements Serializable {
 
     @EJB(mappedName = "ejb/FasadaMagazynD_ejb")
@@ -88,7 +86,6 @@ public class menadzer_magazynu implements Serializable {
             filtrowanaLista.add(mD);
             }
         }
-        System.out.println("FILTER: filterList size" + filtrowanaLista.size());
         strony.setF_collection(filtrowanaLista);
         strony.refresh(5);
         lista = strony.generateDataArray();
