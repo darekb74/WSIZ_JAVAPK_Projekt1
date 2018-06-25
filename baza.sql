@@ -20,8 +20,8 @@ ALTER TABLE SERWIS.MAGAZYND
 INSERT INTO SERWIS.USERD (id, username, password_hash, email, isonline, last_login, rmask) VALUES 
 ( 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@serwis.pl', false, '1970-01-01 00:00:00',255),
 ( 2, 'darek', 'b64a76fbfcbc7b85bc416a53240bb077', 'darek@serwis.pl', false, '1970-01-01 00:00:00',1),
-( 3, 'robert', '684c851af59965b680086b7b4896ff98', 'robert@serwis.pl', false, '1970-01-01 00:00:00',0),
-( 4, 'jakub', 'eccdacd4709395e97e6b19756c7b45c1', 'jakub@serwis.pl', false, '1970-01-01 00:00:00',0),
+( 3, 'robert', '684c851af59965b680086b7b4896ff98', 'robert@serwis.pl', false, '1970-01-01 00:00:00',2),
+( 4, 'jakub', 'eccdacd4709395e97e6b19756c7b45c1', 'jakub@serwis.pl', false, '1970-01-01 00:00:00',8),
 ( 5, 'julia', 'c2e285cb33cecdbeb83d2189e983a8c0', 'julia@serwis.pl', false, '1970-01-01 00:00:00',0),
 ( 6, 'wojciech', 'e1b429b19a9e5931d30e72f14616a117', 'wojciech@serwis.pl', false, '1970-01-01 00:00:00',0),
 ( 7, 'klaudia', 'fc39b096375417b3e2df3d24551cf277', 'klaudia@serwis.pl', false, '1970-01-01 00:00:00',0),

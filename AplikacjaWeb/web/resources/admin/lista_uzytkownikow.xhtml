@@ -117,7 +117,9 @@
                         <f:facet name="header">
                             <h:outputText value="Osatatnie logowanie"/>
                         </f:facet>
-                        <h:outputText value="#{user.last_login}"/>
+                        <h:outputText value="#{user.last_login}">
+                            <f:convertDateTime pattern="EEEE, dd MMMM yyyy, HH:mm:ss"/>
+                        </h:outputText>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
@@ -137,7 +139,7 @@
                         </f:facet>
                         <h:panelGroup layout="block" class="btn-group" a:role="group">
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
-                                value="Edytuj" action="#{menadzer_uzytkownikow.edytuj(user)}"/>
+                                value="Edytuj" action="#{menadzer_uzytkownikow.dodajCzyEdytuj(1,user)}"/>
                             <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
                                 onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?')) return false"
                                 action="#{menadzer_uzytkownikow.usun(user)}"/>

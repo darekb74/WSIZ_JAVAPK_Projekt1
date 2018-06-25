@@ -50,12 +50,18 @@ public class menadzer_magazynu implements Serializable {
     private Integer do_wyd;
     private String nazwa_s;
 
+    private int tryb;
+
     public String getNazwa_s() {
         return nazwa_s;
     }
 
     public void setNazwa_s(String nazwa_s) {
         this.nazwa_s = nazwa_s;
+    }
+
+    public int getTryb() {
+        return tryb;
     }
 
     public Integer getDo_wyd() {
@@ -97,6 +103,24 @@ public class menadzer_magazynu implements Serializable {
         nazwa_s = "";
         return "/resources/magazyn/zawartosc_magazynu";
     }
+    public String dodajCzyEdytuj(int tryb, MagazynDTO toEdit) {
+        this.tryb = tryb;
+        this.toEdit = toEdit;
+        if (toEdit != null) {
+            id = toEdit.getId();
+            czesc = toEdit.getCzesc();
+            regal = toEdit.getRegal();
+            polka = toEdit.getPolka();
+            ilosc = toEdit.getIlosc();
+        } else {
+            id = null;
+            czesc = null;
+            regal = null;
+            polka = null;
+            ilosc = null;
+        }
+        return "/resources/magazyn/przyjecie_czesci";
+    }
 
     public String dodaj() {
         try {
@@ -129,6 +153,10 @@ public class menadzer_magazynu implements Serializable {
 
     public String aktualizuj() {
         try {
+            toEdit.setCzesc(czesc);
+            toEdit.setRegal(regal);
+            toEdit.setPolka(polka);
+            toEdit.setIlosc(ilosc);
             fasadaMagazynu.aktualizujDane(toEdit);
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została zaktualizowana.", "Część została zaktualizowana.");
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
@@ -217,10 +245,6 @@ public class menadzer_magazynu implements Serializable {
             strony.setPage(cPage);
             lista = strony.generateDataArray();
         }
-    }
-
-    public String czescDTOcolor() {
-        return czesc != null ? "green" : "red";
     }
 
     public String edytuj(MagazynDTO item) {

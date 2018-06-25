@@ -123,7 +123,9 @@
                         <f:facet name="header">
                             <h:outputText value="Cena jednostkowa"/>
                         </f:facet>
-                        <h:outputText value="#{czesc.cena_jednostkowa}"/>
+                        <h:outputText value="#{czesc.cena_jednostkowa}">
+                            <f:convertNumber pattern="#0.00 ¤"/>
+                        </h:outputText>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -131,7 +133,7 @@
                         </f:facet>
                         <h:panelGroup layout="block" class="btn-group" a:role="group">
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
-                                             value="Edytuj" action="#{menadzer_czesci.edytuj(czesc)}"/>
+                                             value="Edytuj" action="#{menadzer_czesci.dodajCzyEdytuj(1, czesc)}"/>
                             <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
                                              onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?'))
                                                      return false"

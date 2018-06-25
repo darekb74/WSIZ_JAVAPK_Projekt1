@@ -144,13 +144,17 @@
                         <f:facet name="header">
                             <h:outputText value="Cena jednostkowa"/>
                         </f:facet>
-                        <h:outputText value="#{czesc.czesc.cena_jednostkowa}"/>
+                        <h:outputText value="#{czesc.czesc.cena_jednostkowa}">
+                            <f:convertNumber pattern="#0.00 ¤"/>
+                        </h:outputText>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
                             <h:outputText value="Wartość całkowita"/>
                         </f:facet>
-                        <h:outputText value="#{menadzer_magazynu.getWartosc(czesc.czesc.cena_jednostkowa, czesc.ilosc)}"/>
+                        <h:outputText value="#{menadzer_magazynu.getWartosc(czesc.czesc.cena_jednostkowa, czesc.ilosc)}">
+                            <f:convertNumber pattern="#0.00 ¤"/>
+                        </h:outputText>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -160,7 +164,7 @@
                             <h:commandButton class="btn btn-info btn-sm rounded" 
                                              value="Wydaj" action="#{menadzer_magazynu.wydaj(czesc)}"/>
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
-                                             value="Edytuj" action="#{menadzer_magazynu.edytuj(czesc)}"/>
+                                             value="Edytuj" action="#{menadzer_magazynu.dodajCzyEdytuj(1,czesc)}"/>
                             <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
                                              onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?'))
                                                          return false"

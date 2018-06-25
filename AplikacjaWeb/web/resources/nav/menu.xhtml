@@ -8,92 +8,98 @@
 
     <!-- INTERFACE -->
     <cc:interface>
+        <cc:attribute name="addUserLinkOutcome"
+                      method-signature="java.lang.String dodaj()" />
+        <cc:attribute name="addPartDefLinkOutcome"
+                      method-signature="java.lang.String dodaj()" />
+        <cc:attribute name="addPartLinkOutcome"
+                      method-signature="java.lang.String dodaj()" />
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded" id="menubar">
-                <h:panelGroup layout="block" class="navbar-brand">
-                    <h:link class="navbar-brand" outcome="/index" value="Serwis komputerowy"/>
-                </h:panelGroup>
-                <ul class="navbar-nav mr-auto">
-                    <!-- Magazyn -->
-                    <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
-                        <li class="nav-item dropdown">
-                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">Magazyn
-                                <h:panelGroup class="caret"/></h:link>
-                            <ul class="dropdown-menu">
-                                <li><h:link class="dropdown-item" outcome="/resources/magazyn/zawartosc_magazynu">Lista części w magazynie</h:link></li>
-                                <li><h:link class="dropdown-item" outcome="/resources/magazyn/przyjecie_czesci">Przyjęcie części do magazynu</h:link></li>
-                            </ul>
-                        </li>
-                    </c:if>
-                    <!-- Zaopatrzenie -->
-                    <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('zaopatrzenie')}">
-                        <li class="nav-item dropdown">
-                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">Zaopatrzenie
-                                <h:panelGroup class="caret"/></h:link>
-                            <ul class="dropdown-menu">
-                                <li><h:link class="dropdown-item" outcome="/resources/zaopatrzenie/lista_czesci" value="Lista definicji części"></h:link></li>
-                                <li><h:link class="dropdown-item" outcome="/resources/zaopatrzenie/dodaj_czesc" value="Dodaj definicję części"></h:link></li>
-                            </ul>
-                        </li>
-                    </c:if>
-                    <!-- Administracja -->
-                    <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
-                        <li class="nav-item dropdown">
-                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">Administracja
-                                <h:panelGroup class="caret"/></h:link>
-                            <ul class="dropdown-menu">
-                                <li><h:link class="dropdown-item" outcome="/resources/admin/lista_uzytkownikow" value="Lista użytkowników"></h:link></li>
-                                <li><h:link class="dropdown-item" outcome="/resources/admin/dodaj_uzytkownika" value="Dodaj użytkownika"></h:link></li>
-                            </ul>
-                        </li>
-                    </c:if>
-                </ul>
-                <ul class="nav navbar-nav navbar-inline my-2 my-sm-0">
-                    <li class="dropdown">
-                        <c:choose>
-                            <c:when test="#{!menadzer_uzytkownikow.isZalogowany()}">
-                                <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">
-                                    <h:panelGroup class="glyphicon glyphicon-log-in"/> Logowanie <h:panelGroup class="caret"/>
-                                </h:link>
-                                <ul id="login-dp" class="dropdown-menu">
-                                    <li>
-                                        <h:panelGroup layout="block" class="row">
-                                            <h:panelGroup layout="block" class="col-md-12">
-                                                <h:panelGroup layout="block" style="color: #045491">Wprowadź dane:</h:panelGroup>
-                                                <h:form class="form" role="form" acceptcharset="UTF-8" id="login-nav">
-                                                    <h:panelGroup layout="block" class="form-group">
-                                                        <h:outputLabel class="sr-only" for="uzytkownik" value="Nazwa użytkownika"/>
-                                                        <h:inputText class="form-control" value="#{menadzer_uzytkownikow.uzytkownik}" id="uzytkownik" a:placeholder="Nazwa użytkownika" required="true"/>
-                                                    </h:panelGroup>
-                                                    <h:panelGroup layout="block" class="form-group">
-                                                        <h:outputLabel class="sr-only" for="haslo" value="Hasło"/>
-                                                        <h:inputSecret class="form-control" value="#{menadzer_uzytkownikow.haslo}" id="haslo" a:placeholder="Hasło" required="true" />
-                                                    </h:panelGroup>
-                                                    <h:panelGroup layout="block" class="form-group">
-                                                        <h:commandButton class="btn btn-primary btn-block" value="Zaloguj się" action="#{menadzer_uzytkownikow.login()}" />
-                                                    </h:panelGroup>
-                                                </h:form>
-                                            </h:panelGroup>
-                                        </h:panelGroup>
-                                    </li>
-                                </ul>
-                            </c:when>
-                            <c:otherwise>
-                                <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">
-                                    <h:panelGroup class="glyphicon glyphicon-user"/> Zalogowany jako <h:outputText class="text-primary" value="#{menadzer_uzytkownikow.uzytkownik}" escape="false" /><h:panelGroup class="caret"/>
-                                </h:link>
-                                <ul id="login-dp" class="dropdown-menu">
-                                    <li><h:form>
-                                            <h:commandButton class="btn btn-primary btn-block" value="Wyloguj się" action="#{menadzer_uzytkownikow.logout()}" />
-                                    </h:form></li>
-                                </ul>
-                            </c:otherwise>
-                        </c:choose>
+            <h:panelGroup layout="block" class="navbar-brand">
+                <h:link class="navbar-brand" outcome="/index" value="#{txtBundle['TITLE']}"/>
+            </h:panelGroup>
+            <ul class="navbar-nav mr-auto">
+                <!-- Magazyn -->
+                <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('magazynier')}">
+                    <li class="nav-item dropdown">
+                        <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#"><h:panelGroup class="glyphicon glyphicon-tasks"/> #{txtBundle['m_storagemenu']}
+                            <h:panelGroup class="caret"/></h:link>
+                        <ul class="dropdown-menu">
+                            <li><h:link class="dropdown-item" outcome="/resources/magazyn/zawartosc_magazynu"><h:panelGroup class="glyphicon glyphicon-list"/> #{txtBundle['m_partlist_s']}</h:link></li>
+                            <li><h:form><h:commandLink class="dropdown-item" action="#{cc.attrs.addPartLinkOutcome}"><h:panelGroup class="glyphicon glyphicon-plus"/> #{txtBundle['m_addpart_s']}</h:commandLink></h:form></li>
+                        </ul>
                     </li>
-                </ul>
+                </c:if>
+                <!-- Zaopatrzenie -->
+                <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('zaopatrzenie')}">
+                    <li class="nav-item dropdown">
+                        <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#"><h:panelGroup class="glyphicon glyphicon-road"/> #{txtBundle['m_supplymenu']}
+                            <h:panelGroup class="caret"/></h:link>
+                        <ul class="dropdown-menu">
+                            <li><h:link class="dropdown-item" outcome="/resources/zaopatrzenie/lista_czesci"><h:panelGroup class="glyphicon glyphicon-list"/> #{txtBundle['m_partlist']}</h:link></li>
+                            <li><h:form><h:commandLink class="dropdown-item" action="#{cc.attrs.addPartDefLinkOutcome}"><h:panelGroup class="glyphicon glyphicon-plus"/> #{txtBundle['m_addpart']}</h:commandLink></h:form></li>
+                        </ul>
+                    </li>
+                </c:if>
+                <!-- Administracja -->
+                <c:if test="#{menadzer_uzytkownikow.posiadaUprawnienia('administrator')}">
+                    <li class="nav-item dropdown">
+                        <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#"><h:panelGroup class="glyphicon glyphicon-text-background"/> #{txtBundle['m_adminmenu']}
+                            <h:panelGroup class="caret"/></h:link>
+                        <ul class="dropdown-menu">
+                            <li><h:link class="dropdown-item" outcome="/resources/admin/lista_uzytkownikow"><h:panelGroup class="glyphicon glyphicon-list"/> #{txtBundle['m_userlist']}</h:link></li>
+                            <li><h:form><h:commandLink class="dropdown-item" action="#{cc.attrs.addUserLinkOutcome}"><h:panelGroup class="glyphicon glyphicon-plus"/> #{txtBundle['m_adduser']}</h:commandLink></h:form></li>
+                        </ul>
+                    </li>
+                </c:if>
+            </ul>
+            <ul class="nav navbar-nav navbar-inline my-2 my-sm-0">
+                <li class="dropdown">
+                    <c:choose>
+                        <c:when test="#{!menadzer_uzytkownikow.isZalogowany()}">
+                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                                <h:panelGroup class="glyphicon glyphicon-log-in"/> #{txtBundle['m_logTXT']} <h:panelGroup class="caret"/>
+                            </h:link>
+                            <ul id="login-dp" class="dropdown-menu">
+                                <li>
+                                    <h:panelGroup layout="block" class="row">
+                                        <h:panelGroup layout="block" class="col-md-12">
+                                            <h:panelGroup layout="block" style="color: #045491">#{txtBundle['m_enterdata']}:</h:panelGroup>
+                                            <h:form class="form" role="form" acceptcharset="UTF-8" id="login-nav">
+                                                <h:panelGroup layout="block" class="form-group">
+                                                    <h:outputLabel class="sr-only" for="uzytkownik" value="#{txtBundle['m_username']}:"/>
+                                                    <h:inputText class="form-control" value="#{menadzer_uzytkownikow.uzytkownik}" id="uzytkownik" a:placeholder="#{txtBundle['m_username']}" required="true"/>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" class="form-group">
+                                                    <h:outputLabel class="sr-only" for="haslo" value="#{txtBundle['m_password']}:"/>
+                                                    <h:inputSecret class="form-control" value="#{menadzer_uzytkownikow.haslo}" id="haslo" a:placeholder="#{txtBundle['m_password']}" required="true" />
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" class="form-group">
+                                                    <h:commandButton class="btn btn-primary btn-block" value="#{txtBundle['m_login']}" action="#{menadzer_uzytkownikow.login()}" />
+                                                </h:panelGroup>
+                                            </h:form>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </li>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                            <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#">
+                                <h:panelGroup class="glyphicon glyphicon-user"/> #{txtBundle['m_loggedas']} <h:outputText class="text-primary" value="#{menadzer_uzytkownikow.uzytkownik}" escape="false" /><h:panelGroup class="caret"/>
+                            </h:link>
+                            <ul id="login-dp" class="dropdown-menu">
+                                <li><h:form>
+                                        <h:commandButton class="btn btn-primary btn-block" value="#{txtBundle['m_logout']}" action="#{menadzer_uzytkownikow.logout()}" />
+                                    </h:form></li>
+                            </ul>
+                        </c:otherwise>
+                    </c:choose>
+                </li>
+            </ul>
         </nav>
     </cc:implementation>
 </html>

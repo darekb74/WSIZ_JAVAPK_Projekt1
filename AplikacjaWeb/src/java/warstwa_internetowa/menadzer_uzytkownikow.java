@@ -49,6 +49,7 @@ public class menadzer_uzytkownikow implements Serializable {
     private List<UserDTO> listaU;
     private Pagination<UserDTO> strony;
     private UserDTO toEdit;
+    private Integer tryb;
 
     private String username, password, password2, pasword_hash, email;
     private Short rmask;
@@ -63,9 +64,35 @@ public class menadzer_uzytkownikow implements Serializable {
         this.toEdit = toEdit;
     }
 
+    public Integer getTryb() {
+        return tryb;
+    }
+    public String dodajCzyEdytuj(int tryb, UserDTO toEdit) {
+        System.out.println("[SET TRYB] tryb=" + tryb);
+        this.tryb = tryb;
+        this.toEdit = toEdit;
+        if (toEdit != null) {
+            username = toEdit.getUsername();
+            password = "";
+            password2 = "";
+            email = toEdit.geteMail();
+            rmask = toEdit.getRmask();
+        } else {
+            username = null;
+            password = "";
+            password2 = "";
+            email = null;
+            rmask = null;
+        }
+        return "/resources/admin/dodaj_uzytkownika";
+    }
+  
     public String aktualizuj() {
         try {
-            if (password != null || !password.equals("")) {
+            toEdit.setUsername(username);
+            toEdit.seteMail(email);
+            toEdit.setRmask(rmask);
+            if (password != null && !password.equals("")) {
                 toEdit.setPassword_hash(Utils.Utils.md5(password));
             }
             fasadaUser.aktualizujDane(toEdit);
@@ -80,6 +107,8 @@ public class menadzer_uzytkownikow implements Serializable {
 
     public String edytuj(UserDTO item) {
         toEdit = item;
+        password = "";
+        password2 = "";
         return "/resources/admin/edytuj_uzytkownika";
     }
 
@@ -380,6 +409,8 @@ public class menadzer_uzytkownikow implements Serializable {
                     uDTO.setIsOnline(true); // uaktualnij status online
                     uDTO.setLast_login(Utils.Utils.usunMS(new Date())); // uaktualnij dane ostatniego zalogowania
                     fasadaUser.aktualizujDane(uDTO); // uaktualnij bazę
+                    // odśwież listę
+                    setPagination();
                 } else {
                     uDTO = null;
                     zalogowany = false;
@@ -417,4 +448,16 @@ public class menadzer_uzytkownikow implements Serializable {
         }
         return false;
     }
+    
+    /*
+    private FasadaUserD_ejbRemote lookupFasadaUserD_ejbRemote() {
+        try {
+            Context c = new InitialContext();
+            return (FasadaUserD_ejbRemote) c.lookup("ejb/FasadaUserD_ejb");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+    */
 }

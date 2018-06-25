@@ -7,25 +7,39 @@
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <ui:define name="title">
-        Magazyn - Przyjęcie części
+        Magazyn - <h:outputText value="#{menadzer_magazynu.tryb == 0 ? 'Przyjęcie części' : 'Edycja części'}"/>
     </ui:define>
 
     <ui:define name="content">
         <!-- formularz -->
         <h:form id="myform">
             <h:panelGroup layout="block" class="form-row">
-                <h:panelGroup layout="block" class="form-group col-md-3">
+                <h:panelGroup layout="block" class="form-group col-md-2">
                     <h:outputLabel for="id" value="Id części:"/>
                     <h:inputText id="id_c" required="true" class="form-control" a:placeholder="Id części"
                                  maxlength="128" value="#{menadzer_magazynu.czesc}"
                                  requiredMessage="To pole jest wymagane.">
                         <f:converter converterId="KonwerterCzesciDTO"/>
-                        <f:ajax event="blur" execute="id_c" render="idvErr"/>
+                        <f:ajax event="blur" execute="id_c" render="idvErr nazwac modelc"/>
                     </h:inputText>
-                    <h:message id="idvErr" for="id_c" class="feedback" style="font-size: 10px; color: #{menadzer_magazynu.czescDTOcolor()}"/>
+                    <h:message id="idvErr" for="id_c" class="feedback" style="font-size: 10px; color: red"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-7">
+                    <h:outputLabel for="nazwac" value="Nazwa części:"/>
+                    <h:inputText id="nazwac" required="true" class="form-control" disabled="true"
+                                 a:placeholder="Nazwa części"
+                                 maxlength="128" value="#{menadzer_magazynu.czesc.nazwa}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="regal" value="Nr regalu:"/>
+                    <h:outputLabel for="modelc" value="Model:"/>
+                    <h:inputText id="modelc" required="true" class="form-control" disabled="true"
+                                 a:placeholder="Model"
+                                 maxlength="128" value="#{menadzer_magazynu.czesc.model}"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-row">
+                <h:panelGroup layout="block" class="form-group col-md-4">
+                    <h:outputLabel for="regal" value="Nr regału:"/>
                     <h:inputText id="regal" required="true" class="form-control" a:placeholder="Nr regału"
                                  maxlength="32" value="#{menadzer_magazynu.regal}"
                                  requiredMessage="To pole jest wymagane."
@@ -35,7 +49,7 @@
                     </h:inputText>
                     <h:message id="regalvErr" for="regal" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
-                <h:panelGroup layout="block" class="form-group col-md-3">
+                <h:panelGroup layout="block" class="form-group col-md-4">
                     <h:outputLabel for="polka" value="Nr półki:"/>
                     <h:inputText id="polka" required="true" class="form-control" a:placeholder="Nr półki"
                                  maxlength="32" value="#{menadzer_magazynu.polka}"
@@ -46,7 +60,7 @@
                     </h:inputText>
                     <h:message id="polkavErr" for="polka" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
-                <h:panelGroup layout="block" class="form-group col-md-3">
+                <h:panelGroup layout="block" class="form-group col-md-4">
                     <h:outputLabel for="ilosc" value="Ilość:"/>
                     <h:inputText id="ilosc" required="true" class="form-control" a:placeholder="Ilość"
                                    maxlength="10" value="#{menadzer_magazynu.ilosc}"
@@ -58,7 +72,8 @@
                     <h:message id="iloscvErr" for="ilosc" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
             </h:panelGroup>
-            &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Dodaj" action="#{menadzer_magazynu.dodaj}"/>
+            &nbsp;&nbsp;&nbsp;<h:commandButton type="dodaj" rendered="#{menadzer_magazynu.tryb==0}" class="btn btn-primary" value="Dodaj" action="#{menadzer_magazynu.dodaj}"/>
+            <h:commandButton type="aktualizuj" rendered="#{menadzer_magazynu.tryb!=0}" class="btn btn-primary" value="Aktualizuj" action="#{menadzer_magazynu.aktualizuj}"/>
         </h:form>
     </ui:define>
 

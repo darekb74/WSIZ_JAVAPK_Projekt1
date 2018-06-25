@@ -39,9 +39,11 @@ public class menadzer_czesci implements Serializable {
 
     private CzesciDTO toEdit;
 
+    private Long id;
     private String nazwa, producent, model, jednostka;
     private Double cena_jednostkowa;
     private String nazwa_s;
+    private Integer tryb = 0;
 
     public FasadaCzesciD_ejbRemote getFasadaCzesci() {
         return fasadaCzesci;
@@ -53,11 +55,6 @@ public class menadzer_czesci implements Serializable {
 
     public void setToEdit(CzesciDTO toEdit) {
         this.toEdit = toEdit;
-    }
-
-    public String edytuj(CzesciDTO item) {
-        toEdit = item;
-        return "/resources/zaopatrzenie/edytuj_czesc";
     }
 
     public String usun(CzesciDTO item) {
@@ -78,6 +75,11 @@ public class menadzer_czesci implements Serializable {
 
     public String aktualizuj() {
         try {
+            toEdit.setNazwa(nazwa);
+            toEdit.setModel(model);
+            toEdit.setProducent(producent);
+            toEdit.setJednostka(jednostka);
+            toEdit.setCena_jednostkowa(cena_jednostkowa);
             fasadaCzesci.aktualizujDane(toEdit);
             FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została zaktualizowana.", "Definicja części została zaktualizowana.");
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
@@ -132,6 +134,14 @@ public class menadzer_czesci implements Serializable {
         return "/resources/zaopatrzenie/lista_czesci";
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getNazwa() {
         return nazwa;
     }
@@ -172,6 +182,10 @@ public class menadzer_czesci implements Serializable {
         this.cena_jednostkowa = cena_jednostkowa;
     }
 
+    public Integer getTryb() {
+        return tryb;
+    }
+
     public boolean czyRenderowacTabele() {
         if (strony == null) {
             return false;
@@ -192,6 +206,27 @@ public class menadzer_czesci implements Serializable {
         }
     }
 
+    public String dodajCzyEdytuj(int tryb, CzesciDTO toEdit) {
+        this.tryb = tryb;
+        this.toEdit = toEdit;
+        if (toEdit != null) {
+            id = toEdit.getId();
+            nazwa = toEdit.getNazwa();
+            producent = toEdit.getProducent();
+            model = toEdit.getModel();
+            jednostka = toEdit.getJednostka();
+            cena_jednostkowa = toEdit.getCena_jednostkowa();
+        } else {
+            id = null;
+            nazwa = null;
+            producent = null;
+            model = null;
+            jednostka = null;
+            cena_jednostkowa = null;
+        }
+        return "/resources/zaopatrzenie/dodaj_czesc";
+    }
+    
     public String dodaj() {
         try {
             fasadaCzesci.dodajCzesc(new CzesciDTO(fasadaCzesci.znajdzNastepneID(), nazwa, producent, model, jednostka, cena_jednostkowa));
