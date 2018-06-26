@@ -73,3 +73,5 @@ AplikacjaWeb/build/web/resources/zaopatrzenie/dodaj_czesc.xhtml
 AplikacjaWeb/build/web/resources/zaopatrzenie/lista_czesci.xhtml
 /AplikacjaWeb/dist/
 /AplikacjaWeb/build/
+AplikacjaWeb/nbproject/private/private.properties
+AplikacjaWeb/nbproject/private/private.xml

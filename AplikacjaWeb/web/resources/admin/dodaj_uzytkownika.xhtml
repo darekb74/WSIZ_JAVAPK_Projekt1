@@ -21,7 +21,7 @@
                     <h:outputLabel for="username" value="#{txtBundle['ulist.column.username']}:"/>
                     <h:inputText id="username" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.username']}"
                                  maxlength="32" value="#{menadzer_uzytkownikow.username}"
-                                 validatorMessage="#{txtBundle['amuser.username.validtor']}"
+                                 validatorMessage="#{txtBundle['amuser.username.validator']}"
                                  requiredMessage="#{txtBundle['global.required']}">
                         <f:validateRegex 
                             pattern="^(?=.{3,32}$)[(?i)a-z(?-i)0-9]+$" />
@@ -33,7 +33,7 @@
                     <h:outputLabel for="eMail" value="#{txtBundle['ulist.column.email']}:"/>
                     <h:inputText id="eMail" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.email']}"
                                  maxlength="64" value="#{menadzer_uzytkownikow.email}"
-                                 validatorMessage="#{txtBundle['amuser.email.validtor']}"
+                                 validatorMessage="#{txtBundle['amuser.email.validator']}"
                                  requiredMessage="#{txtBundle['global.required']}.">
                         <f:validateRegex 
                             pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[\p{L}\p{M}\p{N}.-]*(\.[\p{L}\p{M}]{2,})$" />
@@ -58,7 +58,7 @@
                     <h:outputLabel for="password" value="#{txtBundle['ulist.column.password']}:"/>
                     <h:inputSecret id="password" rendered="#{menadzer_uzytkownikow.tryb==0}" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.password']}"
                                    maxlength="32" value="#{menadzer_uzytkownikow.password}"
-                                   validatorMessage="#{txtBundle['amuser.password.validtor']}"
+                                   validatorMessage="#{txtBundle['amuser.password.validator']}"
                                    requiredMessage="#{txtBundle['global.required']}">
                         <f:validateRegex
                             pattern="^(?=.{5,32}$)(?=.*\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*)[(?i)a-z(?-i)0-9]+$" />
@@ -67,7 +67,7 @@
                     <h:message id="passwordvErr" for="password" class="feedback" style="font-size: 10px;  color: red"/>
                     <h:inputSecret id="passwordE" rendered="#{menadzer_uzytkownikow.tryb!=0}" required="false" class="form-control" 
                                    a:placeholder="Hasło" maxlength="32" value="#{menadzer_uzytkownikow.password}"
-                                   validatorMessage="#{txtBundle['amuser.password.validtor']}">
+                                   validatorMessage="#{txtBundle['amuser.password.validator']}">
                         <f:validateRegex
                             pattern="^$|^(?=.{5,32}$)(?=.*\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*)[(?i)a-z(?-i)0-9]+$" />
                         <f:ajax event="blur" execute="passwordE" render="passwordEvErr"/>
@@ -78,7 +78,7 @@
                     <h:outputLabel for="password2" rendered="#{menadzer_uzytkownikow.tryb==0}" value="#{txtBundle['amuser.password.repeat']}:"/>
                     <h:inputSecret id="password2" rendered="#{menadzer_uzytkownikow.tryb==0}" required="true" class="form-control" 
                                    a:placeholder="#{txtBundle['amuser.password.repeat']}" maxlength="32" value="#{menadzer_uzytkownikow.password2}"
-                                   validatorMessage="#{txtBundle['amuser.password2.validtor']}"
+                                   validatorMessage="#{txtBundle['amuser.password2.validator']}"
                                    requiredMessage="#{txtBundle['global.required']}"
                                    validator="#{menadzer_uzytkownikow.porownajHasla}" >
                         <f:ajax event="blur" execute="password2" render="password2vErr"/>
@@ -87,7 +87,7 @@
                     <h:outputLabel for="password2E" rendered="#{menadzer_uzytkownikow.tryb!=0}" value="#{txtBundle['amuser.password.repeat']}:"/>
                     <h:inputSecret id="password2E" rendered="#{menadzer_uzytkownikow.tryb!=0}" required="false" class="form-control" 
                                    a:placeholder="#{txtBundle['amuser.password.repeat']}" maxlength="32" value="#{menadzer_uzytkownikow.password2}"
-                                   validatorMessage="#{txtBundle['amuser.password2.validtor']}"
+                                   validatorMessage="#{txtBundle['amuser.password2.validator']}"
                                    validator="#{menadzer_uzytkownikow.porownajHasla}" >
                         <f:ajax event="blur" execute="password2E" render="password2EvErr"/>
                     </h:inputSecret>

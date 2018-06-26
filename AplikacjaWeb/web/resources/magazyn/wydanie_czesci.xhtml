@@ -57,7 +57,7 @@
                                  maxlength="10" value="#{menadzer_magazynu.do_wyd}" 
                                  requiredMessage="#{txtBundle['global.required']}"
                                  converterMessage="#{txtBundle['rstorage.quantity.converter']}"
-                                 validatorMessage="#{txtBundle['rstorage.quantity.validtor.start']} #{ilosc.value} #{txtBundle['rstorage.quantity.validtor.end']}"
+                                 validatorMessage="#{txtBundle['rstorage.quantity.validator.start']} #{ilosc.value} #{txtBundle['rstorage.quantity.validator.end']}"
                                  binding="#{do_wyd}">
                         <f:ajax event="blur" execute="do_wyd" render="wydvErr"/>
                         <f:validateLongRange minimum="1" maximum="#{ilosc.value}"/>

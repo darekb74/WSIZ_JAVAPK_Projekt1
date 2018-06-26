@@ -47,7 +47,7 @@
                                  maxlength="32" value="#{menadzer_magazynu.regal}"
                                  requiredMessage="#{txtBundle['global.required']}"
                                  converterMessage="#{txtBundle['amstorage.stillage.converter']}"
-                                 validatorMessage="#{txtBundle['amstorage.stillage.validtor']}">
+                                 validatorMessage="#{txtBundle['amstorage.stillage.validator']}">
                         <f:ajax event="blur" execute="regal" render="regalvErr"/>
                         <f:validateLongRange minimum="1" maximum="10"/>
                     </h:inputText>
@@ -59,7 +59,7 @@
                                  maxlength="32" value="#{menadzer_magazynu.polka}"
                                  requiredMessage="#{txtBundle['global.required']}"
                                  converterMessage="#{txtBundle['amstorage.shelf.converter']}"
-                                 validatorMessage="#{txtBundle['amstorage.shelf.validtor']}">
+                                 validatorMessage="#{txtBundle['amstorage.shelf.validator']}">
                         <f:ajax event="blur" execute="polka" render="polkavErr"/>
                         <f:validateLongRange minimum="1" maximum="20"/>
                     </h:inputText>
@@ -71,7 +71,7 @@
                                    maxlength="10" value="#{menadzer_magazynu.ilosc}"
                                    requiredMessage="#{txtBundle['global.required']}"
                                    converterMessage="#{txtBundle['amstorage.quantity.converter']}"
-                                   validatorMessage="#{txtBundle['amstorage.quantity.validtor']}">
+                                   validatorMessage="#{txtBundle['amstorage.quantity.validator']}">
                         <f:ajax event="blur" execute="ilosc" render="iloscvErr"/>
                         <f:validateLongRange minimum="1"/>
                     </h:inputText>
