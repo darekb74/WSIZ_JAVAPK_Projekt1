@@ -28,7 +28,7 @@
                     <li class="nav-item dropdown">
                         <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#"><h:panelGroup class="glyphicon glyphicon-tasks"/> #{txtBundle['m_storagemenu']}
                             <h:panelGroup class="caret"/></h:link>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-custom">
                             <li><h:link class="dropdown-item" outcome="/resources/magazyn/zawartosc_magazynu"><h:panelGroup class="glyphicon glyphicon-list"/> #{txtBundle['m_partlist_s']}</h:link></li>
                             <li><h:form><h:commandLink class="dropdown-item" action="#{cc.attrs.addPartLinkOutcome}"><h:panelGroup class="glyphicon glyphicon-plus"/> #{txtBundle['m_addpart_s']}</h:commandLink></h:form></li>
                         </ul>
@@ -39,7 +39,7 @@
                     <li class="nav-item dropdown">
                         <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#"><h:panelGroup class="glyphicon glyphicon-road"/> #{txtBundle['m_supplymenu']}
                             <h:panelGroup class="caret"/></h:link>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-custom">
                             <li><h:link class="dropdown-item" outcome="/resources/zaopatrzenie/lista_czesci"><h:panelGroup class="glyphicon glyphicon-list"/> #{txtBundle['m_partlist']}</h:link></li>
                             <li><h:form><h:commandLink class="dropdown-item" action="#{cc.attrs.addPartDefLinkOutcome}"><h:panelGroup class="glyphicon glyphicon-plus"/> #{txtBundle['m_addpart']}</h:commandLink></h:form></li>
                         </ul>
@@ -50,7 +50,7 @@
                     <li class="nav-item dropdown">
                         <h:link class="nav-link dropdown-toggle" a:data-toggle="dropdown" a:href="#"><h:panelGroup class="glyphicon glyphicon-text-background"/> #{txtBundle['m_adminmenu']}
                             <h:panelGroup class="caret"/></h:link>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-custom">
                             <li><h:link class="dropdown-item" outcome="/resources/admin/lista_uzytkownikow"><h:panelGroup class="glyphicon glyphicon-list"/> #{txtBundle['m_userlist']}</h:link></li>
                             <li><h:form><h:commandLink class="dropdown-item" action="#{cc.attrs.addUserLinkOutcome}"><h:panelGroup class="glyphicon glyphicon-plus"/> #{txtBundle['m_adduser']}</h:commandLink></h:form></li>
                         </ul>

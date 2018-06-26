@@ -1,17 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/template2.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
-        Magazyn - Wydanie części
-    </ui:define>
-
-    <ui:define name="left">
-        left
+        <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
+        #{txtBundle['rstorage.title']}
     </ui:define>
 
     <ui:define name="content">
@@ -20,45 +19,45 @@
             <h:inputHidden id="id" value="#{menadzer_magazynu.toWyd.id}" />
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-1">
-                    <h:outputLabel for="id_c" value="Id części:"/>
+                    <h:outputLabel for="id_c" value="#{txtBundle['amstorage.part.id']}:"/>
                     <h:inputText id="id_c" required="true" class="form-control" disabled="true"
                                  maxlength="128" value="#{menadzer_magazynu.toWyd.czesc.id}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-8">
-                    <h:outputLabel for="nazwac" value="Nazwa części:"/>
+                    <h:outputLabel for="nazwac" value="#{txtBundle['plist.column.partname']}:"/>
                     <h:inputText id="nazwac" required="true" class="form-control" disabled="true"
                                  maxlength="128" value="#{menadzer_magazynu.toWyd.czesc.nazwa}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="modelc" value="Model:"/>
+                    <h:outputLabel for="modelc" value="#{txtBundle['plist.column.model']}:"/>
                     <h:inputText id="modelc" required="true" class="form-control" disabled="true"
                                  maxlength="128" value="#{menadzer_magazynu.toWyd.czesc.model}"/>
                 </h:panelGroup>
             </h:panelGroup>
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="regal" value="Nr regalu:"/>
+                    <h:outputLabel for="regal" value="#{txtBundle['slist.column.stillage']}:"/>
                     <h:inputText id="regal" required="true" class="form-control" disabled="true"
                                  maxlength="32" value="#{menadzer_magazynu.toWyd.regal}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="polka" value="Nr półki:"/>
+                    <h:outputLabel for="polka" value="#{txtBundle['slist.column.shelf']}:"/>
                     <h:inputText id="polka" required="true" class="form-control" disabled="true"
                                  maxlength="32" value="#{menadzer_magazynu.toWyd.polka}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="ilosc" value="Dostępna ilość:"/>
+                    <h:outputLabel for="ilosc" value="#{txtBundle['rstorage.avilable_quantity']}:"/>
                     <h:inputText id="ilosc" required="true" class="form-control" disabled="true"
                                  maxlength="10" value="#{menadzer_magazynu.toWyd.ilosc}"
                                  binding="#{ilosc}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="do_wyd" value="Ilość do wydania:"/>
-                    <h:inputText id="do_wyd" required="true" class="form-control" a:placeholder="Ilość do wydania"
+                    <h:outputLabel for="do_wyd" value="#{txtBundle['rstorage.quantity']}:"/>
+                    <h:inputText id="do_wyd" required="true" class="form-control" a:placeholder="#{txtBundle['rstorage.quantity']}"
                                  maxlength="10" value="#{menadzer_magazynu.do_wyd}" 
-                                 requiredMessage="To pole jest wymagane."
-                                 converterMessage="Pole musi zawierać liczbę."
-                                 validatorMessage="Nieprawidłowa ilość części (minimum 1, maximum #{ilosc.value})."
+                                 requiredMessage="#{txtBundle['global.required']}"
+                                 converterMessage="#{txtBundle['rstorage.quantity.converter']}"
+                                 validatorMessage="#{txtBundle['rstorage.quantity.validtor.start']} #{ilosc.value} #{txtBundle['rstorage.quantity.validtor.end']}"
                                  binding="#{do_wyd}">
                         <f:ajax event="blur" execute="do_wyd" render="wydvErr"/>
                         <f:validateLongRange minimum="1" maximum="#{ilosc.value}"/>
@@ -66,7 +65,11 @@
                     <h:message id="wydvErr" for="do_wyd" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
             </h:panelGroup>
-            &nbsp;&nbsp;&nbsp;<h:commandButton type="submit" class="btn btn-primary" value="Wydaj" action="#{menadzer_magazynu.wydaj}"/>
+            <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['action.release']}" action="#{menadzer_magazynu.wydaj}"/>
+            <h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+                <br /><br />
+                <h:messages id="messagePanel" globalOnly="true" class="bg-info text-white rounded" style="font-size: 12px;"/>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 

@@ -13,6 +13,7 @@ import Utils.Pagination;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -125,10 +126,12 @@ public class menadzer_magazynu implements Serializable {
     public String dodaj() {
         try {
             fasadaMagazynu.dodajPozycje(new MagazynDTO(fasadaMagazynu.znajdzNastepneID(), czesc, regal, polka, ilosc));
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została dodana.", "Część została dodana.");
+            String msg = getPropertyValue("storage.add.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie dodawania części.", "Błąd w czasie dodawania części.");
+            String msg = getPropertyValue("storage.add.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         int cPage = strony.getPage();
@@ -158,10 +161,12 @@ public class menadzer_magazynu implements Serializable {
             toEdit.setPolka(polka);
             toEdit.setIlosc(ilosc);
             fasadaMagazynu.aktualizujDane(toEdit);
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została zaktualizowana.", "Część została zaktualizowana.");
+            String msg = getPropertyValue("storage.modify.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd aktualizacji danych części.", "Błąd aktualizacji danych części");
+            String msg = getPropertyValue("storage.modify.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         return "/resources/magazyn/zawartosc_magazynu";
@@ -253,7 +258,6 @@ public class menadzer_magazynu implements Serializable {
     }
 
     public String wydaj() {
-        System.out.println("[WYDAJ] item=" + toWyd + "; ilosc=" + do_wyd);
         boolean tmp = toWyd.getIlosc() == do_wyd;
         try {
             if (tmp) {
@@ -262,10 +266,12 @@ public class menadzer_magazynu implements Serializable {
                 toWyd.setIlosc(toWyd.getIlosc() - do_wyd);
                 fasadaMagazynu.aktualizujDane(toWyd);
             }
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została wydana z magazynu.", "Część została wydana z magazynu.");
+            String msg = getPropertyValue("storage.release.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd wydawania części.", "Błąd wydawania części.");
+            String msg = getPropertyValue("storage.release.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
 
@@ -281,10 +287,12 @@ public class menadzer_magazynu implements Serializable {
     public String usun(MagazynDTO item) {
         try {
             fasadaMagazynu.usunPozycje(item);
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została usunięta z magazynu.", "Część została usunięta z magazynu.");
+            String msg = getPropertyValue("storage.delete.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie usuwania części.", "Błąd w czasie usuwania części.");
+            String msg = getPropertyValue("storage.delete.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         int cPage = strony.getPage();
@@ -385,5 +393,11 @@ public class menadzer_magazynu implements Serializable {
     private void setPagination() {
         strony = new Pagination(5, fasadaMagazynu.listaCzesci());
         lista = strony.generateDataArray();
+    }
+    
+    public String getPropertyValue(String keyName) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle text = context.getApplication().evaluateExpressionGet(context, "#{txtBundle}", ResourceBundle.class);
+        return text.getString(keyName);
     }
 }

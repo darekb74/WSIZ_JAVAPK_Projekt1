@@ -11,6 +11,7 @@ import Utils.Pagination;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -60,10 +61,12 @@ public class menadzer_czesci implements Serializable {
     public String usun(CzesciDTO item) {
         try {
             fasadaCzesci.usunPozycje(item);
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została usunięta.", "Definicja części została usunięta.");
+            String msg = getPropertyValue("partdef.delete.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie usuwania definicji części.", "Błąd w czasie usuwania definicji części.");
+            String msg = getPropertyValue("partdef.delete.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         int cPage = strony.getPage();
@@ -81,10 +84,12 @@ public class menadzer_czesci implements Serializable {
             toEdit.setJednostka(jednostka);
             toEdit.setCena_jednostkowa(cena_jednostkowa);
             fasadaCzesci.aktualizujDane(toEdit);
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została zaktualizowana.", "Definicja części została zaktualizowana.");
+            String msg = getPropertyValue("partdef.modify.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd aktualizacji danych definicji części.", "Błąd aktualizacji danych definicji części");
+            String msg = getPropertyValue("partdef.modify.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         return "/resources/zaopatrzenie/lista_czesci";
@@ -226,14 +231,16 @@ public class menadzer_czesci implements Serializable {
         }
         return "/resources/zaopatrzenie/dodaj_czesc";
     }
-    
+
     public String dodaj() {
         try {
             fasadaCzesci.dodajCzesc(new CzesciDTO(fasadaCzesci.znajdzNastepneID(), nazwa, producent, model, jednostka, cena_jednostkowa));
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Definicja części została dodana.", "Definicja części została dodana.");
+            String msg = getPropertyValue("partdef.add.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie dodawani definicji części.", "Błąd w czasie dodawania definicji części.");
+            String msg = getPropertyValue("partdef.add.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         int cPage = strony.getPage();
@@ -334,5 +341,11 @@ public class menadzer_czesci implements Serializable {
     private void setPagination() {
         strony = new Pagination(5, fasadaCzesci.listaCzesci());
         lista = strony.generateDataArray();
+    }
+
+    public String getPropertyValue(String keyName) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle text = context.getApplication().evaluateExpressionGet(context, "#{txtBundle}", ResourceBundle.class);
+        return text.getString(keyName);
     }
 }

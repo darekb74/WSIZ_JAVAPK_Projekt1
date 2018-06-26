@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -53,9 +54,9 @@ public class menadzer_uzytkownikow implements Serializable {
 
     private String username, password, password2, pasword_hash, email;
     private Short rmask;
-    
+
     private String nazwa_s;
- 
+
     public UserDTO getToEdit() {
         return toEdit;
     }
@@ -67,6 +68,7 @@ public class menadzer_uzytkownikow implements Serializable {
     public Integer getTryb() {
         return tryb;
     }
+
     public String dodajCzyEdytuj(int tryb, UserDTO toEdit) {
         System.out.println("[SET TRYB] tryb=" + tryb);
         this.tryb = tryb;
@@ -86,7 +88,7 @@ public class menadzer_uzytkownikow implements Serializable {
         }
         return "/resources/admin/dodaj_uzytkownika";
     }
-  
+
     public String aktualizuj() {
         try {
             toEdit.setUsername(username);
@@ -96,10 +98,12 @@ public class menadzer_uzytkownikow implements Serializable {
                 toEdit.setPassword_hash(Utils.Utils.md5(password));
             }
             fasadaUser.aktualizujDane(toEdit);
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Część została zaktualizowana.", "Część została zaktualizowana.");
+            String msg = getPropertyValue("user.modify.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd aktualizacji danych części.", "Błąd aktualizacji danych części");
+            String msg = getPropertyValue("user.modify.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         return "/resources/admin/lista_uzytkownikow";
@@ -115,10 +119,12 @@ public class menadzer_uzytkownikow implements Serializable {
     public String usun(UserDTO item) {
         try {
             fasadaUser.usunUzytkownika(item);
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Użytkownik został usunięty.", "Użytkownik został usunięty.");
+            String msg = getPropertyValue("user.delete.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd usuwania użytkownika.", "Błąd usuwania użytkownika.");
+            String msg = getPropertyValue("user.delete.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         int cPage = strony.getPage();
@@ -127,12 +133,13 @@ public class menadzer_uzytkownikow implements Serializable {
         listaU = strony.generateDataArray();
         return "/resources/admin/lista_uzytkownikow";
     }
+
     public String filtruj() {
         List<UserDTO> aktualnaLista = strony.getCollection();
         List<UserDTO> filtrowanaLista = new ArrayList<>();
         for (UserDTO mD : aktualnaLista) {
-            if (mD.getUsername().contains(nazwa_s)){
-            filtrowanaLista.add(mD);
+            if (mD.getUsername().contains(nazwa_s)) {
+                filtrowanaLista.add(mD);
             }
         }
         strony.setF_collection(filtrowanaLista);
@@ -140,13 +147,13 @@ public class menadzer_uzytkownikow implements Serializable {
         listaU = strony.generateDataArray();
         return "/resources/admin/lista_uzytkownikow";
     }
-    
-    public String resetuj () {
+
+    public String resetuj() {
         setPagination();
         nazwa_s = "";
         return "/resources/admin/lista_uzytkownikow";
     }
-    
+
     public Pagination<UserDTO> getStrony() {
         return strony;
     }
@@ -232,10 +239,12 @@ public class menadzer_uzytkownikow implements Serializable {
     public String dodaj() {
         try {
             fasadaUser.dodajUzytkownika(new UserDTO(fasadaUser.znajdzNastepneID(), username, Utils.Utils.md5(password), email, null, false, rmask));
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Użytkownik został dodany.", "Użytkownik został dodany.");
+            String msg = getPropertyValue("user.add.success");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         } catch (Exception e) {
-            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd w czasie dodawania użytkownika.", "Błąd w czasie dodawania użytkownika.");
+            String msg = getPropertyValue("user.add.error");
+            FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             FacesContext.getCurrentInstance().addMessage(null, facesMsg);
         }
         int cPage = strony.getPage();
@@ -247,7 +256,8 @@ public class menadzer_uzytkownikow implements Serializable {
 
     public void porownajHasla(FacesContext context, UIComponent toValidate, Object value) {
         if (!((String) value).equals(password)) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Passwords do not match!", "Passwords do not match!");
+            String msg = getPropertyValue("amuser.password2.validtor");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             throw new ValidatorException(message);
         }
     }
@@ -448,16 +458,10 @@ public class menadzer_uzytkownikow implements Serializable {
         }
         return false;
     }
-    
-    /*
-    private FasadaUserD_ejbRemote lookupFasadaUserD_ejbRemote() {
-        try {
-            Context c = new InitialContext();
-            return (FasadaUserD_ejbRemote) c.lookup("ejb/FasadaUserD_ejb");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
+
+    public String getPropertyValue(String keyName) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle text = context.getApplication().evaluateExpressionGet(context, "#{txtBundle}", ResourceBundle.class);
+        return text.getString(keyName);
     }
-    */
 }

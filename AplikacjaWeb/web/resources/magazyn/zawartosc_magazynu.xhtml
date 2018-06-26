@@ -10,30 +10,30 @@
 
     <ui:define name="title">
         <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
-        Magazyn - Lista części
+        #{txtBundle['slist.title']}
     </ui:define>
 
     <ui:define name="left">
-        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center" rendered="#{menadzer_magazynu.czyRenderowacTabele()}">
+        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
             <h:form id="search">
                 <h:panelGroup layout="block" class="form-row">
                     <h:panelGroup layout="block" class="form-group col-md-12">
-                        <h:outputLabel for="nazwa_s" value="Nazwa części:"/>
-                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="Nazwa części"
+                        <h:outputLabel for="nazwa_s" value="#{txtBundle['plist.column.partname']}:"/>
+                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.partname']}"
                                      maxlength="32" value="#{menadzer_magazynu.nazwa_s}"
-                                     requiredMessage="Filtr musi zawierać minimum 1 znak.">
+                                     requiredMessage="#{txtBundle['lpanel.value.required']}">
                             <f:ajax event="blur" execute="nazwa_s" render="nazwa_svErr"/>
                         </h:inputText>
                         <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
                     </h:panelGroup>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-                    <h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_magazynu.filtruj}"/>
+                    <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['lpanel.action']}" action="#{menadzer_magazynu.filtruj}"/>
                 </h:panelGroup>
             </h:form>
             <h:form>
                 <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-                    <h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_magazynu.resetuj}"/>
+                    <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['lpanel.reset']}" action="#{menadzer_magazynu.resetuj}"/>
                 </h:panelGroup>
             </h:form>
         </h:panelGroup>
@@ -44,7 +44,7 @@
             <c:set var="lista" value="#{menadzer_magazynu.getLista()}"/>
             <h:panelGroup layout="block" rendered="#{!menadzer_magazynu.czyRenderowacTabele()}">
                 <br/>
-                <h:outputText class="alert alert-warning" escape="false" value="Magazyn jest pusty."/>
+                <h:outputText class="alert alert-warning rounded" escape="false" value="#{txtBundle['slist.empty']}"/>
                 <br/><br/>
             </h:panelGroup>
             <h:panelGroup rendered="#{menadzer_magazynu.czyRenderowacTabele()}" >
@@ -91,58 +91,60 @@
                 </h:panelGroup>
                 <!-- LISTA UŻYTKOWNIKÓW -->
                 <h:dataTable class="custom_table table table-hover" var="czesc" rules="all"
-                             value="#{menadzer_magazynu.lista}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
+                             value="#{menadzer_magazynu.lista}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;"
+                             headerClass="align-middle text-center"
+                             columnClasses="align-middle text-center,align-middle,align-middle,align-middle,align-middle text-center,align-middle text-center,align-middle text-center,align-middle,align-middle,align-middle,align-middle text-center">
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Id"/>
+                            <h:outputText value="#{txtBundle['slist.column.id']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.id}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Nazwa części"/>
+                            <h:outputText value="#{txtBundle['plist.column.partname']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.czesc.nazwa}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Model"/>
+                            <h:outputText value="#{txtBundle['plist.column.model']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.czesc.model}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Producent"/>
+                            <h:outputText value="#{txtBundle['plist.column.producent']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.czesc.producent}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Numer regału"/>
+                            <h:outputText value="#{txtBundle['slist.column.stillage']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.regal}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Numer półki"/>
+                            <h:outputText value="#{txtBundle['slist.column.shelf']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.polka}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Ilość"/>
+                            <h:outputText value="#{txtBundle['slist.column.quantity']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.ilosc}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Jednostka"/>
+                            <h:outputText value="#{txtBundle['plist.column.unit']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.czesc.jednostka}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Cena jednostkowa"/>
+                            <h:outputText value="#{txtBundle['plist.column.unit_value']}"/>
                         </f:facet>
                         <h:outputText value="#{czesc.czesc.cena_jednostkowa}">
                             <f:convertNumber pattern="#0.00 ¤"/>
@@ -150,7 +152,7 @@
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Wartość całkowita"/>
+                            <h:outputText value="#{txtBundle['slist.column.total_value']}"/>
                         </f:facet>
                         <h:outputText value="#{menadzer_magazynu.getWartosc(czesc.czesc.cena_jednostkowa, czesc.ilosc)}">
                             <f:convertNumber pattern="#0.00 ¤"/>
@@ -158,24 +160,28 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Operacje"/>
+                            <h:outputText value="#{txtBundle['column.actions']}"/>
                         </f:facet>
                         <h:panelGroup layout="block" class="btn-group" a:role="group">
                             <h:commandButton class="btn btn-info btn-sm rounded" 
-                                             value="Wydaj" action="#{menadzer_magazynu.wydaj(czesc)}"/>
+                                             value="#{txtBundle['action.release']}" action="#{menadzer_magazynu.wydaj(czesc)}"/>
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
-                                             value="Edytuj" action="#{menadzer_magazynu.dodajCzyEdytuj(1,czesc)}"/>
-                            <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
-                                             onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?'))
+                                             value="#{txtBundle['action.modify']}" action="#{menadzer_magazynu.dodajCzyEdytuj(1,czesc)}"/>
+                            <h:commandButton class="btn btn-danger btn-sm rounded" value="#{txtBundle['action.delete']}" 
+                                             onclick="if (!confirm('#{txtBundle['action.delete.confirmation']}'))
                                                          return false"
                                              action="#{menadzer_magazynu.usun(czesc)}"/>
                         </h:panelGroup>
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
-            <h:commandButton class="btn btn-primary" a:href="#" value="Odśwież">
+            <h:commandButton class="btn btn-primary" a:href="#" value="#{txtBundle['action.refresh']}">
                 <f:ajax event="click" render="main_list" listener="#{menadzer_magazynu.refresh()}"/>
             </h:commandButton>
+            <h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+                <br /><br />
+                <h:messages id="messagePanel" globalOnly="true" class="bg-info text-white rounded" style="font-size: 12px;"/>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 </ui:composition>

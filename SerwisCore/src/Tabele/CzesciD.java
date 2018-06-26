@@ -41,7 +41,7 @@ public class CzesciD implements Serializable {
     @Column(length = 10)
     private String jednostka;
     
-    @Column(columnDefinition = "DECIMAL DEFAULT 0")
+    @Column(columnDefinition = "DECIMAL(10,2) DEFAULT 0")
     private Double cena_jednostkowa;
     
     // czy konieczne ?

@@ -12,3 +12,13 @@ body {
 .table.custom_table th {
     border-bottom: 2px solid #003366;
 }
+
+.dropdown-custom {
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow: hidden;
+    background-color: rgba(255,255,255,.8);
+}
+
+.dropdown-custom a:hover { background-color:rgba(210,210,210,.8);
+                           border-radius: 5px;}

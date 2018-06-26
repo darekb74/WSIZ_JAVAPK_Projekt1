@@ -7,6 +7,7 @@ package Konwertery;
 
 import DTO.CzesciDTO;
 import EE_ejb.FasadaCzesciD_ejbRemote;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -35,11 +36,14 @@ public class KonwerterCzesciDTO implements Converter {
         try {
             CzesciDTO cDTO = m.getFasadaCzesci().znajdzCzesc(Long.valueOf(value));
             m.setCzesc(cDTO);
-            if (cDTO==null) throw new NumberFormatException();
+            if (cDTO == null) {
+                throw new NumberFormatException();
+            }
             //context.addMessage(component.getClientId(), new FacesMessage(cDTO.getNazwa()));
             return cDTO;
         } catch (NumberFormatException | NullPointerException e) {
-            throw new ConverterException(new FacesMessage(value + " nie jest prawidłowym ID części."), e);
+            String msg = getPropertyValue("storage.part.wrong.id");
+            throw new ConverterException(new FacesMessage(value + " " + msg), e);
         }
     }
 
@@ -52,7 +56,14 @@ public class KonwerterCzesciDTO implements Converter {
         if (value instanceof CzesciDTO) {
             return String.valueOf(((CzesciDTO) value).getId());
         } else {
-            throw new ConverterException(new FacesMessage(value + " nie jest prawidłowym obiektem części."));
+            String msg = getPropertyValue("storage.part.wrong.object");
+            throw new ConverterException(new FacesMessage(value + " " + msg));
         }
+    }
+
+    private String getPropertyValue(String keyName) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ResourceBundle text = context.getApplication().evaluateExpressionGet(context, "#{txtBundle}", ResourceBundle.class);
+        return text.getString(keyName);
     }
 }

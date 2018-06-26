@@ -9,29 +9,29 @@
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <ui:define name="title">
         <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
-        Administaracja - Lista użytkowników
+        #{txtBundle['ulist.title']}
     </ui:define>
     <ui:define name="left">
-        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center" rendered="#{menadzer_uzytkownikow.czyRenderowacTabele()}">
+        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
             <h:form id="search">
                 <h:panelGroup layout="block" class="form-row">
                     <h:panelGroup layout="block" class="form-group col-md-12">
-                        <h:outputLabel for="nazwa_s" value="Nazwa użytkownika:"/>
-                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="Nazwa użytkownika"
+                        <h:outputLabel for="nazwa_s" value="#{txtBundle['ulist.column.username']}:"/>
+                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.username']}"
                                      maxlength="32" value="#{menadzer_uzytkownikow.nazwa_s}"
-                                     requiredMessage="Filtr musi zawierać minimum 1 znak.">
+                                     requiredMessage="#{txtBundle['lpanel.value.required']}">
                             <f:ajax event="blur" execute="nazwa_s" render="nazwa_svErr"/>
                         </h:inputText>
                         <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
                     </h:panelGroup>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-                    <h:commandButton type="submit" class="btn btn-primary" value="Filtruj" action="#{menadzer_uzytkownikow.filtruj}"/>
+                    <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['lpanel.action']}" action="#{menadzer_uzytkownikow.filtruj}"/>
                 </h:panelGroup>
             </h:form>
             <h:form>
                 <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-                    <h:commandButton type="submit" class="btn btn-primary" value="Resetuj" action="#{menadzer_uzytkownikow.resetuj}"/>
+                    <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['lpanel.reset']}" action="#{menadzer_uzytkownikow.resetuj}"/>
                 </h:panelGroup>
             </h:form>
         </h:panelGroup>
@@ -41,7 +41,7 @@
             <c:set var="listaU" value="#{menadzer_uzytkownikow.getListaU()}"/>
             <h:panelGroup layout="block" rendered="#{!menadzer_uzytkownikow.czyRenderowacTabele()}">
                 <br/>
-                <h:outputText class="alert alert-warning" escape="false" value="Lista użytkowników jest pusta."/>
+                <h:outputText class="alert alert-warning rounded" escape="false" value="#{txtBundle['ulist.empty']}"/>
                 <br/><br/>
             </h:panelGroup>
             <h:panelGroup rendered="#{menadzer_uzytkownikow.czyRenderowacTabele()}">
@@ -88,34 +88,36 @@
                 </h:panelGroup>
                 <!-- LISTA UŻYTKOWNIKÓW -->
                 <h:dataTable class="custom_table table table-hover" var="user" rules="all"
-                             value="#{menadzer_uzytkownikow.listaU}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;">
+                             value="#{menadzer_uzytkownikow.listaU}" style="border-bottom: 2px solid #003366; border-top: 2px solid #003366;"
+                             headerClass="align-middle text-center"
+                             columnClasses="align-middle text-center,align-middle,align-middle,align-middle,align-middle,align-middle text-center,align-middle text-center,align-middle text-center">
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Id"/>
+                            <h:outputText value="#{txtBundle['ulist.column.id']}"/>
                         </f:facet>
                         <h:outputText value="#{user.id}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Nazwa użytkownika"/>
+                            <h:outputText value="#{txtBundle['ulist.column.username']}"/>
                         </f:facet>
                         <h:outputText value="#{user.username}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Hasło"/>
+                            <h:outputText value="#{txtBundle['ulist.column.password']}"/>
                         </f:facet>
                         <h:outputText value="#{user.password_hash}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="E-mail"/>
+                            <h:outputText value="#{txtBundle['ulist.column.email']}"/>
                         </f:facet>
                         <h:outputText value="#{user.eMail}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Osatatnie logowanie"/>
+                            <h:outputText value="#{txtBundle['ulist.column.last_login']}"/>
                         </f:facet>
                         <h:outputText value="#{user.last_login}">
                             <f:convertDateTime pattern="EEEE, dd MMMM yyyy, HH:mm:ss"/>
@@ -123,33 +125,37 @@
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Zalogowany"/>
+                            <h:outputText value="#{txtBundle['ulist.column.logged']}"/>
                         </f:facet>
                         <h:outputText value="#{user.isOnline()}"/>
                     </h:column>
                     <h:column> 
                         <f:facet name="header">
-                            <h:outputText value="Maska uprawnień"/>
+                            <h:outputText value="#{txtBundle['ulist.column.rmask']}"/>
                         </f:facet>
                         <h:outputText value="#{user.rmask}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <h:outputText value="Operacje"/>
+                            <h:outputText value="#{txtBundle['column.actions']}"/>
                         </f:facet>
                         <h:panelGroup layout="block" class="btn-group" a:role="group">
                             <h:commandButton class="btn btn-warning btn-sm rounded" 
-                                value="Edytuj" action="#{menadzer_uzytkownikow.dodajCzyEdytuj(1,user)}"/>
-                            <h:commandButton class="btn btn-danger btn-sm rounded" value="Usuń" 
-                                onclick="if (!confirm('Czy jestes pewien, że chcesz usunąć ten element?')) return false"
+                                value="#{txtBundle['action.modify']}" action="#{menadzer_uzytkownikow.dodajCzyEdytuj(1,user)}"/>
+                            <h:commandButton class="btn btn-danger btn-sm rounded" value="#{txtBundle['action.delete']}" 
+                                             onclick="if (!confirm('#{txtBundle['action.delete.confirmation']}')) return false"
                                 action="#{menadzer_uzytkownikow.usun(user)}"/>
                         </h:panelGroup>
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
-            <h:commandButton class="btn btn-primary" a:href="#" value="Odśwież">
+            <h:commandButton class="btn btn-primary" a:href="#" value="#{txtBundle['action.refresh']}">
                 <f:ajax event="click" render="main_list" listener="#{menadzer_uzytkownikow.refresh()}"/>
             </h:commandButton>
+            <h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+                <br /><br />
+                <h:messages id="messagePanel" globalOnly="true" class="bg-info text-white rounded" style="font-size: 12px;"/>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 </ui:composition>

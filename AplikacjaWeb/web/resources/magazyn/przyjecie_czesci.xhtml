@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/resources/templates/template2.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
-        Magazyn - <h:outputText value="#{menadzer_magazynu.tryb == 0 ? 'Przyjęcie części' : 'Edycja części'}"/>
+        <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
+        #{txtBundle['amstorage.title']} - <h:outputText value="#{menadzer_magazynu.tryb == 0 ? txtBundle['amstorage.add.title'] : txtBundle['amstorage.modify.title']}"/>
     </ui:define>
 
     <ui:define name="content">
@@ -15,65 +18,72 @@
         <h:form id="myform">
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-2">
-                    <h:outputLabel for="id" value="Id części:"/>
-                    <h:inputText id="id_c" required="true" class="form-control" a:placeholder="Id części"
+                    <h:outputLabel for="id" value="#{txtBundle['amstorage.part.id']}:"/>
+                    <h:inputText id="id_c" required="true" class="form-control" a:placeholder="#{txtBundle['amstorage.part.id']}"
                                  maxlength="128" value="#{menadzer_magazynu.czesc}"
-                                 requiredMessage="To pole jest wymagane.">
+                                 requiredMessage="#{txtBundle['global.required']}">
                         <f:converter converterId="KonwerterCzesciDTO"/>
                         <f:ajax event="blur" execute="id_c" render="idvErr nazwac modelc"/>
                     </h:inputText>
                     <h:message id="idvErr" for="id_c" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-7">
-                    <h:outputLabel for="nazwac" value="Nazwa części:"/>
+                    <h:outputLabel for="nazwac" value="#{txtBundle['plist.column.partname']}:"/>
                     <h:inputText id="nazwac" required="true" class="form-control" disabled="true"
-                                 a:placeholder="Nazwa części"
+                                 a:placeholder="#{txtBundle['plist.column.partname']}"
                                  maxlength="128" value="#{menadzer_magazynu.czesc.nazwa}"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
-                    <h:outputLabel for="modelc" value="Model:"/>
+                    <h:outputLabel for="modelc" value="#{txtBundle['plist.column.model']}:"/>
                     <h:inputText id="modelc" required="true" class="form-control" disabled="true"
-                                 a:placeholder="Model"
+                                 a:placeholder="#{txtBundle['plist.column.model']}"
                                  maxlength="128" value="#{menadzer_magazynu.czesc.model}"/>
                 </h:panelGroup>
             </h:panelGroup>
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-4">
-                    <h:outputLabel for="regal" value="Nr regału:"/>
-                    <h:inputText id="regal" required="true" class="form-control" a:placeholder="Nr regału"
+                    <h:outputLabel for="regal" value="#{txtBundle['slist.column.stillage']}:"/>
+                    <h:inputText id="regal" required="true" class="form-control" a:placeholder="#{txtBundle['slist.column.stillage']}"
                                  maxlength="32" value="#{menadzer_magazynu.regal}"
-                                 requiredMessage="To pole jest wymagane."
-                                 validatorMessage="Nieprawidłowy nr regału (1-10).">
+                                 requiredMessage="#{txtBundle['global.required']}"
+                                 converterMessage="#{txtBundle['amstorage.stillage.converter']}"
+                                 validatorMessage="#{txtBundle['amstorage.stillage.validtor']}">
                         <f:ajax event="blur" execute="regal" render="regalvErr"/>
                         <f:validateLongRange minimum="1" maximum="10"/>
                     </h:inputText>
                     <h:message id="regalvErr" for="regal" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-4">
-                    <h:outputLabel for="polka" value="Nr półki:"/>
-                    <h:inputText id="polka" required="true" class="form-control" a:placeholder="Nr półki"
+                    <h:outputLabel for="polka" value="#{txtBundle['slist.column.shelf']}:"/>
+                    <h:inputText id="polka" required="true" class="form-control" a:placeholder="#{txtBundle['slist.column.shelf']}"
                                  maxlength="32" value="#{menadzer_magazynu.polka}"
-                                 requiredMessage="To pole jest wymagane."
-                                 validatorMessage="Nieprawidłowy nr półki (1-20).">
+                                 requiredMessage="#{txtBundle['global.required']}"
+                                 converterMessage="#{txtBundle['amstorage.shelf.converter']}"
+                                 validatorMessage="#{txtBundle['amstorage.shelf.validtor']}">
                         <f:ajax event="blur" execute="polka" render="polkavErr"/>
                         <f:validateLongRange minimum="1" maximum="20"/>
                     </h:inputText>
                     <h:message id="polkavErr" for="polka" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-4">
-                    <h:outputLabel for="ilosc" value="Ilość:"/>
-                    <h:inputText id="ilosc" required="true" class="form-control" a:placeholder="Ilość"
+                    <h:outputLabel for="ilosc" value="#{txtBundle['slist.column.quantity']}:"/>
+                    <h:inputText id="ilosc" required="true" class="form-control" a:placeholder="#{txtBundle['slist.column.quantity']}"
                                    maxlength="10" value="#{menadzer_magazynu.ilosc}"
-                                   requiredMessage="To pole jest wymagane."
-                                   validatorMessage="Nieprawidłowa ilość części (minimum 1).">
+                                   requiredMessage="#{txtBundle['global.required']}"
+                                   converterMessage="#{txtBundle['amstorage.quantity.converter']}"
+                                   validatorMessage="#{txtBundle['amstorage.quantity.validtor']}">
                         <f:ajax event="blur" execute="ilosc" render="iloscvErr"/>
                         <f:validateLongRange minimum="1"/>
                     </h:inputText>
                     <h:message id="iloscvErr" for="ilosc" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
             </h:panelGroup>
-            &nbsp;&nbsp;&nbsp;<h:commandButton type="dodaj" rendered="#{menadzer_magazynu.tryb==0}" class="btn btn-primary" value="Dodaj" action="#{menadzer_magazynu.dodaj}"/>
-            <h:commandButton type="aktualizuj" rendered="#{menadzer_magazynu.tryb!=0}" class="btn btn-primary" value="Aktualizuj" action="#{menadzer_magazynu.aktualizuj}"/>
+            <h:commandButton type="dodaj" rendered="#{menadzer_magazynu.tryb==0}" class="btn btn-primary" value="#{txtBundle['action.add']}" action="#{menadzer_magazynu.dodaj}"/>
+            <h:commandButton type="aktualizuj" rendered="#{menadzer_magazynu.tryb!=0}" class="btn btn-primary" value="#{txtBundle['action.update']}" action="#{menadzer_magazynu.aktualizuj}"/>
+            <h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+                <br /><br />
+                <h:messages id="messagePanel" globalOnly="true" class="bg-info text-white rounded" style="font-size: 12px;"/>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 

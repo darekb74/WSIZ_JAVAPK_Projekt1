@@ -5,10 +5,12 @@
                 template="/resources/templates/template2.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="title">
-        Administaracja - <h:outputText value="#{menadzer_uzytkownikow.tryb == 0 ? 'Dodaj użytkownika' : 'Edytuj użytkownika'}"/>
+        <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
+        #{txtBundle['amuser.title']} - <h:outputText value="#{menadzer_uzytkownikow.tryb == 0 ? txtBundle['amuser.add.title'] : txtBundle['amuser.modify.title']}"/>
     </ui:define>
 
     <ui:define name="content">
@@ -16,11 +18,11 @@
         <h:form>
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-4">
-                    <h:outputLabel for="username" value="Nazwa użytkownika:"/>
-                    <h:inputText id="username" required="true" class="form-control" a:placeholder="Nazwa użytkownika"
+                    <h:outputLabel for="username" value="#{txtBundle['ulist.column.username']}:"/>
+                    <h:inputText id="username" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.username']}"
                                  maxlength="32" value="#{menadzer_uzytkownikow.username}"
-                                 validatorMessage="Nieprawidłowa nazwa użytkownika."
-                                 requiredMessage="To pole jest wymagane.">
+                                 validatorMessage="#{txtBundle['amuser.username.validtor']}"
+                                 requiredMessage="#{txtBundle['global.required']}">
                         <f:validateRegex 
                             pattern="^(?=.{3,32}$)[(?i)a-z(?-i)0-9]+$" />
                         <f:ajax event="blur" execute="username" render="uservErr"/>
@@ -28,11 +30,11 @@
                     <h:message id="uservErr" for="username" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-4">
-                    <h:outputLabel for="eMail" value="E-mail:"/>
-                    <h:inputText id="eMail" required="true" class="form-control" a:placeholder="E-mail"
+                    <h:outputLabel for="eMail" value="#{txtBundle['ulist.column.email']}:"/>
+                    <h:inputText id="eMail" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.email']}"
                                  maxlength="64" value="#{menadzer_uzytkownikow.email}"
-                                 validatorMessage="Nieprawidłowy adres e-mail."
-                                 requiredMessage="To pole jest wymagane.">
+                                 validatorMessage="#{txtBundle['amuser.email.validtor']}"
+                                 requiredMessage="#{txtBundle['global.required']}.">
                         <f:validateRegex 
                             pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[\p{L}\p{M}\p{N}.-]*(\.[\p{L}\p{M}]{2,})$" />
                         <f:ajax event="blur" execute="eMail" render="eMailvErr"/>
@@ -40,24 +42,24 @@
                     <h:message id="eMailvErr" for="eMail" class="feedback" style="font-size: 10px;  color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-4">
-                    <h:outputLabel for="rmask" value="Typ użytkownika:"/>
+                    <h:outputLabel for="rmask" value="#{txtBundle['amuser.usertype']}:"/>
                     <h:selectOneMenu id="rmask" required="true" class="form-control" 
                                      value="#{menadzer_uzytkownikow.rmask}">
-                        <f:selectItem itemValue="0" itemLabel="Klient"/> 
-                        <f:selectItem itemValue="1" itemLabel="Magazynier"/>
-                        <f:selectItem itemValue="2" itemLabel="Serwisant"/> 
-                        <f:selectItem itemValue="8" itemLabel="Zaopatrzeniowiec"/> 
-                        <f:selectItem itemValue="255" itemLabel="Administartor"/> 
+                        <f:selectItem itemValue="0" itemLabel="#{txtBundle['amuser.usertype.lvl0']}"/> 
+                        <f:selectItem itemValue="1" itemLabel="#{txtBundle['amuser.usertype.lvl1']}"/>
+                        <f:selectItem itemValue="2" itemLabel="#{txtBundle['amuser.usertype.lvl2']}"/> 
+                        <f:selectItem itemValue="8" itemLabel="#{txtBundle['amuser.usertype.lvl4']}"/> 
+                        <f:selectItem itemValue="255" itemLabel="#{txtBundle['amuser.usertype.lvlADM']}"/> 
                     </h:selectOneMenu>
                 </h:panelGroup>
             </h:panelGroup>
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-6">
-                    <h:outputLabel for="password" value="Hasło:"/>
-                    <h:inputSecret id="password" rendered="#{menadzer_uzytkownikow.tryb==0}" required="true" class="form-control" a:placeholder="Hasło"
+                    <h:outputLabel for="password" value="#{txtBundle['ulist.column.password']}:"/>
+                    <h:inputSecret id="password" rendered="#{menadzer_uzytkownikow.tryb==0}" required="true" class="form-control" a:placeholder="#{txtBundle['ulist.column.password']}"
                                    maxlength="32" value="#{menadzer_uzytkownikow.password}"
-                                   validatorMessage="Hasło nie spełnia wymogów."
-                                   requiredMessage="To pole jest wymagane.">
+                                   validatorMessage="#{txtBundle['amuser.password.validtor']}"
+                                   requiredMessage="#{txtBundle['global.required']}">
                         <f:validateRegex
                             pattern="^(?=.{5,32}$)(?=.*\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*)[(?i)a-z(?-i)0-9]+$" />
                         <f:ajax event="blur" execute="password" render="passwordvErr"/>
@@ -65,7 +67,7 @@
                     <h:message id="passwordvErr" for="password" class="feedback" style="font-size: 10px;  color: red"/>
                     <h:inputSecret id="passwordE" rendered="#{menadzer_uzytkownikow.tryb!=0}" required="false" class="form-control" 
                                    a:placeholder="Hasło" maxlength="32" value="#{menadzer_uzytkownikow.password}"
-                                   validatorMessage="Hasło nie spełnia wymogów.">
+                                   validatorMessage="#{txtBundle['amuser.password.validtor']}">
                         <f:validateRegex
                             pattern="^$|^(?=.{5,32}$)(?=.*\d+.*)(?=.*[a-z]+.*)(?=.*[A-Z]+.*)[(?i)a-z(?-i)0-9]+$" />
                         <f:ajax event="blur" execute="passwordE" render="passwordEvErr"/>
@@ -73,33 +75,35 @@
                     <h:message id="passwordEvErr" for="passwordE" class="feedback" style="font-size: 10px;  color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-6">
-                    <h:outputLabel for="password2" rendered="#{menadzer_uzytkownikow.tryb==0}" value="Powtórz hasło:"/>
+                    <h:outputLabel for="password2" rendered="#{menadzer_uzytkownikow.tryb==0}" value="#{txtBundle['amuser.password.repeat']}:"/>
                     <h:inputSecret id="password2" rendered="#{menadzer_uzytkownikow.tryb==0}" required="true" class="form-control" 
-                                   a:placeholder="Powtórz hasło" maxlength="32" value="#{menadzer_uzytkownikow.password2}"
-                                   validatorMessage="Hasła nie są identyczne."
-                                   requiredMessage="To pole jest wymagane."
+                                   a:placeholder="#{txtBundle['amuser.password.repeat']}" maxlength="32" value="#{menadzer_uzytkownikow.password2}"
+                                   validatorMessage="#{txtBundle['amuser.password2.validtor']}"
+                                   requiredMessage="#{txtBundle['global.required']}"
                                    validator="#{menadzer_uzytkownikow.porownajHasla}" >
                         <f:ajax event="blur" execute="password2" render="password2vErr"/>
                     </h:inputSecret>
                     <h:message id="password2vErr" rendered="#{menadzer_uzytkownikow.tryb==0}" for="password2" class="feedback" style="font-size: 10px;  color: red"/>
-                    <h:outputLabel for="password2E" rendered="#{menadzer_uzytkownikow.tryb!=0}" value="Powtórz hasło2:"/>
+                    <h:outputLabel for="password2E" rendered="#{menadzer_uzytkownikow.tryb!=0}" value="#{txtBundle['amuser.password.repeat']}:"/>
                     <h:inputSecret id="password2E" rendered="#{menadzer_uzytkownikow.tryb!=0}" required="false" class="form-control" 
-                                   a:placeholder="Powtórz hasło" maxlength="32" value="#{menadzer_uzytkownikow.password2}"
-                                   validatorMessage="Hasła nie są identyczne."
+                                   a:placeholder="#{txtBundle['amuser.password.repeat']}" maxlength="32" value="#{menadzer_uzytkownikow.password2}"
+                                   validatorMessage="#{txtBundle['amuser.password2.validtor']}"
                                    validator="#{menadzer_uzytkownikow.porownajHasla}" >
                         <f:ajax event="blur" execute="password2E" render="password2EvErr"/>
                     </h:inputSecret>
                     <h:message id="password2EvErr" rendered="#{menadzer_uzytkownikow.tryb!=0}" for="password2E" class="feedback" style="font-size: 10px;  color: red"/>
                 </h:panelGroup>
             </h:panelGroup>
-            &nbsp;&nbsp;&nbsp;<h:commandButton type="dodaj" class="btn btn-primary" value="Dodaj" 
+            <h:commandButton type="dodaj" class="btn btn-primary" value="#{txtBundle['action.add']}" 
                                                rendered="#{menadzer_uzytkownikow.tryb == 0}"
                                                action="#{menadzer_uzytkownikow.dodaj()}"/>
-            <h:commandButton type="aktualizuj" class="btn btn-primary" value="Aktualizuj" 
+            <h:commandButton type="aktualizuj" class="btn btn-primary" value="#{txtBundle['action.update']}" 
                                                rendered="#{menadzer_uzytkownikow.tryb != 0}"
                                                action="#{menadzer_uzytkownikow.aktualizuj()}"/>
+            <h:panelGroup layout="block" rendered="#{not empty facesContext.messageList}">
+                <br /><br />
+                <h:messages id="messagePanel" globalOnly="true" class="bg-info text-white rounded" style="font-size: 12px;"/>
+            </h:panelGroup>
         </h:form>
-
     </ui:define>
-
 </ui:composition>
