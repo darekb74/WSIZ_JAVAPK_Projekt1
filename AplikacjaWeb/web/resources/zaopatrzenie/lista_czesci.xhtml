@@ -6,35 +6,17 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:search="http://xmlns.jcp.org/jsf/composite/search">
     <ui:define name="title">
         <c:if test="#{menadzer_uzytkownikow.redirectTest()}"/>
-        Zaopatrzenie - Lista części
+        #{txtBundle['plist.title']}
     </ui:define>
     <ui:define name="left">
-        <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-            <h:form id="search">
-                <h:panelGroup layout="block" class="form-row">
-                    <h:panelGroup layout="block" class="form-group col-md-12">
-                        <h:outputLabel for="nazwa_s" value="#{txtBundle['plist.column.partname']}:"/>
-                        <h:inputText id="nazwa_s" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.partname']}"
-                                     maxlength="32" value="#{menadzer_czesci.nazwa_s}"
-                                     requiredMessage="#{txtBundle['lpanel.value.required']}">
-                            <f:ajax event="blur" execute="nazwa_s" render="nazwa_svErr"/>
-                        </h:inputText>
-                        <h:message id="nazwa_svErr" for="nazwa_s" class="feedback" style="font-size: 10px; color: red"/>
-                    </h:panelGroup>
-                </h:panelGroup>
-                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-                    <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['lpanel.action']}" action="#{menadzer_czesci.filtruj}"/>
-                </h:panelGroup>
-            </h:form>
-            <h:form>
-                <h:panelGroup layout="block" class="d-flex flex-column justify-content-center">
-                    <h:commandButton type="submit" class="btn btn-primary" value="#{txtBundle['lpanel.reset']}" action="#{menadzer_czesci.resetuj}"/>
-                </h:panelGroup>
-            </h:form>
-        </h:panelGroup>
+        <search:sform filtrujAction="#{menadzer_czesci.filtruj}"
+                      resetujAction="#{menadzer_czesci.resetuj}"
+                      serchInText="#{txtBundle['plist.column.partname']}"
+                      nazwa_s="#{menadzer_czesci.nazwa_s}"/>
     </ui:define>
     <ui:define name="content">
         <h:form id="main_list">

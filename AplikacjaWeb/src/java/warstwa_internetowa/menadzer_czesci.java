@@ -123,7 +123,7 @@ public class menadzer_czesci implements Serializable {
         List<CzesciDTO> aktualnaLista = strony.getCollection();
         List<CzesciDTO> filtrowanaLista = new ArrayList<>();
         for (CzesciDTO mD : aktualnaLista) {
-            if (mD.getNazwa().contains(nazwa_s)) {
+            if (mD.sprawdzWarunekFiltrowania(nazwa_s)) {
                 filtrowanaLista.add(mD);
             }
         }

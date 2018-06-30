@@ -89,7 +89,7 @@ public class menadzer_magazynu implements Serializable {
         List<MagazynDTO> aktualnaLista = strony.getCollection();
         List<MagazynDTO> filtrowanaLista = new ArrayList<>();
         for (MagazynDTO mD : aktualnaLista) {
-            if (mD.getCzesc().getNazwa().contains(nazwa_s)){
+            if (mD.sprawdzWarunekFiltrowania(nazwa_s)){
             filtrowanaLista.add(mD);
             }
         }

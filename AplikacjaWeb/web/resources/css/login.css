@@ -9,6 +9,7 @@ and open the template in the editor.
 */
 
 #login-dp{
+    left: -20px;
     min-width: 250px;
     padding: 14px 14px 0;
     overflow:hidden;

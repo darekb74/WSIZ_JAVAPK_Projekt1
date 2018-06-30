@@ -43,6 +43,10 @@ public class MagazynDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public boolean sprawdzWarunekFiltrowania(String tekst) {
+        return czesc.sprawdzWarunekFiltrowania(tekst);
+    }
 
     public CzesciDTO getCzesc() {
         return czesc;

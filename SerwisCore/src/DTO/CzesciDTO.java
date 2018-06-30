@@ -42,6 +42,10 @@ public class CzesciDTO implements Serializable {
         }
     }
 
+    public boolean sprawdzWarunekFiltrowania(String tekst) {
+        return nazwa.contains(tekst);
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

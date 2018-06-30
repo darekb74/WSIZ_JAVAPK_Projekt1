@@ -45,6 +45,10 @@ public class UserDTO implements Serializable {
         }
     }
 
+    public boolean sprawdzWarunekFiltrowania(String tekst) {
+        return username.contains(tekst);
+    }
+    
     public void setId(Long id) {
         this.id = id;
     }

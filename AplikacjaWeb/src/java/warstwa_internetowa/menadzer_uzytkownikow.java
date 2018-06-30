@@ -138,7 +138,7 @@ public class menadzer_uzytkownikow implements Serializable {
         List<UserDTO> aktualnaLista = strony.getCollection();
         List<UserDTO> filtrowanaLista = new ArrayList<>();
         for (UserDTO mD : aktualnaLista) {
-            if (mD.getUsername().contains(nazwa_s)) {
+            if (mD.sprawdzWarunekFiltrowania(nazwa_s)) {
                 filtrowanaLista.add(mD);
             }
         }
@@ -421,11 +421,15 @@ public class menadzer_uzytkownikow implements Serializable {
                     fasadaUser.aktualizujDane(uDTO); // uaktualnij bazę
                     // odśwież listę
                     setPagination();
+                    return "index";
                 } else {
                     uDTO = null;
                     zalogowany = false;
                 }
             }
+            String msg = getPropertyValue("m_login.error");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
         return "index";
     }

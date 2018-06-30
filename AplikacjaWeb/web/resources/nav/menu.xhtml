@@ -4,7 +4,8 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -72,14 +73,27 @@
                                             <h:form class="form" role="form" acceptcharset="UTF-8" id="login-nav">
                                                 <h:panelGroup layout="block" class="form-group">
                                                     <h:outputLabel class="sr-only" for="uzytkownik" value="#{txtBundle['m_username']}:"/>
-                                                    <h:inputText class="form-control" value="#{menadzer_uzytkownikow.uzytkownik}" id="uzytkownik" a:placeholder="#{txtBundle['m_username']}" required="true"/>
+                                                    <h:inputText class="form-control" value="#{menadzer_uzytkownikow.uzytkownik}" 
+                                                                 id="uzytkownik" a:placeholder="#{txtBundle['m_username']}" required="true"
+                                                                 requiredMessage="#{txtBundle['global.required']}">
+                                                        <f:ajax event="blur" execute="uzytkownik" render="uzytkownikErr"/>
+                                                    </h:inputText>
+                                                    <h:message id="uzytkownikErr" for="uzytkownik" class="feedback" style="font-size: 10px; color: red"/>
                                                 </h:panelGroup>
                                                 <h:panelGroup layout="block" class="form-group">
                                                     <h:outputLabel class="sr-only" for="haslo" value="#{txtBundle['m_password']}:"/>
-                                                    <h:inputSecret class="form-control" value="#{menadzer_uzytkownikow.haslo}" id="haslo" a:placeholder="#{txtBundle['m_password']}" required="true" />
+                                                    <h:inputSecret class="form-control" value="#{menadzer_uzytkownikow.haslo}" 
+                                                                   id="haslo" a:placeholder="#{txtBundle['m_password']}" required="true" 
+                                                                   requiredMessage="#{txtBundle['global.required']}">
+                                                        <f:ajax event="blur" execute="haslo" render="hasloErr"/>
+                                                    </h:inputSecret>
+                                                    <h:message id="hasloErr" for="haslo" class="feedback" style="font-size: 10px; color: red"/>
                                                 </h:panelGroup>
                                                 <h:panelGroup layout="block" class="form-group">
                                                     <h:commandButton class="btn btn-primary btn-block" value="#{txtBundle['m_login']}" action="#{menadzer_uzytkownikow.login()}" />
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" class="form-group">
+                                                    <h:messages id="lErr" globalOnly="true" class="feedback" style="font-size: 11px; color: red" />
                                                 </h:panelGroup>
                                             </h:form>
                                         </h:panelGroup>
