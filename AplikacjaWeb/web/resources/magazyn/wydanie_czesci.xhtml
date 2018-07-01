@@ -53,13 +53,14 @@
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
                     <h:outputLabel for="do_wyd" value="#{txtBundle['rstorage.quantity']}:"/>
-                    <h:inputText id="do_wyd" required="true" class="form-control" a:placeholder="#{txtBundle['rstorage.quantity']}"
+                    <h:inputText id="do_wyd" required="true" a:placeholder="#{txtBundle['rstorage.quantity']}"
+                                 class="form-control #{component.valid ? '' : 'is-invalid'}"
                                  maxlength="10" value="#{menadzer_magazynu.do_wyd}" 
                                  requiredMessage="#{txtBundle['global.required']}"
                                  converterMessage="#{txtBundle['rstorage.quantity.converter']}"
                                  validatorMessage="#{txtBundle['rstorage.quantity.validator.start']} #{ilosc.value} #{txtBundle['rstorage.quantity.validator.end']}"
                                  binding="#{do_wyd}">
-                        <f:ajax event="blur" execute="do_wyd" render="wydvErr"/>
+                        <f:ajax event="blur" execute="do_wyd" render="wydvErr do_wyd"/>
                         <f:validateLongRange minimum="1" maximum="#{ilosc.value}"/>
                     </h:inputText>
                     <h:message id="wydvErr" for="do_wyd" class="feedback" style="font-size: 10px; color: red"/>

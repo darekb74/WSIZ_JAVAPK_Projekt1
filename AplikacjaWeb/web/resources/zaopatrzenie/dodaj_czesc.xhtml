@@ -19,28 +19,31 @@
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="nazwa" value="#{txtBundle['plist.column.partname']}:"/>
-                    <h:inputText id="nazwa" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.partname']}"
+                    <h:inputText id="nazwa" required="true" a:placeholder="#{txtBundle['plist.column.partname']}"
+                                 class="form-control #{component.valid ? '' : 'is-invalid'}"
                                  maxlength="128" value="#{menadzer_czesci.nazwa}"
                                  requiredMessage="#{txtBundle['global.required']}">
-                        <f:ajax event="blur" execute="nazwa" render="nvErr submit" />
+                        <f:ajax event="blur" execute="nazwa" render="nvErr nazwa" />
                     </h:inputText>
                     <h:message id="nvErr" for="nazwa" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
                     <h:outputLabel for="model" value="#{txtBundle['plist.column.model']}:"/>
-                    <h:inputText id="model" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.model']}"
+                    <h:inputText id="model" required="true" a:placeholder="#{txtBundle['plist.column.model']}"
+                                 class="form-control #{component.valid ? '' : 'is-invalid'}"
                                  maxlength="32" value="#{menadzer_czesci.model}"
                                  requiredMessage="#{txtBundle['global.required']}">
-                        <f:ajax event="blur" execute="model" render="mvErr submit"/>
+                        <f:ajax event="blur" execute="model" render="mvErr model"/>
                     </h:inputText>
                     <h:message id="mvErr" for="model" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-3">
                     <h:outputLabel for="producent" value="#{txtBundle['plist.column.producent']}:"/>
-                    <h:inputText id="producent" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.producent']}"
+                    <h:inputText id="producent" required="true" a:placeholder="#{txtBundle['plist.column.producent']}"
+                                 class="form-control #{component.valid ? '' : 'is-invalid'}"
                                  maxlength="32" value="#{menadzer_czesci.producent}"
                                  requiredMessage="#{txtBundle['global.required']}">
-                        <f:ajax event="blur" execute="producent" render="pvErr submit"/>
+                        <f:ajax event="blur" execute="producent" render="pvErr producent"/>
                     </h:inputText>
                     <h:message id="pvErr" for="producent" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
@@ -48,22 +51,24 @@
             <h:panelGroup layout="block" class="form-row">
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="jednostka" value="#{txtBundle['plist.column.unit']}:"/>
-                    <h:inputText id="jednostka" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.unit']}"
+                    <h:inputText id="jednostka" required="true" a:placeholder="#{txtBundle['plist.column.unit']}"
+                                 class="form-control #{component.valid ? '' : 'is-invalid'}"
                                  maxlength="10" value="#{menadzer_czesci.jednostka}"
                                  requiredMessage="#{txtBundle['global.required']}">
-                        <f:ajax event="blur" execute="jednostka" render="jvErr submit"/>
+                        <f:ajax event="blur" execute="jednostka" render="jvErr jednostka"/>
                     </h:inputText>
                     <h:message id="jvErr" for="jednostka" class="feedback" style="font-size: 10px; color: red"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" class="form-group col-md-6">
                     <h:outputLabel for="cena_jendostkowa" value="#{txtBundle['plist.column.unit_value']}:"/>
                     <h:panelGroup layout="block" class="input-group">
-                        <h:inputText id="cena_jendostkowa" required="true" class="form-control" a:placeholder="#{txtBundle['plist.column.unit_value']}"
+                        <h:inputText id="cena_jendostkowa" required="true" a:placeholder="#{txtBundle['plist.column.unit_value']}"
+                                     class="form-control #{component.valid ? '' : 'is-invalid'}"
                                      maxlength="32" value="#{menadzer_czesci.cena_jednostkowa}"
                                      validatorMessage="#{txtBundle['ampartdef.unit_value.validator']}"
                                      converterMessage="#{txtBundle['ampartdef.unit_value.converter']}"
                                      requiredMessage="#{txtBundle['global.required']}">
-                            <f:ajax event="blur" execute="cena_jendostkowa" render="cjvErr submit"/>
+                            <f:ajax event="blur" execute="cena_jendostkowa" render="cjvErr cena_jendostkowa"/>
                             <f:validateDoubleRange minimum="0.00" maximum="99999999.99"/>
                             <f:convertNumber pattern="#0.00"/>
                         </h:inputText>

@@ -256,7 +256,7 @@ public class menadzer_uzytkownikow implements Serializable {
 
     public void porownajHasla(FacesContext context, UIComponent toValidate, Object value) {
         if (!((String) value).equals(password)) {
-            String msg = getPropertyValue("amuser.password2.validtor");
+            String msg = getPropertyValue("amuser.password2.validator");
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
             throw new ValidatorException(message);
         }
